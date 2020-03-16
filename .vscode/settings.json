@@ -8,5 +8,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "node_modules": true,
+    "packages/frontend/node_modules": true,
+    "packages/backend/node_modules": true,
   },
 }
