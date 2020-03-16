@@ -4,9 +4,8 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "cd packages/frontend && yarn start"
-  },
-  "--dependencies": {
-    "lerna": "^3.20.2"
+    "start": "cd packages/frontend && yarn start",
+    "build": "cd packages/frontend && yarn build",
+    "test": "cd packages/frontend && yarn test"
   }
 }
