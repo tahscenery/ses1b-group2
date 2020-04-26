@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "module": "commonjs",
     "lib": ["dom", "dom.iterable", "es2016", "esnext.asynciterable"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -9,7 +10,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "module": "esnext",
     "moduleResolution": "node",
     "isolatedModules": true,
     "noEmit": true,
