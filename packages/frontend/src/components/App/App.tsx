@@ -2,7 +2,7 @@ import React from 'react';
 import logo from 'resources/logo.svg';
 import './App.css';
 
-import { sayHello } from '@restaurant-app/backend';
+// import { sayHello } from '@restaurant-app/backend';
 
 const App = () => {
   return (
@@ -17,9 +17,7 @@ const App = () => {
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
-        >
-          {sayHello}
-        </a>
+        >Hello, world!</a>
       </header>
     </div>
   );
