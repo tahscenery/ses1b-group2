@@ -52,8 +52,6 @@ async function startConnection() {
     host: 'localhost',
     port: port,
     url: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@my-cluster-s1j8q.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
-    // username: "dbUser",
-    // password: "dbUserPassword",
     database: "test",
     entities: [User],
   })
