@@ -2,7 +2,7 @@ import React from 'react';
 import logo from 'resources/logo.svg';
 import './App.css';
 
-// import { sayHello } from '@restaurant-app/backend';
+// import { sayHello } from '@sapori-unici/backend';
 
 const App = () => {
   return (
