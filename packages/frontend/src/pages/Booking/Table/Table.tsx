@@ -12,12 +12,12 @@ import {
 } from '@material-ui/core';
 
 
-import './Login.css';
+import './Booking.css';
 
-class Login extends Component {
+class Table extends Component {
   render() {
     return (
-      <div className="">
+      <div className="image">
         <Container component="main" maxWidth="xs">
 
           <CssBaseline />
@@ -86,4 +86,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Table;
