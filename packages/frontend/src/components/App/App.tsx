@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from 'resources/logo.svg';
-import './App.css';
+import React, { Component } from 'react';
 
-const App = () => {
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import './App.css';
+import Login from '../../pages/Login/Login';
+import Booking from '../../pages/Booking/Booking';
+
+
+class App extends Component {
+  render () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >Hello, World!</a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <React.Fragment>
+        <Switch>
+          <Redirect from="/" to="/booking" exact ></Redirect>
+          <Route path="/login" component={Login} />
+          <Route path="/booking" component={Booking} />
+        </Switch>
+      </React.Fragment>
+    </BrowserRouter>
   );
+  };
 }
 
 export default App;
