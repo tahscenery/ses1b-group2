@@ -4,8 +4,13 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "cd packages/frontend && yarn start",
+    "start": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\"",
+    "frontend": "yarn workspace @sapori-unici/frontend start",
+    "backend": "yarn workspace @sapori-unici/backend start",
     "build": "cd packages/frontend && yarn build",
     "test": "cd packages/frontend && yarn test"
+  },
+  "dependencies": {
+    "concurrently": "^5.2.0"
   }
 }
