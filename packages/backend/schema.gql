@@ -3,6 +3,18 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""The Admin model """
+type Admin {
+  id: ID!
+  email: String!
+  password: String!
+}
+
+input AdminInput {
+  email: String!
+  password: String!
+}
+
 """The Item model"""
 type Item {
   name: String!
@@ -23,6 +35,10 @@ input ItemInput {
 type Mutation {
   createUser(data: UserInput!): User!
   deleteUser(id: String!): Boolean!
+  createStaff(data: StaffInput!): Staff!
+  deleteStaff(id: String!): Boolean!
+  createAdmin(data: AdminInput!): Admin!
+  deleteAdmin(id: String!): Boolean!
   createProduct(data: ProductInput!): Product!
   deleteProduct(id: String!): Boolean!
   createItem(data: ItemInput!): Item!
@@ -50,10 +66,28 @@ input ProductInput {
 type Query {
   returnSingleUser(id: String!): User!
   returnAllUsers: [User!]!
+  returnSingleStaff(username: String!): Staff!
+  returnAllStaffs: [Staff!]!
+  returnSingleAdmin(id: String!): Admin!
+  returnAllAdmins: [Admin!]!
   returnSingleProduct(id: String!): Product!
   returnAllProduct: [Product!]!
   returnSingleItem(id: String!): Item!
   returnAllItem: [Item!]!
+}
+
+"""The Staff model """
+type Staff {
+  id: ID!
+  username: String!
+  email: String!
+  password: String!
+}
+
+input StaffInput {
+  username: String!
+  email: String!
+  password: String!
 }
 
 """The User model"""

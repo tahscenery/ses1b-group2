@@ -4,6 +4,8 @@ import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 
 import { UserResolver } from "./resolvers/User";
+import { StaffResolver } from "./resolvers/Staff";
+import { AdminResolver } from "./resolvers/Admin";
 import { ProductResolver } from "./resolvers/Product";
 import { ItemResolver } from "./resolvers/Item";
 
@@ -15,6 +17,8 @@ const main = async () => {
       ItemResolver,
       ProductResolver,
       UserResolver,
+      StaffResolver,
+      AdminResolver
     ],
     emitSchemaFile: true,
     validate: false,
