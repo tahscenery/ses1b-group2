@@ -2,20 +2,29 @@ import React, { Component } from 'react';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import * as colors from '@material-ui/core/colors'
 
 import { Booking, Home, Login, ViewMenu,  } from 'pages';
 import './App.css';
 
 const theme = createMuiTheme({
   palette: {
-    primary: colors.amber
+    primary: {
+      main: '#ffc107',
+      light: '#fff350',
+      dark: '#c79100',
+      contrastText: '#000000'
+    },
+    secondary: {
+      main: '#424242',
+      light: '#6d6d6d',
+      dark: '#1b1b1b',
+      contrastText: '#ffffff'
+    }
   },
   typography: {
     fontFamily: 'Source Sans Pro',
     button: {
       fontSize: '1rem',
-      // textTransform: 'none'
     },
     h1: {
       fontFamily: 'Playfair Display',
@@ -23,6 +32,14 @@ const theme = createMuiTheme({
       fontWeight: 900,
       '@media screen and (max-width: 780px)': {
         fontSize: '2.5rem'
+      }
+    },
+    h2: {
+      fontFamily: 'Playfair Display',
+      fontSize: '2.5rem',
+      fontWeight: 900,
+      '@media screen and (max-width: 780px)': {
+        fontSize: '2rem'
       }
     }
   }
