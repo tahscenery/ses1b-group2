@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Test from './Context/Date';
 import Date from './Context/DateTime';
 import People from './Context/People';
 import Location from './Context/Location';
@@ -26,15 +25,15 @@ class Booking extends Component {
               Booking
             </Typography>
             <form className="bookform">
-              
+
                 <Typography variant="h6" color="secondary">
                    Date and Time
               </Typography>
                 <Date />
                 <People />
                 <Location />
-              
-       
+
+
             </form>
           </div>
         </Grid>
