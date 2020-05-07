@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Typography } from '@material-ui/core';
 
 import NavBar from 'components/NavBar'
-import { Typography } from '@material-ui/core';
 
 class Home extends Component {
   render() {

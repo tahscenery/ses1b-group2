@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import NavBar from 'components/NavBar';
 import { Typography } from '@material-ui/core';
+
+import NavBar from 'components/NavBar';
 
 class ViewMenu extends Component {
   componentDidMount() {
