@@ -13,7 +13,7 @@ class ViewMenu extends Component {
       <div>
         <NavBar/>
         <div className="component-container">
-          <Typography variant="h1">Entrée & Salads</Typography>
+          <Typography variant="h2">Entrée & Salads</Typography>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
             odio id consectetur pellentesque. Nam pellentesque ante id risus
             consectetur, at aliquam augue convallis. Suspendisse nec urna eu
@@ -25,7 +25,7 @@ class ViewMenu extends Component {
             nibh scelerisque velit luctus porta ac vel erat. Pellentesque
             facilisis facilisis mi quis tristique. Cras sit amet mi viverra,
             molestie est id, aliquet dui.</p>
-          <Typography variant="h1">Mains</Typography>
+          <Typography variant="h2">Mains</Typography>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
             odio id consectetur pellentesque. Nam pellentesque ante id risus
             consectetur, at aliquam augue convallis. Suspendisse nec urna eu
@@ -37,7 +37,7 @@ class ViewMenu extends Component {
             nibh scelerisque velit luctus porta ac vel erat. Pellentesque
             facilisis facilisis mi quis tristique. Cras sit amet mi viverra,
             molestie est id, aliquet dui.</p>
-          <Typography variant="h1">Desserts & Drinks</Typography>
+          <Typography variant="h2">Desserts & Drinks</Typography>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
             odio id consectetur pellentesque. Nam pellentesque ante id risus
             consectetur, at aliquam augue convallis. Suspendisse nec urna eu

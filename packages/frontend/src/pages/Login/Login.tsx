@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
   Button,
-  Container,
-  FormControlLabel,
   Checkbox,
-  CssBaseline,
-  TextField,
-  Grid,
+  FormControlLabel,
   Link,
-  Typography,
+  TextField,
+  Typography
 } from '@material-ui/core';
 
 import './Login.css';
@@ -17,70 +14,65 @@ import NavBar from 'components/NavBar';
 class Login extends Component {
   render() {
     return (
-      <div className="">
+      <div>
         <NavBar/>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className="paper">
-            <form className="form" noValidate>
-              <Typography component="h1" variant="h2" color="secondary">
-                Sign in
-              </Typography>
+        <div className="component-container">
+          <div className="login-form">
+            <Typography variant="h2">Login</Typography>
+            <form noValidate>
               <TextField
                 variant="outlined"
-                margin="normal"
-                required
-                fullWidth
                 id="email"
-                label="Email Address"
-                name="email"
+                label="Email"
                 autoComplete="email"
+                margin="normal"
+                fullWidth
+                required
                 autoFocus
-              //inputRef=""
               />
               <TextField
                 variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
+                id="password"
                 label="Password"
                 type="password"
-                id="password"
                 autoComplete="current-password"
-              //inputRef=""
+                margin="normal"
+                fullWidth
+                required
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="secondary" />}
                 label="Remember me"
+                control={<Checkbox value="remember" color="primary"/>}
               />
               <Button
+                className="login-button"
                 type="submit"
-                fullWidth
-                variant="contained"
                 color="primary"
-                className="button"
+                variant="contained"
+                size="large"
+                fullWidth
               >
-                Sign In
-          </Button>
-              <div className="marginTop">
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2" color="secondary">
-                      Forgot password?
-              </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="#" variant="body2" color="secondary">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
-              </div>
+                Sign in
+              </Button>
             </form>
+            <div className="login-footer">
+              <Link
+                href="#"
+                variant="body2"
+                color="secondary"
+              >
+                Forgot Password?
+              </Link>
+              <Link
+                href="#"
+                variant="body2"
+                color="secondary"
+              >
+                Don't have an account? Sign Up
+              </Link>
+            </div>
           </div>
-
-        </Container>
+        </div>
       </div>
     );
   }

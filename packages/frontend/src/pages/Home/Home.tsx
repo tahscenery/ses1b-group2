@@ -9,7 +9,7 @@ class Home extends Component {
       <div>
         <NavBar/>
         <div className="component-container">
-          <Typography variant="h1">Home</Typography>
+          <Typography variant="h2">Home</Typography>
         </div>
       </div>
     );
