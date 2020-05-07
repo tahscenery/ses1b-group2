@@ -59,5 +59,11 @@
 
   .nav-bar-collapse-icon {
     display: block;
+    position: relative;
+    right: -1rem;
+  }
+
+  .collapsed {
+    display: none;
   }
 }
