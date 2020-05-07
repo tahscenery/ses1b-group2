@@ -1,0 +1,27 @@
+.nav-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+
+  background-color: var(--nav-bar-background-color);
+  color: var(--nav-bar-foreground-color);
+}
+
+.nav-bar-brand-title {
+  margin: 0;
+  font-family: var(--nav-bar-brand-font-family);
+  font-weight: var(--nav-bar-brand-font-weight);
+  font-size: var(--nav-bar-brand-font-size);
+}
+
+.nav-bar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-bar ul :not(:first-child) {
+  padding-left: 15px;
+}
