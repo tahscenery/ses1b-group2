@@ -1,11 +1,25 @@
-.nav-bar-container {
+/* .nav-bar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 20px;
 
   background-color: var(--nav-bar-background-color);
   color: var(--nav-bar-foreground-color);
+} */
+
+.nav-bar-container {
+  background-color: var(--nav-bar-background-color);
+  color: var(--nav-bar-foreground-color);
+}
+
+.nav-bar-contents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: min(900px, 80%);
 }
 
 .nav-bar-brand-title {
@@ -13,6 +27,11 @@
   font-family: var(--nav-bar-brand-font-family);
   font-weight: var(--nav-bar-brand-font-weight);
   font-size: var(--nav-bar-brand-font-size);
+}
+
+.nav-bar-brand-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .nav-bar ul {

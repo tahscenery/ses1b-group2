@@ -3,15 +3,25 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors'
-import Home from 'pages/Home'
-import Login from 'pages/Login';
-import Booking from 'pages/Booking'
 
+import { Booking, Home, Login, ViewMenu,  } from 'pages';
 import './App.css';
 
 const theme = createMuiTheme({
   palette: {
     primary: colors.amber
+  },
+  typography: {
+    fontFamily: 'Source Sans Pro',
+    button: {
+      fontSize: '1rem',
+      // textTransform: 'none'
+    },
+    h1: {
+      fontFamily: 'Playfair Display',
+      fontSize: '3rem',
+      fontWeight: 900
+    }
   }
 })
 
@@ -26,6 +36,9 @@ class App extends Component {
             <Switch>
               {/* Home */}
               <Route exact path="/" component={Home} />
+
+              {/* View Menu */}
+              <Route exact path="/menu" component={ViewMenu} />
 
               {/* Login */}
               <Route path="/login" component={Login} />
