@@ -1,24 +1,35 @@
 import React, { Component } from 'react';
+import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import Home from 'pages/Home'
+import Login from 'pages/Login';
+import Booking from 'pages/Booking'
 
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import './App.css';
-import Login from '../../pages/Login/Login';
-import Booking from '../../pages/Booking/Booking';
 
+const history = createBrowserHistory();
 
 class App extends Component {
   render () {
-  return (
-    <BrowserRouter>
-      <React.Fragment>
-        <Switch>
-          <Redirect from="/" to="/booking" exact ></Redirect>
-          <Route path="/login" component={Login} />
-          <Route path="/booking" component={Booking} />
-        </Switch>
-      </React.Fragment>
-    </BrowserRouter>
-  );
+    return (
+      <Router history={history}>
+        <React.Fragment>
+          <Switch>
+            {/* Home */}
+            <Route exact path="/" component={Home} />
+
+            {/* Login */}
+            <Route path="/login" component={Login} />
+
+            {/* Booking */}
+            <Route path="/booking" component={Booking} />
+
+            {/* 404 */}
+            <Route render={() => <Redirect to="/"/>} />
+          </Switch>
+        </React.Fragment>
+      </Router>
+    );
   };
 }
 
