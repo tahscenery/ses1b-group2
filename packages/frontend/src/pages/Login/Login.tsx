@@ -12,6 +12,10 @@ import './Login.css';
 import NavBar from 'components/NavBar';
 
 class Login extends Component {
+  componentDidMount() {
+    document.title = 'Login – Sapori Unici';
+  }
+
   render() {
     return (
       <div>
@@ -19,6 +23,7 @@ class Login extends Component {
         <div className="component-container">
           <div className="login-form">
             <Typography variant="h2">Login</Typography>
+            <p>Sign in with your email and password below.</p>
             <form noValidate>
               <TextField
                 variant="outlined"
