@@ -44,3 +44,18 @@
 .nav-bar ul :not(:first-child) {
   padding-left: 15px;
 }
+
+.nav-bar-collapsed {
+  display: none;
+}
+
+@media screen and (max-width: 680px) {
+  .nav-bar-collapsed {
+    display: block;
+    right: -10rem;
+  }
+
+  .nav-bar {
+    display: none;
+  }
+}

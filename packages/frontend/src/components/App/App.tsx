@@ -20,7 +20,10 @@ const theme = createMuiTheme({
     h1: {
       fontFamily: 'Playfair Display',
       fontSize: '3rem',
-      fontWeight: 900
+      fontWeight: 900,
+      '@media screen and (max-width: 780px)': {
+        fontSize: '2.5rem'
+      }
     }
   }
 })
