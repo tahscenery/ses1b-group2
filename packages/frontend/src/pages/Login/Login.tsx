@@ -12,13 +12,14 @@ import {
 } from '@material-ui/core';
 
 import './Login.css';
+import NavBar from 'components/NavBar';
 
 class Login extends Component {
   render() {
     return (
       <div className="">
+        <NavBar/>
         <Container component="main" maxWidth="xs">
-
           <CssBaseline />
           <div className="paper">
             <form className="form" noValidate>
