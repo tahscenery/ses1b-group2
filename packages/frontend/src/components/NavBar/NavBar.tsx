@@ -45,7 +45,7 @@ class NavBar extends Component<NavBarProps, NavBarState> {
             </div>
             <nav id="nav-bar-menu" className="nav-bar-menu collapsed">
               <ul>
-                <li><Button variant="outlined" color="primary" href="/menu">Menu</Button></li>
+                <li><Button variant="outlined" color="primary" href="/menu">Our Menu</Button></li>
                 <li><Button variant="outlined" color="primary" href="/locations">Locations</Button></li>
                 <li><Button variant="outlined" color="primary" href="/register">Sign Up</Button></li>
                 <li><Button variant="outlined" color="primary" href="/login">Login</Button></li>
