@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
 import {
   Button,
-  Checkbox,
-  FormControlLabel,
   Link,
   TextField,
   Typography
 } from '@material-ui/core';
 
-import './Login.css';
+import './SignUp.css';
 import NavBar from 'components/NavBar';
 
-class Login extends Component {
-  componentDidMount() {
-    document.title = 'Login – Sapori Unici';
-  }
-
+class SignUp extends Component {
   render() {
     return (
       <div>
         <NavBar/>
         <div className="component-container">
-          <div className="login-form">
-            <Typography variant="h2">Login</Typography>
-            <p>Sign in with your email and password below.</p>
+          <div className="sign-up-form">
+            <Typography variant="h2">Sign Up</Typography>
+            <p>Don't have an account? Fill in the details below to get started.</p>
             <form noValidate>
               <TextField
                 variant="outlined"
@@ -40,41 +34,45 @@ class Login extends Component {
                 id="password"
                 label="Password"
                 type="password"
-                autoComplete="current-password"
                 margin="normal"
                 fullWidth
                 required
               />
-              <FormControlLabel
-                label="Remember me"
-                control={<Checkbox value="remember" color="primary"/>}
+              <TextField
+                variant="outlined"
+                id="confirm-password"
+                label="Confirm Password"
+                type="confirm-password"
+                margin="normal"
+                fullWidth
+                required
               />
               <Button
-                className="login-button"
+                className="sign-up-button"
                 type="submit"
                 color="primary"
                 variant="contained"
                 size="large"
                 fullWidth
               >
-                Sign In
+                Sign Up
               </Button>
             </form>
-            <div className="login-footer">
+            <div className="sign-up-footer">
               <Link
+                href="/login"
+                variant="body2"
+                color="secondary"
+              >
+                I have an account
+              </Link>
+              {/* <Link
                 href="#"
                 variant="body2"
                 color="secondary"
               >
-                Forgot Password?
-              </Link>
-              <Link
-                href="/register"
-                variant="body2"
-                color="secondary"
-              >
                 Don't have an account? Sign Up
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -83,4 +81,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default SignUp;

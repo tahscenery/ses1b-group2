@@ -3,7 +3,7 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-import { Booking, Home, Login, ViewMenu,  } from 'pages';
+import { Booking, Home, Login, SignUp, ViewMenu,  } from 'pages';
 import './App.css';
 
 const theme = createMuiTheme({
@@ -62,6 +62,9 @@ class App extends Component {
 
               {/* Login */}
               <Route path="/login" component={Login} />
+
+              {/* Sign Up */}
+              <Route path="/register" component={SignUp} />
 
               {/* Booking */}
               <Route path="/booking" component={Booking} />

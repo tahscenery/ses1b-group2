@@ -47,6 +47,7 @@ class NavBar extends Component<NavBarProps, NavBarState> {
               <ul>
                 <li><Button variant="outlined" color="primary" href="/menu">Menu</Button></li>
                 <li><Button variant="outlined" color="primary" href="/locations">Locations</Button></li>
+                <li><Button variant="outlined" color="primary" href="/register">Sign Up</Button></li>
                 <li><Button variant="outlined" color="primary" href="/login">Login</Button></li>
               </ul>
             </nav>
