@@ -13,13 +13,14 @@
     "@types/react-router-dom": "^5.1.5"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.12",
+    "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.10",
     "@sapori-unici/backend": "0.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/material-ui": "^0.21.7",
     "clsx": "^1.1.0",
     "material-table": "^1.57.2",
     "react": "^16.13.0",
