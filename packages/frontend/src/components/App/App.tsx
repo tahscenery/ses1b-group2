@@ -4,6 +4,7 @@ import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 import { Booking, Home, Login, SignUp, ViewMenu,  } from 'pages';
+import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
 
 const theme = createMuiTheme({
@@ -68,6 +69,9 @@ class App extends Component {
 
               {/* Booking */}
               <Route path="/booking" component={Booking} />
+
+              {/* Dashboard for Admin and Staff ON GOING */}
+              <Route path="/dashboard" component={Dashboard} />
 
               {/* 404 */}
               <Route render={() => <Redirect to="/"/>} />
