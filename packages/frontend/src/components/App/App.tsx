@@ -2,8 +2,6 @@ import React from 'react';
 import logo from 'resources/logo.svg';
 import './App.css';
 
-// import { sayHello } from '@sapori-unici/backend';
-
 const App = () => {
   return (
     <div className="App">
@@ -17,7 +15,7 @@ const App = () => {
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
-        >Hello, world!</a>
+        >Hello, World!</a>
       </header>
     </div>
   );
