@@ -1,0 +1,10 @@
+.footer-container {
+  background-color: var(--nav-bar-background-color);
+  color: var(--nav-bar-foreground-color);
+  bottom: 0;
+}
+
+.footer-nav ul {
+  margin: 0;
+  padding: 0;
+}

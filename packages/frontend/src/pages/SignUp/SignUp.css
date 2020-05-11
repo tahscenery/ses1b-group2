@@ -1,0 +1,14 @@
+.sign-up-form {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.sign-up-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.sign-up-button {
+  height: 50px;
+}
