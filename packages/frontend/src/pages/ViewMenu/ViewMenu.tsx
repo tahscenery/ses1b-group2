@@ -1,54 +1,58 @@
 import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 
+import './ViewMenu.css';
 import NavBar from 'components/NavBar';
+import { menu, MenuItem } from 'resources/menu.json';
+
+interface ItemProps {
+  item: MenuItem;
+}
+
+const Item = (props: ItemProps) => {
+  const { name, price, description } = props.item;
+  return (
+    <div className="view-menu-item">
+      <div className="view-menu-item-heading">
+        <Typography variant="h3">{name}</Typography>
+        <Typography variant="h3">{price}</Typography>
+      </div>
+      <p>{description}</p>
+    </div>
+  );
+}
 
 class ViewMenu extends Component {
   componentDidMount() {
     document.title = 'Menu – Sapori Unici';
+    console.log(menu.filter(item => item.type === 'entree').map(item => item.name));
   }
 
   render() {
     return (
       <div>
         <NavBar/>
-        <div className="component-container">
-          <Typography variant="h2">Entrée & Salads</Typography>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
-            odio id consectetur pellentesque. Nam pellentesque ante id risus
-            consectetur, at aliquam augue convallis. Suspendisse nec urna eu
-            arcu imperdiet hendrerit. Duis eget est pharetra, commodo nibh sit
-            amet, imperdiet ipsum. Aenean laoreet, nulla eu vestibulum porta,
-            nulla nunc elementum elit, in placerat nunc mi id diam. In nec
-            sapien ut diam viverra efficitur. Duis in congue lectus, et mattis
-            tellus. In accumsan maximus lacus id tincidunt. Suspendisse vitae
-            nibh scelerisque velit luctus porta ac vel erat. Pellentesque
-            facilisis facilisis mi quis tristique. Cras sit amet mi viverra,
-            molestie est id, aliquet dui.</p>
-          <Typography variant="h2">Mains</Typography>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
-            odio id consectetur pellentesque. Nam pellentesque ante id risus
-            consectetur, at aliquam augue convallis. Suspendisse nec urna eu
-            arcu imperdiet hendrerit. Duis eget est pharetra, commodo nibh sit
-            amet, imperdiet ipsum. Aenean laoreet, nulla eu vestibulum porta,
-            nulla nunc elementum elit, in placerat nunc mi id diam. In nec
-            sapien ut diam viverra efficitur. Duis in congue lectus, et mattis
-            tellus. In accumsan maximus lacus id tincidunt. Suspendisse vitae
-            nibh scelerisque velit luctus porta ac vel erat. Pellentesque
-            facilisis facilisis mi quis tristique. Cras sit amet mi viverra,
-            molestie est id, aliquet dui.</p>
-          <Typography variant="h2">Desserts & Drinks</Typography>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue
-            odio id consectetur pellentesque. Nam pellentesque ante id risus
-            consectetur, at aliquam augue convallis. Suspendisse nec urna eu
-            arcu imperdiet hendrerit. Duis eget est pharetra, commodo nibh sit
-            amet, imperdiet ipsum. Aenean laoreet, nulla eu vestibulum porta,
-            nulla nunc elementum elit, in placerat nunc mi id diam. In nec
-            sapien ut diam viverra efficitur. Duis in congue lectus, et mattis
-            tellus. In accumsan maximus lacus id tincidunt. Suspendisse vitae
-            nibh scelerisque velit luctus porta ac vel erat. Pellentesque
-            facilisis facilisis mi quis tristique. Cras sit amet mi viverra,
-            molestie est id, aliquet dui.</p>
+        <div className="view-menu-container">
+          <div className="view-menu">
+            <div className="view-menu-collection">
+              <Typography variant="h2">Entrée & Salads</Typography>
+              {menu
+                .filter(item => item.type === 'entree')
+                .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
+            </div>
+            <div className="view-menu-collection">
+              <Typography variant="h2">Mains</Typography>
+              {menu
+                .filter(item => item.type === 'main')
+                .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
+            </div>
+            <div className="view-menu-collection">
+              <Typography variant="h2">Desserts & Drinks</Typography>
+              {menu
+                .filter(item => item.type === 'dessert')
+                .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
+            </div>
+          </div>
         </div>
       </div>
     );
