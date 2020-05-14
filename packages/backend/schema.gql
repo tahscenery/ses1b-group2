@@ -101,3 +101,32 @@ input UserInput {
   username: String!
   email: String!
 }
+
+"""The Table model """
+type Table {
+  id: ID!
+  number: Int!
+minCapacity: Int!
+maxCapacity: Int!
+description: String!
+}
+
+input TableInput {
+  number: Int!
+minCapacity: Int!
+maxCapacity: Int!
+description: String!
+}
+
+"""The Order model"""
+type Order {
+  id: ID!
+  number: Int!
+  user: User!
+  order: [Item!]
+
+}
+
+input OrderInput {
+  number: Int!
+}
