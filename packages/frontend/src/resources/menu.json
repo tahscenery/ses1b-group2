@@ -41,6 +41,12 @@
       "name": "Chocolate Brownie with Icecream",
       "price": 8,
       "description": "Description…"
+    },
+    {
+      "type": "dessert",
+      "name": "Expensive Dessert",
+      "price": 100,
+      "description": "Description…"
     }
   ]
 }

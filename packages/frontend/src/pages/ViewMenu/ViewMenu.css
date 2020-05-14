@@ -1,7 +1,7 @@
 .view-menu-container {
   margin: 0 auto;
   margin-top: 35px;
-  max-width: min(1100px, 95%);
+  max-width: min(1200px, 90%);
 }
 
 .view-menu {
@@ -10,10 +10,10 @@
 }
 
 .view-menu .view-menu-collection:nth-child(2) {
-  padding: 0 50px;
+  padding: 0 60px;
 }
 
-@media screen and (max-width: 1110px) {
+@media screen and (max-width: 1310px) {
   .view-menu-container {
     max-width: min(650px, 80%);
   }
