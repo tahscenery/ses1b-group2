@@ -1,0 +1,46 @@
+{
+  "menu": [
+    {
+      "type": "entree",
+      "name": "Curio Granola",
+      "price": 6,
+      "description": "Compote, natural yoghurt, fruit"
+    },
+    {
+      "type": "entree",
+      "name": "Sweet Croissant",
+      "price": 5,
+      "description": "with crème fraîche & marmalade"
+    },
+    {
+      "type": "entree",
+      "name": "Curio Granola",
+      "price": 6,
+      "description": "Compote, natural yoghurt, fruit"
+    },
+    {
+      "type": "entree",
+      "name": "BLT Sandwich",
+      "price": 12,
+      "description": "Pickled green tomatoes, mesculin greens & bacon on a molasses with bun"
+    },
+    {
+      "type": "main",
+      "name": "The Loren's Breakfast",
+      "price": 10,
+      "description": "Eggs, chorizo, hash brown, dry cured bacon, house beans, portobello, mushroom, tomato & sourdough"
+    },
+    {
+      "type": "main",
+      "name": "Blueys Burger",
+      "price": 12,
+      "description": "Chicken breast burger"
+    },
+    {
+      "type": "dessert",
+      "name": "Chocolate Brownie with Icecream",
+      "price": 8,
+      "description": "Description…"
+    }
+  ]
+}
