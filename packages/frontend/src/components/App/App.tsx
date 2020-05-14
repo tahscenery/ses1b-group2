@@ -42,6 +42,15 @@ const theme = createMuiTheme({
       '@media screen and (max-width: 780px)': {
         fontSize: '2rem'
       }
+    },
+    h3: {
+      color: '#424242',
+      fontFamily: 'Playfair Display',
+      fontSize: '1.5rem',
+      fontWeight: 700,
+      '@media screen and (max-width: 780px)': {
+        fontSize: '1.3rem'
+      }
     }
   }
 })
