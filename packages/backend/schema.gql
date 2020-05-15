@@ -3,7 +3,7 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""The Admin model """
+"""The Admin model"""
 type Admin {
   id: ID!
   email: String!
@@ -85,7 +85,7 @@ type Query {
   returnAllItem: [Item!]!
 }
 
-"""The Staff model """
+"""The Staff model"""
 type Staff {
   id: ID!
   username: String!

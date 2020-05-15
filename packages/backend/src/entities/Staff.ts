@@ -1,9 +1,8 @@
 import { ObjectType, Field, ID } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 
-@ObjectType({ description: "The Staff model " })
+@ObjectType({ description: "The Staff model" })
 export class Staff {
-  [x: string]: any;
   @Field(() => ID)
   id: number;
 
@@ -18,10 +17,6 @@ export class Staff {
   @Field()
   @Property({ required: true })
   password: String;
-
-  get user_name(): String {
-    return this.username;
-  }
 
   constructor(username: string, email: string, password: string) {
     this.username = username;

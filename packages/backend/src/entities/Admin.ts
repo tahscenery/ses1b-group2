@@ -1,9 +1,8 @@
 import { ObjectType, Field, ID } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 
-@ObjectType({ description: "The Admin model " })
+@ObjectType({ description: "The Admin model" })
 export class Admin {
-  [x: string]: any;
   @Field(() => ID)
   id: number;
 
