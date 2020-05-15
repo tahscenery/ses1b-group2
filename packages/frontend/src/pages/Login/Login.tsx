@@ -21,6 +21,7 @@ class Login extends Component {
       <div>
         <NavBar/>
         <div className="component-container">
+          <div className="back">
           <div className="login-form">
             <Typography variant="h2">Login</Typography>
             <p>Sign in with your email and password below.</p>
@@ -76,6 +77,7 @@ class Login extends Component {
                 Don't have an account? Sign Up
               </Link>
             </div>
+          </div>
           </div>
         </div>
       </div>
