@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography,} from '@material-ui/core';
+
 
 import './Home.css';
 import NavBar from 'components/NavBar';
