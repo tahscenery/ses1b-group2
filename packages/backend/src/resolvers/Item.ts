@@ -16,13 +16,15 @@ export class ItemResolver {
 
   @Mutation(() => Item)
   async createItem(
-    @Arg("data") { name, description, price }: ItemInput
+    @Arg("data") { name, description, price, category, image }: ItemInput
   ): Promise<Item> {
     const item = (
       await ItemModel.create({
         name,
         description,
         price,
+        category,
+        image,
       })
     ).save();
     return item;
