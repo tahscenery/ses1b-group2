@@ -2,7 +2,7 @@ import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Table, TableModel } from "../entities/Table";
 import { TableInput } from "./types/Table-input";
 
-@Resolver((_of) => Table )
+@Resolver((_of) => Table)
 export class TableResolver {
   @Query((_returns) => Table, { nullable: false })
   async returnSingleTable(@Arg("id") id: string) {
@@ -18,13 +18,13 @@ export class TableResolver {
   async createTable(@Arg("data") {tableNumber, minCapacity, maxCapacity, description}: TableInput): Promise<Table> {
 
     const existingTable = TableModel.findOne( {tableNumber: tableNumber});
-    if(existingTable) 
+    if(existingTable)
     {
       throw new Error("Table exists already.");
     }
 
     const Table = (
-      await TableModel.create({ 
+      await TableModel.create({
         tableNumber,
         minCapacity,
         maxCapacity,

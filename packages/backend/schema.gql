@@ -43,6 +43,8 @@ type Mutation {
   deleteProduct(id: String!): Boolean!
   createItem(data: ItemInput!): Item!
   deleteItem(id: String!): Boolean!
+  createTable(data: TableInput!): Table!
+  deleteTable(id: String!): Boolean!
 }
 
 """The Product model"""
@@ -74,6 +76,8 @@ type Query {
   returnAllProduct: [Product!]!
   returnSingleItem(id: String!): Item!
   returnAllItem: [Item!]!
+  returnSingleTable(id: String!): Table!
+  returnAllTables: [Table!]!
 }
 
 """The Staff model """
@@ -90,6 +94,22 @@ input StaffInput {
   password: String!
 }
 
+"""The Table model"""
+type Table {
+  id: ID!
+  tableNumber: Float!
+  minCapacity: Float!
+  maxCapacity: Float!
+  description: String!
+}
+
+input TableInput {
+  tableNumber: Float!
+  minCapacity: Float!
+  maxCapacity: Float!
+  description: String!
+}
+
 """The User model"""
 type User {
   id: ID!
@@ -100,33 +120,4 @@ type User {
 input UserInput {
   username: String!
   email: String!
-}
-
-"""The Table model """
-type Table {
-  id: ID!
-  number: Int!
-minCapacity: Int!
-maxCapacity: Int!
-description: String!
-}
-
-input TableInput {
-  number: Int!
-minCapacity: Int!
-maxCapacity: Int!
-description: String!
-}
-
-"""The Order model"""
-type Order {
-  id: ID!
-  number: Int!
-  user: User!
-  order: [Item!]
-
-}
-
-input OrderInput {
-  number: Int!
 }
