@@ -4,7 +4,6 @@ import { Item, ItemCategory } from "../../entities/Item";
 
 @InputType()
 export class ItemInput implements Partial<Item> {
-
   @Field()
   name: string;
 
@@ -20,5 +19,4 @@ export class ItemInput implements Partial<Item> {
 
   @Field()
   image: string;
-
 }
