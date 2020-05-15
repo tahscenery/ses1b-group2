@@ -1,0 +1,7 @@
+.component-container{
+background-image: url(../../components/background/pasta.jpg);
+background-size: cover;
+}
+.img{
+  background-size: cover;
+}
