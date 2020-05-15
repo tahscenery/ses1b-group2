@@ -10,9 +10,7 @@ export enum ItemCategory {
 
 registerEnumType(ItemCategory, {
   name: "ItemCategory",
-  description:
-    "An enumeration representing the category of a menu item. \
-      Possible values: ENTREE, MAIN, DESSERT."
+  description: "An enumeration representing the category of a menu item. Possible values: ENTREE, MAIN, DESSERT."
 });
 
 @ObjectType({ description: "The Item model" })
