@@ -11,7 +11,7 @@ class Home extends Component {
     return (
       <div>
         <NavBar/> 
-        <Typography variant="h2">Unique is in our name</Typography><div className='attach'>
+        <div className='attach'>
         
         <Slideshow/>
         </div>

@@ -40,6 +40,7 @@ class NavBar extends Component<NavBarProps, NavBarState> {
               <Typography variant="h1">
                 <a href="/" className="nav-bar-brand-link">Sapori Unici</a>
               </Typography>
+              <Typography variant="h5">Unique is in our name</Typography>
               <span className="nav-bar-collapse-icon">
                 <IconButton color="primary" onClick={this.toggleMenu}>
                   {this.state.shouldShowMenu ? <Close/> : <Menu/>}
