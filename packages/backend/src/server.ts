@@ -8,17 +8,19 @@ import { StaffResolver } from "./resolvers/Staff";
 import { AdminResolver } from "./resolvers/Admin";
 import { ProductResolver } from "./resolvers/Product";
 import { ItemResolver } from "./resolvers/Item";
+import { TableResolver } from "./resolvers/Table";
 
 const connectDB = require("./connection");
 
 const main = async () => {
   const schema = await buildSchema({
-    resolvers: [    
+    resolvers: [
       ItemResolver,
       ProductResolver,
       UserResolver,
       StaffResolver,
-      AdminResolver
+      AdminResolver,
+      TableResolver,
     ],
     emitSchemaFile: true,
     validate: false,
