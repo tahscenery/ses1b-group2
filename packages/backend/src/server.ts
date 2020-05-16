@@ -34,9 +34,9 @@ const main = async () => {
 
   server.applyMiddleware({ app });
 
-  app.listen({ port: 3333 }, () =>
+  app.listen({ port: 4000 }, () =>
     console.log(
-      `🚀 Server ready and listening at ==> http://localhost:3333${server.graphqlPath}`
+      `🚀 Server ready and listening at ==> http://localhost:4000${server.graphqlPath}`
     )
   );
 };

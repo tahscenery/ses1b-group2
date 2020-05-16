@@ -3,8 +3,14 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-import { Booking, Home, Login, SignUp, ViewMenu,  } from 'pages';
+import { Booking, Home, Login, SignUp, ViewMenu } from 'pages';
+import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
+
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 const theme = createMuiTheme({
   palette: {
@@ -41,40 +47,64 @@ const theme = createMuiTheme({
       '@media screen and (max-width: 780px)': {
         fontSize: '2rem'
       }
+    },
+    h3: {
+      color: '#424242',
+      fontFamily: 'Playfair Display',
+      fontSize: '1.5rem',
+      fontWeight: 700,
+      '@media screen and (max-width: 780px)': {
+        fontSize: '1.3rem'
+      }
     }
   }
 })
 
 const history = createBrowserHistory();
 
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: 'http://localhost:4000/graphql'
+});
+
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
+  link
+});
+
 class App extends Component {
-  render () {
+  render() {
     return (
-      <Router history={history}>
-        <React.Fragment>
-          <ThemeProvider theme={theme}>
-            <Switch>
-              {/* Home */}
-              <Route exact path="/" component={Home} />
+      <ApolloProvider client={client} >
+        <Router history={history}>
+          <React.Fragment>
+            <ThemeProvider theme={theme}>
+              <Switch>
+                {/* Home */}
+                <Route exact path="/" component={Home} />
 
-              {/* View Menu */}
-              <Route exact path="/menu" component={ViewMenu} />
+                {/* View Menu */}
+                <Route exact path="/menu" component={ViewMenu} />
 
-              {/* Login */}
-              <Route path="/login" component={Login} />
+                {/* Login */}
+                <Route path="/login" component={Login} />
 
-              {/* Sign Up */}
-              <Route path="/register" component={SignUp} />
+                {/* Sign Up */}
+                <Route path="/register" component={SignUp} />
 
-              {/* Booking */}
-              <Route path="/booking" component={Booking} />
+                {/* Booking */}
+                <Route path="/booking" component={Booking} />
 
-              {/* 404 */}
-              <Route render={() => <Redirect to="/"/>} />
-            </Switch>
-          </ThemeProvider>
-        </React.Fragment>
-      </Router>
+                {/* Dashboard for Admin and Staff ON GOING */}
+                <Route path="/dashboard" component={Dashboard} />
+
+                {/* 404 */}
+                <Route render={() => <Redirect to="/" />} />
+              </Switch>
+            </ThemeProvider>
+          </React.Fragment>
+        </Router>
+      </ApolloProvider>
     );
   };
 }

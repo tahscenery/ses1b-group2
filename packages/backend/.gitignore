@@ -1,6 +1,6 @@
 # node modules
 node_modules
-
+/client
 
 # API keys and secrets
 .env
