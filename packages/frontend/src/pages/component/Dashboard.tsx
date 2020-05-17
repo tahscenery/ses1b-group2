@@ -147,6 +147,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
+                <Customer />
                 <Staff />
               </Paper>
             </Grid>

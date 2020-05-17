@@ -4,11 +4,16 @@ import { User } from "../../entities/User";
 
 @InputType()
 export class UserInput implements Partial<User> {
+
   @Field()
   @Length(1, 255)
-  username: String;
+  name: String;
 
   @Field()
   @IsEmail()
   email: String;
+
+  @Field()
+  @Length(1, 255)
+  password: String;
 }

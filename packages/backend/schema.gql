@@ -32,7 +32,12 @@ input ItemInput {
   image: String!
 }
 
+type LoginResponse {
+  accessToken: String!
+}
+
 type Mutation {
+  Login(password: String!, email: String!): LoginResponse!
   createUser(data: UserInput!): User!
   deleteUser(id: String!): Boolean!
   createStaff(data: StaffInput!): Staff!
@@ -68,6 +73,7 @@ input ProductInput {
 type Query {
   returnSingleUser(id: String!): User!
   returnAllUsers: [User!]!
+  Me: String!
   returnSingleStaff(username: String!): Staff!
   returnAllStaffs: [Staff!]!
   returnSingleAdmin(id: String!): Admin!
@@ -83,6 +89,7 @@ type Query {
 """The Staff model """
 type Staff {
   id: ID!
+  key: String!
   username: String!
   email: String!
   password: String!
@@ -113,11 +120,13 @@ input TableInput {
 """The User model"""
 type User {
   id: ID!
-  username: String!
+  name: String!
   email: String!
+  password: String!
 }
 
 input UserInput {
-  username: String!
+  name: String!
   email: String!
+  password: String!
 }

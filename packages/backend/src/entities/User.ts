@@ -9,11 +9,15 @@ export class User {
 
     @Field()
     @Property({ required: true })
-    username: String;
+    name: String;
 
     @Field()
     @Property({ required: true })
     email: String;
+
+    @Field()
+    @Property({ required: true })
+    password: String;
 
 }
 
