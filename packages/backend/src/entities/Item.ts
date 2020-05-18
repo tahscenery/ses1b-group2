@@ -1,6 +1,17 @@
 import { Entity } from "typeorm";
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType, registerEnumType } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
+
+export enum ItemCategory {
+  ENTREE,
+  MAIN,
+  DESSERT
+}
+
+registerEnumType(ItemCategory, {
+  name: "ItemCategory",
+  description: "An enumeration representing the category of a menu item. Possible values: ENTREE, MAIN, DESSERT."
+});
 
 @ObjectType({ description: "The Item model" })
 @Entity()
@@ -17,9 +28,9 @@ export class Item {
   @Property()
   description: string;
 
-  @Field()
+  @Field(_type => ItemCategory)
   @Property()
-  category: string;
+  category: ItemCategory;
 
   @Field()
   @Property()

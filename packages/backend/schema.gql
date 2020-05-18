@@ -3,7 +3,7 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""The Admin model """
+"""The Admin model"""
 type Admin {
   id: ID!
   email: String!
@@ -20,15 +20,24 @@ type Item {
   name: String!
   price: Float!
   description: String!
-  category: String!
+  category: ItemCategory!
   image: String!
+}
+
+"""
+An enumeration representing the category of a menu item. Possible values: ENTREE, MAIN, DESSERT.
+"""
+enum ItemCategory {
+  ENTREE
+  MAIN
+  DESSERT
 }
 
 input ItemInput {
   name: String!
   description: String!
   price: Float!
-  category: String!
+  category: ItemCategory!
   image: String!
 }
 
@@ -86,7 +95,7 @@ type Query {
   returnAllTables: [Table!]!
 }
 
-"""The Staff model """
+"""The Staff model"""
 type Staff {
   id: ID!
   key: String!

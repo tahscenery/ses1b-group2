@@ -1,6 +1,7 @@
 {
   "name": "@sapori-unici/backend",
   "version": "0.1.0",
+  "license": "MIT",
   "main": "server.ts",
   "scripts": {
     "start": "nodemon src/server.ts"

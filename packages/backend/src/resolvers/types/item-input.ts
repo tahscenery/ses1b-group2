@@ -1,10 +1,9 @@
 import { InputType, Field } from "type-graphql";
 import { Length } from "class-validator";
-import { Item } from "../../entities/Item";
+import { Item, ItemCategory } from "../../entities/Item";
 
 @InputType()
 export class ItemInput implements Partial<Item> {
-
   @Field()
   name: string;
 
@@ -15,10 +14,9 @@ export class ItemInput implements Partial<Item> {
   @Field()
   price: number;
 
-  @Field()
-  category: string;
+  @Field(_type => ItemCategory)
+  category: ItemCategory;
 
   @Field()
   image: string;
-
 }
