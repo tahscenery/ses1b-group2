@@ -15,6 +15,7 @@ class SignUp extends Component {
       <div>
         <NavBar/>
         <div className="component-container">
+          <div className="back">
           <div className="sign-up-form">
             <Typography variant="h2">Sign Up</Typography>
             <p>Don't have an account? Fill in the details below to get started.</p>
@@ -75,6 +76,7 @@ class SignUp extends Component {
               </Link> */}
             </div>
           </div>
+        </div>
         </div>
       </div>
     );

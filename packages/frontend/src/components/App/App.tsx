@@ -3,7 +3,7 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-import { Booking, Home, Login, SignUp, ViewMenu } from 'pages';
+import { Booking, Home, Locations, Login, SignUp, ViewMenu } from 'pages';
 import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
 
@@ -75,7 +75,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 class App extends Component {
   render() {
     return (
-      <ApolloProvider client={client} >
+      <ApolloProvider client={client}>
         <Router history={history}>
           <React.Fragment>
             <ThemeProvider theme={theme}>
@@ -86,20 +86,23 @@ class App extends Component {
                 {/* View Menu */}
                 <Route exact path="/menu" component={ViewMenu} />
 
-                {/* Login */}
-                <Route path="/login" component={Login} />
+                {/* Locations */}
+                <Route path="/locations" component={Locations} />
 
                 {/* Sign Up */}
                 <Route path="/register" component={SignUp} />
 
+                {/* Login */}
+                <Route path="/login" component={Login} />
+
                 {/* Booking */}
                 <Route path="/booking" component={Booking} />
 
-                {/* Dashboard for Admin and Staff ON GOING */}
+                {/* Dashboard for Admin and Staff (WIP) */}
                 <Route path="/dashboard" component={Dashboard} />
 
                 {/* 404 */}
-                <Route render={() => <Redirect to="/" />} />
+                <Route render={() => <Redirect to="/"/>} />
               </Switch>
             </ThemeProvider>
           </React.Fragment>

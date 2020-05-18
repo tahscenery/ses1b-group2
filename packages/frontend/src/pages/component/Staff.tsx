@@ -68,7 +68,7 @@ class Staff extends React.Component<{}, TableState> {
 
   fetchData() {
     //const { loading, error, data } = useQuery(GET_STAFF);
-    
+
   }
 
   render() {

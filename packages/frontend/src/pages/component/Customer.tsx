@@ -128,58 +128,58 @@ export default function Customer() {
 
 /*
 <Card>
-        <CardHeader>Query - Displaying all data</CardHeader>
-        <CardBody>
-          <pre>
-            {JSON.stringify(getAllCustomers.data, null, 2)}
-          </pre>
-        </CardBody>
-      </Card>*/
+  <CardHeader>Query - Displaying all data</CardHeader>
+  <CardBody>
+    <pre>
+      {JSON.stringify(getAllCustomers.data, null, 2)}
+    </pre>
+  </CardBody>
+</Card>
+*/
 
 /*
-    <MaterialTable
-      title="Customer List"
-      columns={state.columns}
-      data={state.data}
+<MaterialTable
+  title="Customer List"
+  columns={state.columns}
+  data={state.data}
+  editable={{
+    onRowAdd: (newData) =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+          setState((prevState) => {
+            const data = [...prevState.data];
+            data.push(newData);
+            return { ...prevState, data };
+          });
+        }, 600);
+      }),
 
-      editable={{
-        onRowAdd: (newData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
+    onRowUpdate: (newData, oldData) =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+          if (oldData) {
+            setState((prevState) => {
+              const data = [...prevState.data];
+              data[data.indexOf(oldData)] = newData;
+              return { ...prevState, data };
+            });
+          }
+        }, 600);
+      }),
 
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState((prevState) => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
-
-        onRowDelete: (oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-      }}
-    />
-    */
+    onRowDelete: (oldData) =>
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+          setState((prevState) => {
+            const data = [...prevState.data];
+            data.splice(data.indexOf(oldData), 1);
+            return { ...prevState, data };
+          });
+        }, 600);
+      }),
+  }}
+/>
+*/

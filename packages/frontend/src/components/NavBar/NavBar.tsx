@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, IconButton, Typography } from '@material-ui/core'
 import Menu from '@material-ui/icons/Menu';
+import Close from '@material-ui/icons/Close'
 
 import './NavBar.css';
 
@@ -40,12 +41,14 @@ class NavBar extends Component<NavBarProps, NavBarState> {
                 <a href="/" className="nav-bar-brand-link">Sapori Unici</a>
               </Typography>
               <span className="nav-bar-collapse-icon">
-                <IconButton color="primary" onClick={this.toggleMenu}><Menu/></IconButton>
+                <IconButton color="primary" onClick={this.toggleMenu}>
+                  {this.state.shouldShowMenu ? <Close/> : <Menu/>}
+                </IconButton>
               </span>
             </div>
             <nav id="nav-bar-menu" className="nav-bar-menu collapsed">
               <ul>
-                <li><Button variant="outlined" color="primary" href="/menu">Menu</Button></li>
+                <li><Button variant="outlined" color="primary" href="/menu">Our Menu</Button></li>
                 <li><Button variant="outlined" color="primary" href="/locations">Locations</Button></li>
                 <li><Button variant="outlined" color="primary" href="/register">Sign Up</Button></li>
                 <li><Button variant="outlined" color="primary" href="/login">Login</Button></li>

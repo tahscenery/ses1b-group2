@@ -100,7 +100,7 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -118,7 +118,7 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          
+
         </Toolbar>
       </AppBar>
       <Drawer
@@ -142,8 +142,8 @@ export default function Dashboard() {
 
           <Grid container spacing={3}>
 
-            
-            
+
+
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
@@ -153,7 +153,7 @@ export default function Dashboard() {
             </Grid>
 
           </Grid>
-          
+
         </Container>
       </main>
     </div>
