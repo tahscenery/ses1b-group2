@@ -8,8 +8,8 @@ class FourOFour extends Component {
       <div>
         <NavBar />
         <div className="component-container">
-          <Typography variant="h2">Uh-oh...</Typography>
-          <p>You weren't supposed to see this 😅</p>
+          <Typography variant="h2">Uh-oh…</Typography>
+          <p>You weren't supposed to see this <span role="img" aria-label="emoji" >😅</span></p>
         </div>
       </div>
     )

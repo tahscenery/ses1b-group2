@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Route, Router, Switch } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
@@ -102,7 +102,7 @@ class App extends Component {
                 <Route path="/dashboard" component={Dashboard} />
 
                 {/* 404 */}
-                <Route render={() => <FourOFour/>} />
+                <Route component={FourOFour} />
               </Switch>
             </ThemeProvider>
           </React.Fragment>
