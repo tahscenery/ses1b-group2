@@ -3,7 +3,7 @@ import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-import { Booking, Home, Locations, Login, SignUp, ViewMenu } from 'pages';
+import { Booking, FourOFour, Home, Locations, Login, SignUp, ViewMenu } from 'pages';
 import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
 
@@ -102,7 +102,7 @@ class App extends Component {
                 <Route path="/dashboard" component={Dashboard} />
 
                 {/* 404 */}
-                <Route render={() => <Redirect to="/"/>} />
+                <Route render={() => <FourOFour/>} />
               </Switch>
             </ThemeProvider>
           </React.Fragment>
