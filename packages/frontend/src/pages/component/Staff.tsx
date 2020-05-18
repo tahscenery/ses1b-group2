@@ -1,12 +1,11 @@
-import React, { Component, useState, Fragment } from 'react';
+import React /*, { Component, useState, Fragment } */ from 'react';
 import MaterialTable, { Column } from 'material-table';
-import gql from 'graphql-tag';
-import { Query, graphql } from 'react-apollo';
-import { useQuery } from '@apollo/react-hooks';
-import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
-import ReactTable from 'react-table';
-import { MyTable } from "./Table";
-
+// import gql from 'graphql-tag';
+// import { Query, graphql } from 'react-apollo';
+// import { useQuery } from '@apollo/react-hooks';
+// import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
+// import ReactTable from 'react-table';
+// import { MyTable } from "./Table";
 
 interface Row {
   id: string;
@@ -20,33 +19,31 @@ interface TableState {
   datas: Row[];
 }
 
-const GET_STAFF = gql`
-query {
-  returnAllStaffs{
-    id
-    username
-    email
-    password
-  }
-}`;
+// const GET_STAFF = gql`
+// query {
+//   returnAllStaffs{
+//     id
+//     username
+//     email
+//     password
+//   }
+// }`;
 
-const ADD_STAFF = gql`
-mutation($username: String, $email: String, $password: password){
-  createStaff (username: $username, email: $email, password: $password) {
-    username
-    email
-    password
-  }
-}`;
+// const ADD_STAFF = gql`
+// mutation($username: String, $email: String, $password: password){
+//   createStaff (username: $username, email: $email, password: $password) {
+//     username
+//     email
+//     password
+//   }
+// }`;
 
-const DELETE_STAFF = gql`
-mutation($id: String){
-  deleteStaff (id: $id)
-}`;
-
+// const DELETE_STAFF = gql`
+// mutation($id: String){
+//   deleteStaff (id: $id)
+// }`;
 
 class Staff extends React.Component<{}, TableState> {
-
   constructor(props: TableState) {
     super(props);
     this.state = {
@@ -61,14 +58,12 @@ class Staff extends React.Component<{}, TableState> {
     }
   }
 
-
   componentDidMount() {
     this.fetchData();
   }
 
   fetchData() {
     //const { loading, error, data } = useQuery(GET_STAFF);
-
   }
 
   render() {

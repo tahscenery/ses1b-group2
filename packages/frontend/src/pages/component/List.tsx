@@ -3,13 +3,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import TableChartIcon from '@material-ui/icons/TableChart';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+// import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 
 export const mainListItems = (
   <div>
-    
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />
@@ -28,7 +27,6 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />

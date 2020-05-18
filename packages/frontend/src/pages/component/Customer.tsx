@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import React /*, { Fragment }*/ from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
 import { useQuery } from '@apollo/react-hooks';
-import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
-import ReactTable from 'react-table'
 import { MyTable } from './Table'
+// import { Query } from 'react-apollo';
+// import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
+// import ReactTable from 'react-table'
 
 interface Row {
   id: string;
@@ -47,7 +47,7 @@ export default function Customer() {
       ]
   });
 
-  const { loading, error, data } = useQuery(GET_DATA);
+  const { /* loading, error, */ data } = useQuery(GET_DATA);
 
   return (
     <div>
