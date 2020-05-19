@@ -9,7 +9,7 @@ import {
   Ctx,
 } from "type-graphql";
 import { User, UserModel } from "../entities/User";
-import { UserInput } from "./types/user-input";
+import { UserInput } from "./inputs";
 import { isAuth } from "./isAuth";
 import { MyContext } from "./MyContext";
 import { sign } from "jsonwebtoken";

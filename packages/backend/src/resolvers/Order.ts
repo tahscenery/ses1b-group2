@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Order, OrderModel } from "../entities/Order";
-import { OrderInput } from "./types/Order-input";
+import OrderInput from "./inputs/OrderInput";
 
 @Resolver((_of) => Order)
 export class OrderResolver {
@@ -16,10 +16,8 @@ export class OrderResolver {
 
   @Mutation(() => Order)
   async createOrder(@Arg("data") {number, user, items}: OrderInput): Promise<Order> {
-
     const existingOrder = OrderModel.findOne( {number: number});
-    if(existingOrder)
-    {
+    if (existingOrder) {
       throw new Error("Order exists already.");
     }
 

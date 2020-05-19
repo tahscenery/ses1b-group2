@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Admin, AdminModel } from "../entities/Admin";
-import { AdminInput } from "./types/Admin-input";
+import { AdminInput } from "./inputs";
 import bcrypt from "bcrypt";
 
 @Resolver((_of) => Admin )
@@ -17,18 +17,16 @@ export class AdminResolver {
 
   @Mutation(() => Admin)
   async createAdmin(@Arg("data") {email, password}: AdminInput): Promise<Admin> {
-
     const existingAdmin = AdminModel.findOne( {email: email});
-    if(existingAdmin) 
-    {
+    if (existingAdmin) {
       throw new Error("Admin exists already.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const admin = (
-      await AdminModel.create({ 
-        email, 
+      await AdminModel.create({
+        email,
         password: hashedPassword
       })
     ).save();

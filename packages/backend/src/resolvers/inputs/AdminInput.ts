@@ -3,12 +3,13 @@ import { IsEmail } from "class-validator";
 import { Admin } from "../../entities/Admin";
 
 @InputType()
-export class AdminInput implements Partial<Admin>{
-
+class AdminInput implements Partial<Admin>{
   @Field()
   @IsEmail()
-  email: String;
+  email: string;
 
   @Field()
-  password: String;
+  password: string;
 }
+
+export default AdminInput;

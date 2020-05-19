@@ -3,15 +3,17 @@ import { Length, IsEmail } from "class-validator";
 import { Staff } from "../../entities/Staff";
 
 @InputType()
-export class StaffInput implements Partial<Staff>{
+class StaffInput implements Partial<Staff>{
   @Field()
   @Length(1, 255)
-  username: String;
+  username: string;
 
   @Field()
   @IsEmail()
-  email: String;
+  email: string;
 
   @Field()
-  password: String;
+  password: string;
 }
+
+export default StaffInput;

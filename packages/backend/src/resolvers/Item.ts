@@ -1,6 +1,6 @@
 import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Item, ItemModel } from "../entities/Item";
-import { ItemInput } from "./types/item-input";
+import { ItemInput } from "./inputs";
 
 @Resolver()
 export class ItemResolver {

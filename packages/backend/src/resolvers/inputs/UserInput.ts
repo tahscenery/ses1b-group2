@@ -3,17 +3,18 @@ import { Length, IsEmail } from "class-validator";
 import { User } from "../../entities/User";
 
 @InputType()
-export class UserInput implements Partial<User> {
-
+class UserInput implements Partial<User> {
   @Field()
   @Length(1, 255)
-  name: String;
+  name: string;
 
   @Field()
   @IsEmail()
-  email: String;
+  email: string;
 
   @Field()
   @Length(1, 255)
-  password: String;
+  password: string;
 }
+
+export default UserInput;

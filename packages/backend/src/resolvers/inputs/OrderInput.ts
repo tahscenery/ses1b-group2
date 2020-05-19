@@ -4,14 +4,15 @@ import { User } from "../../entities/User";
 import { Product } from "../../entities/Product";
 
 @InputType()
-export class OrderInput implements Partial<Order>{
-  
+class OrderInput implements Partial<Order>{
   @Field()
   number: number;
-  
+
   @Field()
   user: User;
-  
-  @Field()
+
+  @Field(_type => Product)
   items: [Product];
 }
+
+export default OrderInput;
