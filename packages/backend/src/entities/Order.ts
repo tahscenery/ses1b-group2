@@ -6,7 +6,7 @@ import { Product } from "./Product";
 @ObjectType({ description: "The Order model" })
 export class Order {
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Field()
   @Property({ required: true })

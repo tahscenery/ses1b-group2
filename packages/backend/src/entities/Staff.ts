@@ -4,7 +4,7 @@ import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 @ObjectType({ description: "The Staff model" })
 export class Staff {
   @Field(() => ID)
-  id: number;
+  id: string;
 
   @Field()
   @Property({ required: true })
