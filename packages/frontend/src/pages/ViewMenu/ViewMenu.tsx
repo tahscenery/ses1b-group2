@@ -72,20 +72,20 @@ const ItemListRow = (props: ItemListRowProps) => {
 
 interface ItemListProps<T> {
   queryResult: QueryResult<T>;
-  filter: Category;
+  filters: Array<Category>;
 }
 
-const ItemList = ({ queryResult, filter } : ItemListProps<ItemsData>) => {
+const ItemList = ({ queryResult, filters } : ItemListProps<ItemsData>) => {
   const { loading, error, data } = queryResult;
 
   if (loading) { return <LoadingCard />; }
-  if (error) { return <p>An error occurred: {error.message}</p>; }
+  if (error) { return <p>(ERROR) {error.message}</p>; }
   if (!data) { return <p>(NO DATA)</p>; }
 
   return (
     <>
       {data.allItems
-        .filter(item => item.category === filter)
+        .filter(item => filters.includes(item.category))
         .map((item, index) => (
           <ItemListRow key={`ItemListRow#${index}`} item={item} />
         ))}
@@ -107,16 +107,15 @@ const ViewMenu = () => {
         <div className="view-menu">
           <div className="view-menu-collection">
             <Typography variant="h2">Entrée & Salads</Typography>
-            <ItemList queryResult={query} filter={Category.ENTREE} />
-            <ItemList queryResult={query} filter={Category.SALAD} />
+            <ItemList queryResult={query} filters={[Category.ENTREE, Category.DESSERT]} />
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Mains</Typography>
-            <ItemList queryResult={query} filter={Category.MAIN} />
+            <ItemList queryResult={query} filters={[Category.MAIN]} />
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Desserts & Drinks</Typography>
-            <ItemList queryResult={query} filter={Category.DESSERT} />
+            <ItemList queryResult={query} filters={[Category.DESSERT]} />
           </div>
         </div>
       </div>
