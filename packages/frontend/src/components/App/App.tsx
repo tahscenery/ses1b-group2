@@ -64,7 +64,7 @@ const history = createBrowserHistory();
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache: new InMemoryCache(),
-  link: new HttpLink({ uri: 'http://localhost:4000/api' }),
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
 });
 
 class App extends Component {
