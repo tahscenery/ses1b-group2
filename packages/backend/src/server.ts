@@ -1,44 +1,35 @@
-import { ApolloServer } from "apollo-server-express";
-import Express from "express";
 import "reflect-metadata";
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 
-import { UserResolver } from "./resolvers/User";
-import { StaffResolver } from "./resolvers/Staff";
-import { AdminResolver } from "./resolvers/Admin";
-import { ProductResolver } from "./resolvers/Product";
-import { ItemResolver } from "./resolvers/Item";
-import { TableResolver } from "./resolvers/Table";
-
+import * as resolvers from "./resolvers";
 import connectDB from "./connection";
 
 const main = async () => {
   const schema = await buildSchema({
     resolvers: [
-      ItemResolver,
-      ProductResolver,
-      UserResolver,
-      StaffResolver,
-      AdminResolver,
-      TableResolver,
+      resolvers.AdminResolver,
+      resolvers.ItemResolver,
+      resolvers.ProductResolver,
+      resolvers.StaffResolver,
+      resolvers.TableResolver,
+      resolvers.UserResolver,
     ],
     emitSchemaFile: true,
     validate: false,
   });
 
   // create mongoose connection
-  const mongoose = connectDB();
-  await mongoose;
+  await connectDB();
 
+  const app = express();
   const server = new ApolloServer({ schema });
-
-  const app = Express();
-
   server.applyMiddleware({ app });
 
   app.listen({ port: 4000 }, () =>
     console.log(
-      `🚀 Server ready and listening at ==> http://localhost:4000${server.graphqlPath}`
+      `🚀 Server ready and listening at => http://localhost:4000${server.graphqlPath}`
     )
   );
 };

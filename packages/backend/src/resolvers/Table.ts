@@ -3,7 +3,7 @@ import { Table, TableModel } from "../entities/Table";
 import { TableInput } from "./inputs";
 
 @Resolver((_of) => Table)
-export class TableResolver {
+class TableResolver {
   @Query((_returns) => Table, { nullable: false })
   async returnSingleTable(@Arg("id") id: string) {
     return await TableModel.findById({ _id: id});
@@ -40,3 +40,5 @@ export class TableResolver {
     return true;
   }
 }
+
+export default TableResolver;

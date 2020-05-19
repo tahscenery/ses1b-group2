@@ -3,7 +3,7 @@ import { Item, ItemModel } from "../entities/Item";
 import { ItemInput } from "./inputs";
 
 @Resolver()
-export class ItemResolver {
+class ItemResolver {
   @Query((_returns) => Item, { nullable: false })
   async item(@Arg("id") id: string) {
     return await ItemModel.findById({ _id: id });
@@ -36,3 +36,5 @@ export class ItemResolver {
     return true;
   }
 }
+
+export default ItemResolver;
