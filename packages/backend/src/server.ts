@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import cors from "cors";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
@@ -24,12 +25,15 @@ const main = async () => {
   await connectDB();
 
   const app = express();
+  app.use(cors());
+
   const server = new ApolloServer({ schema });
   server.applyMiddleware({ app });
 
-  app.listen({ port: 4000 }, () =>
+  const port = 4000;
+  app.listen({ port }, () =>
     console.log(
-      `🚀 Server ready and listening at => http://localhost:4000${server.graphqlPath}`
+      `🚀 Server ready and listening at => http://localhost:${port}${server.graphqlPath}`
     )
   );
 };

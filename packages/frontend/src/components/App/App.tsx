@@ -62,14 +62,9 @@ const theme = createMuiTheme({
 
 const history = createBrowserHistory();
 
-const cache = new InMemoryCache();
-const link = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
-});
-
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  cache,
-  link
+  cache: new InMemoryCache(),
+  link: new HttpLink({ uri: 'http://localhost:4000/api' }),
 });
 
 class App extends Component {
