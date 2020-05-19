@@ -7,8 +7,8 @@ import { Typography } from '@material-ui/core';
 import './Styles.css'
 
 interface LocationConstructor {
-  location: String;
-  setLocation: String;
+  location: string;
+  setLocation: string;
 }
 
 class Location extends React.Component<{}, LocationConstructor> {
