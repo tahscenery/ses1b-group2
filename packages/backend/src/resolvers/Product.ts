@@ -5,12 +5,12 @@ import { ProductInput } from "./inputs";
 @Resolver((_of) => Product)
 class ProductResolver {
   @Query((_returns) => Product, { nullable: false })
-  async returnSingleProduct(@Arg("id") id: string) {
+  async product(@Arg("id") id: string) {
     return await ProductModel.findById({ _id: id });
   }
 
   @Query(() => [Product])
-  async returnAllProduct() {
+  async allProducts() {
     return await ProductModel.find();
   }
 

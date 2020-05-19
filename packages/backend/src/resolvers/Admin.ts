@@ -6,12 +6,12 @@ import bcrypt from "bcrypt";
 @Resolver((_of) => Admin )
 class AdminResolver {
   @Query((_returns) => Admin, { nullable: false })
-  async returnSingleAdmin(@Arg("id") id: string) {
+  async admin(@Arg("id") id: string) {
     return await AdminModel.findById({ _id: id});
   }
 
   @Query(() => [Admin])
-  async returnAllAdmins() {
+  async allAdmins() {
     return await AdminModel.find();
   }
 

@@ -80,18 +80,18 @@ input ProductInput {
 }
 
 type Query {
-  returnSingleAdmin(id: String!): Admin!
-  returnAllAdmins: [Admin!]!
+  admin(id: String!): Admin!
+  allAdmins: [Admin!]!
   item(id: String!): Item!
   allItems: [Item!]!
-  returnSingleProduct(id: String!): Product!
-  returnAllProduct: [Product!]!
-  returnSingleStaff(username: String!): Staff!
-  returnAllStaffs: [Staff!]!
-  returnSingleTable(id: String!): Table!
-  returnAllTables: [Table!]!
-  returnSingleUser(id: String!): User!
-  returnAllUsers: [User!]!
+  product(id: String!): Product!
+  allProducts: [Product!]!
+  staff(username: String!): Staff!
+  allStaff: [Staff!]!
+  table(id: String!): Table!
+  allTables: [Table!]!
+  user(id: String!): User!
+  allUsers: [User!]!
   Me: String!
 }
 

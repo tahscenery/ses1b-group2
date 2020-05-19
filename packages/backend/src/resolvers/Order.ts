@@ -5,12 +5,12 @@ import OrderInput from "./inputs/OrderInput";
 @Resolver((_of) => Order)
 export class OrderResolver {
   @Query((_returns) => Order, { nullable: false })
-  async returnSingleOrder(@Arg("id") id: string) {
+  async order(@Arg("id") id: string) {
     return await OrderModel.findById({ _id: id});
   }
 
   @Query(() => [Order])
-  async returnAllOrders() {
+  async allOrders() {
     return await OrderModel.find();
   }
 

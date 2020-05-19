@@ -21,15 +21,15 @@ class LoginResponse {
   accessToken: string;
 }
 
-@Resolver((_of) => User)
+@Resolver(_of => User)
 class UserResolver {
-  @Query((_returns) => User, { nullable: false })
-  async returnSingleUser(@Arg("id") id: string) {
+  @Query(() => User, { nullable: false })
+  async user(@Arg("id") id: string) {
     return await UserModel.findById({ _id: id });
   }
 
   @Query(() => [User])
-  async returnAllUsers() {
+  async allUsers() {
     return await UserModel.find();
   }
 

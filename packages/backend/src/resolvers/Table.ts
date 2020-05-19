@@ -2,15 +2,15 @@ import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Table, TableModel } from "../entities/Table";
 import { TableInput } from "./inputs";
 
-@Resolver((_of) => Table)
+@Resolver(_of => Table)
 class TableResolver {
-  @Query((_returns) => Table, { nullable: false })
-  async returnSingleTable(@Arg("id") id: string) {
+  @Query(() => Table, { nullable: false })
+  async table(@Arg("id") id: string) {
     return await TableModel.findById({ _id: id});
   }
 
   @Query(() => [Table])
-  async returnAllTables() {
+  async allTables() {
     return await TableModel.find();
   }
 

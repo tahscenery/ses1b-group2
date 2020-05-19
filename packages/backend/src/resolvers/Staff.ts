@@ -6,12 +6,12 @@ import bcrypt from "bcrypt";
 @Resolver((_of) => Staff )
 class StaffResolver {
   @Query((_returns) => Staff, { nullable: false })
-  async returnSingleStaff(@Arg("username") username : string) {
+  async staff(@Arg("username") username : string) {
     return await StaffModel.findOne({ username: username});
   }
 
   @Query(() => [Staff])
-  async returnAllStaffs() {
+  async allStaff() {
     return await StaffModel.find();
   }
 
