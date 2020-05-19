@@ -35,6 +35,23 @@ const GET_ITEMS = gql`
   }
 `;
 
+const LoadingCard = () => {
+  return (
+    <>
+      {[1, 2, 3, 4].map(i => (
+        <div key={`view-menu-item#${i}`} className="view-menu-item">
+          <div
+            key={`view-menu-loading-element-heading#${i}`}
+            className="view-menu-loading-element-heading gradient"></div>
+          <div
+            key={`view-menu-loading-element-body#${i}`}
+            className="view-menu-loading-element-body gradient"></div>
+        </div>
+      ))}
+    </>
+  );
+}
+
 interface ItemListRowProps {
   item: Item;
 }
@@ -60,7 +77,7 @@ interface ItemListProps<T> {
 const ItemList = ({ queryResult, filter } : ItemListProps<ItemsData>) => {
   const { loading, error, data } = queryResult;
 
-  if (loading) { return <p>Loading...</p>; }
+  if (loading) { return <LoadingCard />; }
   if (error) { return <p>An error occurred: {error.message}</p>; }
   if (!data) { return <p>(NO DATA)</p>; }
 
