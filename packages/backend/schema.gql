@@ -17,6 +17,7 @@ input AdminInput {
 
 """The Item model"""
 type Item {
+  id: ID!
   name: String!
   price: Float!
   description: String!

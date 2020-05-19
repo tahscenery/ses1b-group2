@@ -4,7 +4,7 @@ import { ItemInput } from "./inputs";
 
 @Resolver()
 class ItemResolver {
-  @Query((_returns) => Item, { nullable: false })
+  @Query(() => Item, { nullable: false })
   async item(@Arg("id") id: string) {
     return await ItemModel.findById({ _id: id });
   }
