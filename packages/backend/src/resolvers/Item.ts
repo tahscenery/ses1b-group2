@@ -5,12 +5,12 @@ import { ItemInput } from "./types/item-input";
 @Resolver()
 export class ItemResolver {
   @Query((_returns) => Item, { nullable: false })
-  async returnSingleItem(@Arg("id") id: string) {
+  async item(@Arg("id") id: string) {
     return await ItemModel.findById({ _id: id });
   }
 
   @Query(() => [Item])
-  async returnAllItem() {
+  async allItems() {
     return await ItemModel.find();
   }
 

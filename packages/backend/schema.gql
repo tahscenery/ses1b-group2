@@ -89,8 +89,8 @@ type Query {
   returnAllAdmins: [Admin!]!
   returnSingleProduct(id: String!): Product!
   returnAllProduct: [Product!]!
-  returnSingleItem(id: String!): Item!
-  returnAllItem: [Item!]!
+  item(id: String!): Item!
+  allItems: [Item!]!
   returnSingleTable(id: String!): Table!
   returnAllTables: [Table!]!
 }
