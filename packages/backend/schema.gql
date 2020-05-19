@@ -26,10 +26,11 @@ type Item {
 }
 
 """
-An enumeration representing the category of a menu item. Possible values: ENTREE, MAIN, DESSERT.
+An enumeration representing the category of a menu item. Possible values: ENTREE, SALAD, MAIN, DESSERT.
 """
 enum ItemCategory {
   ENTREE
+  SALAD
   MAIN
   DESSERT
 }

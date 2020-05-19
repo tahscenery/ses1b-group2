@@ -9,6 +9,7 @@ import NavBar from 'components/NavBar';
 
 enum Category {
   ENTREE = "ENTREE",
+  SALAD = "SALAD",
   MAIN = "MAIN",
   DESSERT = "DESSERT",
 }
@@ -107,6 +108,7 @@ const ViewMenu = () => {
           <div className="view-menu-collection">
             <Typography variant="h2">Entrée & Salads</Typography>
             <ItemList queryResult={query} filter={Category.ENTREE} />
+            <ItemList queryResult={query} filter={Category.SALAD} />
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Mains</Typography>

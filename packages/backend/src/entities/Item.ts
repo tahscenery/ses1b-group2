@@ -4,13 +4,14 @@ import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 
 export enum ItemCategory {
   ENTREE,
+  SALAD,
   MAIN,
   DESSERT
 }
 
 registerEnumType(ItemCategory, {
   name: "ItemCategory",
-  description: "An enumeration representing the category of a menu item. Possible values: ENTREE, MAIN, DESSERT."
+  description: "An enumeration representing the category of a menu item. Possible values: ENTREE, SALAD, MAIN, DESSERT."
 });
 
 @ObjectType({ description: "The Item model" })
