@@ -10,7 +10,7 @@ import { ProductResolver } from "./resolvers/Product";
 import { ItemResolver } from "./resolvers/Item";
 import { TableResolver } from "./resolvers/Table";
 
-const connectDB = require("./connection");
+import connectDB from "./connection";
 
 const main = async () => {
   const schema = await buildSchema({
