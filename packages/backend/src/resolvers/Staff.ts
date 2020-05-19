@@ -4,7 +4,7 @@ import { StaffInput } from "./inputs";
 import bcrypt from "bcrypt";
 
 @Resolver((_of) => Staff )
-export class StaffResolver {
+class StaffResolver {
   @Query((_returns) => Staff, { nullable: false })
   async returnSingleStaff(@Arg("username") username : string) {
     return await StaffModel.findOne({ username: username});
@@ -42,3 +42,5 @@ export class StaffResolver {
     return true;
   }
 }
+
+export default StaffResolver;

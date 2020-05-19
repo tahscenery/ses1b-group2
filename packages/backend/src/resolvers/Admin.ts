@@ -4,7 +4,7 @@ import { AdminInput } from "./inputs";
 import bcrypt from "bcrypt";
 
 @Resolver((_of) => Admin )
-export class AdminResolver {
+class AdminResolver {
   @Query((_returns) => Admin, { nullable: false })
   async returnSingleAdmin(@Arg("id") id: string) {
     return await AdminModel.findById({ _id: id});
@@ -39,3 +39,5 @@ export class AdminResolver {
     return true;
   }
 }
+
+export default AdminResolver;

@@ -22,7 +22,7 @@ class LoginResponse {
 }
 
 @Resolver((_of) => User)
-export class UserResolver {
+class UserResolver {
   @Query((_returns) => User, { nullable: false })
   async returnSingleUser(@Arg("id") id: string) {
     return await UserModel.findById({ _id: id });
@@ -85,3 +85,5 @@ export class UserResolver {
     return true;
   }
 }
+
+export default UserResolver;
