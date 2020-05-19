@@ -20,7 +20,7 @@ export class Table {
 
   @Field()
   @Property({ required: true })
-  description: String;
+  description: string;
 }
 
 export const TableModel = getModelForClass(Table);

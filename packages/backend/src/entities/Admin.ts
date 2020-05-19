@@ -8,11 +8,11 @@ export class Admin {
 
   @Field()
   @Property({ required: true })
-  email: String;
+  email: string;
 
   @Field()
   @Property({ required: true })
-  password: String;
+  password: string;
 }
 
 export const AdminModel = getModelForClass(Admin);

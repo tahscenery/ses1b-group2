@@ -8,19 +8,19 @@ export class Staff {
 
   @Field()
   @Property({ required: true })
-  key: String;
+  key: string;
 
   @Field()
   @Property({ required: true })
-  username: String;
+  username: string;
 
   @Field()
   @Property({ required: true })
-  email: String;
+  email: string;
 
   @Field()
   @Property({ required: true })
-  password: String;
+  password: string;
 
   constructor(username: string, email: string, password: string) {
     this.username = username;
