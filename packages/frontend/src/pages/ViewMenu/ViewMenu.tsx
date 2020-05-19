@@ -7,7 +7,11 @@ import gql from 'graphql-tag';
 import './ViewMenu.css';
 import NavBar from 'components/NavBar';
 
-type Category = "ENTREE" | "MAIN" | "DESSERT";
+enum Category {
+  ENTREE = "ENTREE",
+  MAIN = "MAIN",
+  DESSERT = "DESSERT",
+}
 
 interface Item {
   name: string;
@@ -21,7 +25,7 @@ interface ItemsData {
 }
 
 const GET_ITEMS = gql`
-  query getItem {
+  query getItems {
     allItems {
       name
       description
@@ -30,11 +34,6 @@ const GET_ITEMS = gql`
     }
   }
 `;
-
-interface ListProps<T> {
-  queryResult: QueryResult<T>;
-  filter: Category;
-}
 
 interface ItemListRowProps {
   item: Item;
@@ -53,43 +52,27 @@ const ItemListRow = (props: ItemListRowProps) => {
   );
 }
 
-const ItemList = ({ queryResult: { loading, error, data }, filter } : ListProps<ItemsData>) => {
-  const status = (fitler: Category) => {
-    if (loading) {
-      return (
-        <p>Loading...</p>
-      );
-    } else {
-      if (error) {
-        return (
-          <p>An error occurred: {error.message}</p>
-        );
-      } else if (!data) {
-        return (
-          <p>(NO DATA)</p>
-        );
-      } else {
-        return (
-          <div>
-            {
-              data.allItems
-                .filter(item => {
-                  console.log(`${item.category}`);
-                  return item.category === filter;
-                })
-                .map((item, index) => <ItemListRow key={index} item={item} />)
-            }
-          </div>
-        );
-      }
-    }
-  }
+interface ItemListProps<T> {
+  queryResult: QueryResult<T>;
+  filter: Category;
+}
+
+const ItemList = ({ queryResult, filter } : ItemListProps<ItemsData>) => {
+  const { loading, error, data } = queryResult;
+
+  if (loading) { return <p>Loading...</p>; }
+  if (error) { return <p>An error occurred: {error.message}</p>; }
+  if (!data) { return <p>(NO DATA)</p>; }
 
   return (
-    <div>
-      {status(filter)}
-    </div>
-  )
+    <>
+      {data.allItems
+        .filter(item => item.category === filter)
+        .map((item, index) => (
+          <ItemListRow key={`ItemListRow#${index}`} item={item} />
+        ))}
+    </>
+  );
 }
 
 const ViewMenu = () => {
@@ -106,15 +89,15 @@ const ViewMenu = () => {
         <div className="view-menu">
           <div className="view-menu-collection">
             <Typography variant="h2">Entrée & Salads</Typography>
-            <ItemList queryResult={query} filter={"ENTREE"} />
+            <ItemList queryResult={query} filter={Category.ENTREE} />
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Mains</Typography>
-            <ItemList queryResult={query} filter={"MAIN"} />
+            <ItemList queryResult={query} filter={Category.MAIN} />
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Desserts & Drinks</Typography>
-            <ItemList queryResult={query} filter={"DESSERT"} />
+            <ItemList queryResult={query} filter={Category.DESSERT} />
           </div>
         </div>
       </div>
