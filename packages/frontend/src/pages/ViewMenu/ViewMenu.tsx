@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@material-ui/core';
 
 import './ViewMenu.css';
@@ -22,41 +22,38 @@ const Item = (props: ItemProps) => {
   );
 }
 
-class ViewMenu extends Component {
-  componentDidMount() {
+const ViewMenu = () => {
+  useEffect(() => {
     document.title = 'Menu – Sapori Unici';
-    console.log(menu.filter(item => item.type === 'entree').map(item => item.name));
-  }
+  });
 
-  render() {
-    return (
-      <div>
-        <NavBar/>
-        <div className="view-menu-container">
-          <div className="view-menu">
-            <div className="view-menu-collection">
-              <Typography variant="h2">Entrée & Salads</Typography>
-              {menu
-                .filter(item => item.type === 'entree')
-                .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
-            </div>
-            <div className="view-menu-collection">
-              <Typography variant="h2">Mains</Typography>
-              {menu
-                .filter(item => item.type === 'main')
-                .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
-            </div>
-            <div className="view-menu-collection">
-              <Typography variant="h2">Desserts & Drinks</Typography>
-              {menu
-                .filter(item => item.type === 'dessert')
-                .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
-            </div>
+  return (
+    <div>
+      <NavBar/>
+      <div className="view-menu-container">
+        <div className="view-menu">
+          <div className="view-menu-collection">
+            <Typography variant="h2">Entrée & Salads</Typography>
+            {menu
+              .filter(item => item.type === 'entree')
+              .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
+          </div>
+          <div className="view-menu-collection">
+            <Typography variant="h2">Mains</Typography>
+            {menu
+              .filter(item => item.type === 'main')
+              .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
+          </div>
+          <div className="view-menu-collection">
+            <Typography variant="h2">Desserts & Drinks</Typography>
+            {menu
+              .filter(item => item.type === 'dessert')
+              .map((item, index) => <Item key={`Item#${index}`} item={item}/>)}
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default ViewMenu;
