@@ -6,17 +6,17 @@ export class User {
   @Field(() => ID)
   id: number;
 
-    @Field()
-    @Property({ required: true })
-    name: string;
+  @Field()
+  @Property({ required: true })
+  name: string;
 
-    @Field()
-    @Property({ required: true })
-    email: string;
+  @Field()
+  @Property({ required: true })
+  email: string;
 
-    @Field()
-    @Property({ required: true })
-    password: string;
+  @Field()
+  @Property({ required: true })
+  password: string;
 }
 
 export const UserModel = getModelForClass(User);

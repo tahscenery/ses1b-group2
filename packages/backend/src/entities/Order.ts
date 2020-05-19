@@ -12,7 +12,7 @@ export class Order {
   @Property({ required: true })
   user : User;
 
-  @Field()
+  @Field(_type => Product)
   @Property({ required: true })
   items: [Product];
 }
