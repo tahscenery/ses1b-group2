@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 
 import './ViewMenu.css';
 import NavBar from 'components/NavBar';
+import LoadingCard from './LoadingCard';
 
 enum Category {
   ENTREE = "ENTREE",
@@ -35,23 +36,6 @@ const GET_ITEMS = gql`
     }
   }
 `;
-
-const LoadingCard = () => {
-  return (
-    <>
-      {[1, 2, 3, 4].map(i => (
-        <div key={`view-menu-item#${i}`} className="view-menu-item">
-          <div
-            key={`view-menu-loading-element-heading#${i}`}
-            className="view-menu-loading-element-heading gradient"></div>
-          <div
-            key={`view-menu-loading-element-body#${i}`}
-            className="view-menu-loading-element-body gradient"></div>
-        </div>
-      ))}
-    </>
-  );
-}
 
 interface ItemListRowProps {
   item: Item;
@@ -107,7 +91,7 @@ const ViewMenu = () => {
         <div className="view-menu">
           <div className="view-menu-collection">
             <Typography variant="h2">Entrée & Salads</Typography>
-            <ItemList queryResult={query} filters={[Category.ENTREE, Category.DESSERT]} />
+            <ItemList queryResult={query} filters={[Category.ENTREE, Category.SALAD]} />
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Mains</Typography>
