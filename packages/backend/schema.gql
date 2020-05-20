@@ -60,6 +60,7 @@ type Mutation {
   deleteTable(id: String!): Boolean!
   Login(password: String!, email: String!): LoginResponse!
   createUser(data: UserInput!): User!
+  Register(password: String!, email: String!, name: String!): Boolean!
   deleteUser(id: String!): Boolean!
 }
 

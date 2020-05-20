@@ -80,8 +80,35 @@ class UserResolver {
   }
 
   @Mutation(() => Boolean)
+  async Register(
+    @Arg("name") name: string,
+    @Arg("email") email: string,
+    @Arg("password") password: string
+  ) {
+    const existingUser = await UserModel.findOne({ email: email });
+    if (existingUser) {
+      throw new Error("User exists already.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 13);
+    // let user = null;
+    try {
+      await UserModel.create({
+        name,
+        email,
+        password: hashedPassword
+      });
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+
+    return true;
+  }
+
+  @Mutation(() => Boolean)
   async deleteUser(@Arg("id") id: string) {
-    await UserModel.deleteOne({ id });
+    await UserModel.deleteOne({ _id: id });
     return true;
   }
 }
