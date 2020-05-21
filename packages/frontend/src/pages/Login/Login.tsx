@@ -39,11 +39,11 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
   }
 
   state = {
-    email: "",
-    password: ""
+    email: "bryancolin35@ymail.com",
+    password: "bryan"
   };
 
-  handleChange = (e: any) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     this.setState({
       [name]: value
@@ -64,32 +64,48 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                 {mutate => (
                   <div
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
+                    }}>
                     <div>
-                      <input
-                        type="text"
-                        name="email"
-                        placeholder="email"
+                      <TextField
+                        variant="outlined"
+                        id="email"
+                        label="Email"
+                        autoComplete="email"
+                        margin="normal"
+                        fullWidth
+                        required
+                        autoFocus
                         value={email}
                         onChange={this.handleChange}
                       />
                     </div>
                     <div>
-                      <input
+                      <TextField
+                        variant="outlined"
+                        id="password"
+                        label="Password"
                         type="password"
-                        name="password"
-                        placeholder="password"
-                        value={password}
+                        autoComplete="current-password"
+                        margin="normal"
+                        fullWidth
+                        required
+                        value={this.state.password}
                         onChange={this.handleChange}
                       />
                     </div>
                     <div>
-                      <button
+                      <FormControlLabel
+                        label="Remember me"
+                        control={<Checkbox value="remember" color="primary" />}
+                      />
+                      <Button
+                        className="login-button"
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        size="large"
+                        fullWidth
                         onClick={async () => {
                           const response = await mutate({
                             variables: this.state
@@ -98,12 +114,28 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                           this.props.history.push("/booking");
                         }}
                       >
-                        login
-                      </button>
+                        Sign In
+                    </Button>
                     </div>
                   </div>
                 )}
               </Mutation>
+              <div className="login-footer">
+                <Link
+                  href="#"
+                  variant="body2"
+                  color="secondary"
+                >
+                  Forgot Password?
+              </Link>
+                <Link
+                  href="/register"
+                  variant="body2"
+                  color="secondary"
+                >
+                  Don't have an account? Sign Up
+              </Link>
+              </div>
 
             </div>
           </div>
