@@ -1,9 +1,13 @@
 import React from 'react';
 
-const LoadingCard = () => {
+interface LoadingCardProps {
+  numberOfItems: number;
+}
+
+const LoadingCard = ({ numberOfItems }: LoadingCardProps) => {
   return (
     <>
-      {[1, 2, 3, 4].map(i => (
+      {[...Array(numberOfItems).keys()].map(i => (
         <div key={`view-menu-item#${i}`} className="view-menu-item">
           <div
             key={`view-menu-loading-element-heading#${i}`}
