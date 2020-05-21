@@ -48,7 +48,7 @@ class UserResolver {
 
     const verify = await bcrypt.compare(password, user.password as string);
     if (!verify) {
-      throw new Error("Bad password");
+      throw new Error("Invalid Password");
     }
 
     return {
