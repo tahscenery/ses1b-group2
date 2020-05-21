@@ -13,6 +13,7 @@ import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import { RouteComponentProps } from "react-router-dom";
 
+
 const registerMutation = gql`
   mutation RegisterMutation($name: String!, $email: String!, $password: String!) {
     Register(name: $name, email: $email, password: $password)
@@ -45,6 +46,8 @@ class SignUp extends React.PureComponent<RouteComponentProps<{}>> {
   render() {
     const { password, email, name } = this.state;
     return (
+      <div>
+      <NavBar/>
       <Mutation<RegisterMutation, RegisterMutationVariables>
         mutation={registerMutation}
       >
@@ -100,6 +103,7 @@ class SignUp extends React.PureComponent<RouteComponentProps<{}>> {
         </div>
         )}
       </Mutation>
+      </div>
     );
   }
 }
