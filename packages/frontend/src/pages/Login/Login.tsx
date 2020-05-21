@@ -57,6 +57,7 @@ class Login extends Component {
                 variant="contained"
                 size="large"
                 fullWidth
+                onClick={() => console.log('I do nothing yet...')}
               >
                 Sign In
               </Button>
