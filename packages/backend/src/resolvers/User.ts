@@ -91,15 +91,15 @@ class UserResolver {
     }
 
     const hashedPassword = await bcrypt.hash(password, 13);
-    // let user = null;
+
     try {
       await UserModel.create({
         name,
         email,
         password: hashedPassword
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       return false;
     }
 
