@@ -47,62 +47,70 @@ class SignUp extends React.PureComponent<RouteComponentProps<{}>> {
     const { password, email, name } = this.state;
     return (
       <div>
-      <NavBar/>
-      <Mutation<RegisterMutation, RegisterMutationVariables>
-        mutation={registerMutation}
-      >
-        {mutate => (
-          <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="name"
-              value={name}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              name="email"
-              placeholder="email"
-              value={email}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              value={password}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <button
-              onClick={async () => {
-                const response = await mutate({
-                  variables: this.state
-                });
-                console.log(response);
-                this.props.history.push("/login");
-              }}
-            >
-              register
+        <NavBar />
+        <div className="component-container">
+          <div className="back">
+            <div className="login-form">
+              <Typography variant="h2">Sign Up</Typography>
+              <p>Sign up with your email and password below.</p>
+              <Mutation<RegisterMutation, RegisterMutationVariables>
+                mutation={registerMutation}
+              >
+                {mutate => (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="name"
+                        value={name}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div>
+                      <button
+                        onClick={async () => {
+                          const response = await mutate({
+                            variables: this.state
+                          });
+                          console.log(response);
+                          this.props.history.push("/login");
+                        }}
+                      >
+                        register
             </button>
+                    </div>
+                  </div>
+                )}
+              </Mutation>
+            </div>
           </div>
         </div>
-        )}
-      </Mutation>
       </div>
     );
   }
