@@ -25,6 +25,7 @@ interface RegisterMutation {
 }
 
 interface RegisterMutationVariables {
+  name: string;
   email: string;
   password: string;
 }
@@ -66,7 +67,7 @@ class SignUp extends React.PureComponent<RouteComponentProps<{}>> {
                     }}
                   >
                     <div>
-                      <input
+                    <input
                         type="text"
                         name="name"
                         placeholder="name"

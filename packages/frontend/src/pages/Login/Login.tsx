@@ -11,73 +11,101 @@ import {
 import './Login.css';
 import NavBar from 'components/NavBar';
 
-class Login extends Component {
+import { Mutation } from "react-apollo";
+import { gql } from "apollo-boost";
+import { RouteComponentProps } from "react-router-dom";
+
+const loginMutation = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    Login(email: $email, password: $password) {
+      accessToken
+    }
+  }
+`;
+
+export interface LoginMutation {
+  accessToken: string;
+}
+
+export interface LoginMutationVariables {
+  email: string;
+  password: string;
+}
+
+class Login extends React.PureComponent<RouteComponentProps<{}>> {
+
   componentDidMount() {
     document.title = 'Login – Sapori Unici';
   }
 
+  state = {
+    email: "",
+    password: ""
+  };
+
+  handleChange = (e: any) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
   render() {
+    const { password, email } = this.state;
     return (
       <div>
-        <NavBar/>
+        <NavBar />
         <div className="component-container">
           <div className="back">
-          <div className="login-form">
-            <Typography variant="h2">Login</Typography>
-            <p>Sign in with your email and password below.</p>
-            <form noValidate>
-              <TextField
-                variant="outlined"
-                id="email"
-                label="Email"
-                autoComplete="email"
-                margin="normal"
-                fullWidth
-                required
-                autoFocus
-              />
-              <TextField
-                variant="outlined"
-                id="password"
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-                margin="normal"
-                fullWidth
-                required
-              />
-              <FormControlLabel
-                label="Remember me"
-                control={<Checkbox value="remember" color="primary"/>}
-              />
-              <Button
-                className="login-button"
-                type="submit"
-                color="primary"
-                variant="contained"
-                size="large"
-                fullWidth
-              >
-                Sign In
-              </Button>
-            </form>
-            <div className="login-footer">
-              <Link
-                href="#"
-                variant="body2"
-                color="secondary"
-              >
-                Forgot Password?
-              </Link>
-              <Link
-                href="/register"
-                variant="body2"
-                color="secondary"
-              >
-                Don't have an account? Sign Up
-              </Link>
+            <div className="login-form">
+              <Typography variant="h2">Login</Typography>
+              <p>Sign in with your email and password below.</p>
+              <Mutation<LoginMutation, LoginMutationVariables> mutation={loginMutation}>
+                {mutate => (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <div>
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="password"
+                        value={password}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+                    <div>
+                      <button
+                        onClick={async () => {
+                          const response = await mutate({
+                            variables: this.state
+                          });
+                          console.log(response);
+                          this.props.history.push("/booking");
+                        }}
+                      >
+                        login
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </Mutation>
+
             </div>
-          </div>
           </div>
         </div>
       </div>
