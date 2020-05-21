@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Link, TextField, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
@@ -22,37 +23,21 @@ const REGISTER_USER = gql`
   }
 `;
 
-interface LoginResponse {
-  Login: { accessToken: string; };
-}
-
-interface LoginParams {
-  email: string;
-  password: string;
-}
-
-const LOGIN_USER = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    Login(email: $email, password: $password) {
-      accessToken
-    }
-  }
-`;
-
 const SignUp = () => {
+  useEffect(() => {
+    document.title = 'Sign Up – Sapori Unici';
+  }, []);
+
+  const history = useHistory();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [registerUser, { error: registerError, data: registerData }] =
+  const [registerUser, { error, data }] =
     useMutation<RegisterResponse, RegisterParams>(REGISTER_USER, {
       variables: { name, email, password }
-    });
-
-  const [loginUser, {}] =
-    useMutation<LoginResponse, LoginParams>(LOGIN_USER, {
-      variables: { email, password }
     });
 
   const handleRegisterUser = () => {
@@ -79,25 +64,21 @@ const SignUp = () => {
 
     console.log('Registering user...');
     registerUser()
-      .then(() => {
-        console.log('Logging user in...');
-        loginUser()
-          .then(result => {
-            if (result.data) {
-              fetch('http://localhost:4000/graphql', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(result.data),
-                redirect: 'follow',
-              })
-              .then(res => res.json())
-              .then(data => console.log(data))
-              .catch(error => `A fetch error occurred: ${error}`);
-            }
-          })
-          .catch(error => console.log(error));
+      .then(res => {
+        console.log(`DATA: ${JSON.stringify(res.data)}`);
+        console.log('Redirecting...');
+        history.push('/login');
       })
-      .catch(error => console.log(error));
+      .catch(error => console.error(error));
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      handleRegisterUser();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -107,20 +88,9 @@ const SignUp = () => {
         <div className="sign-up-form">
           <Typography variant="h2">Sign Up</Typography>
           <p>Don't have an account? Fill in the details below to get started.</p>
-          {registerError ? <p>(ERRROR): {registerError.message}</p> : null}
-          {registerData && registerData.Register ? <p>Success!</p> : null}
-          <form
-            noValidate
-            method="POST"
-            id="sign-up-form"
-            onSubmit={e => {
-              e.preventDefault();
-              try {
-                handleRegisterUser();
-              } catch (error) {
-                console.log(error);
-              }
-            }}>
+          {error ? <p>(ERRROR): {error.message}</p> : null}
+          {data && data.Register ? <p>Success!</p> : null}
+          <form noValidate onSubmit={e => handleSubmit(e)}>
             <TextField
               variant="outlined"
               id="name"
