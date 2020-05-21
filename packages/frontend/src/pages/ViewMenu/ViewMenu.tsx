@@ -62,7 +62,7 @@ interface ItemListProps<T> {
 const ItemList = ({ queryResult, filters } : ItemListProps<ItemsData>) => {
   const { loading, error, data } = queryResult;
 
-  if (loading) { return <LoadingCard />; }
+  if (loading) { return <LoadingCard numberOfItems={4} />; }
   if (error) { return <p>(ERROR) {error.message}</p>; }
   if (!data) { return <p>(NO DATA)</p>; }
 
