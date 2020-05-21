@@ -95,6 +95,7 @@ type Query {
   allTables: [Table!]!
   user(id: String!): User!
   allUsers: [User!]!
+  me: User!
   Me: String!
 }
 

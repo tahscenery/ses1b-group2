@@ -33,6 +33,21 @@ class UserResolver {
     return await UserModel.find();
   }
 
+  @Query(() => User)
+  @UseMiddleware(isAuth)
+  async me(@Ctx() { payload }: MyContext): Promise<User> {
+    if (payload) {
+      const user = await UserModel.findOne({ _id: payload.userId });
+      if (!user) {
+        throw new Error("No existing user");
+      }
+
+      return user;
+    }
+
+    throw new Error("No payload data");
+  }
+
   @Query(() => String)
   @UseMiddleware(isAuth)
   async Me(@Ctx() { payload }: MyContext) {
