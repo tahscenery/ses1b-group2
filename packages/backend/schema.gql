@@ -97,6 +97,7 @@ type Query {
   user(id: String!): User!
   getEmail(email: String!): User!
   allUsers: [User!]!
+  me: User!
   Me: String!
 }
 

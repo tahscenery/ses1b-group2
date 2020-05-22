@@ -1,7 +1,7 @@
 import { InputType, Field } from "type-graphql";
 import { Order } from "../../entities/Order";
 import { User } from "../../entities/User";
-import { Product } from "../../entities/Product";
+import { Item } from "../../entities/Item";
 
 @InputType()
 class OrderInput implements Partial<Order>{
@@ -11,8 +11,8 @@ class OrderInput implements Partial<Order>{
   @Field()
   user: User;
 
-  @Field(_type => Product)
-  items: [Product];
+  @Field(_type => Item)
+  items: [Item];
 }
 
 export default OrderInput;

@@ -41,6 +41,21 @@ class UserResolver {
     return await UserModel.find();
   }
 
+  @Query(() => User)
+  @UseMiddleware(isAuth)
+  async me(@Ctx() { payload }: MyContext): Promise<User> {
+    if (payload) {
+      const user = await UserModel.findOne({ _id: payload.userId });
+      if (!user) {
+        throw new Error("No existing user");
+      }
+
+      return user;
+    }
+
+    throw new Error("No payload data");
+  }
+
   @Query(() => String)
   @UseMiddleware(isAuth)
   async Me(@Ctx() { payload }: MyContext) {
@@ -100,15 +115,15 @@ class UserResolver {
     }
 
     const hashedPassword = await bcrypt.hash(password, 13);
-    // let user = null;
+
     try {
       await UserModel.create({
         name,
         email,
         password: hashedPassword
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
       return false;
     }
 
