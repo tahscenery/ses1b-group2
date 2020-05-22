@@ -11,7 +11,6 @@ const main = async () => {
     resolvers: [
       resolvers.AdminResolver,
       resolvers.ItemResolver,
-      resolvers.ProductResolver,
       resolvers.StaffResolver,
       resolvers.TableResolver,
       resolvers.UserResolver,

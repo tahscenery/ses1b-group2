@@ -53,8 +53,6 @@ type Mutation {
   deleteAdmin(id: String!): Boolean!
   createItem(data: ItemInput!): Item!
   deleteItem(id: String!): Boolean!
-  createProduct(data: ProductInput!): Product!
-  deleteProduct(id: String!): Boolean!
   createStaff(data: StaffInput!): Staff!
   deleteStaff(id: String!): Boolean!
   createTable(data: TableInput!): Table!
@@ -65,31 +63,11 @@ type Mutation {
   deleteUser(id: String!): Boolean!
 }
 
-"""The Product model"""
-type Product {
-  id: ID!
-  name: String!
-  description: String!
-  color: String!
-  stock: Int!
-  price: Int!
-}
-
-input ProductInput {
-  name: String!
-  description: String!
-  color: String!
-  stock: Float!
-  price: Float!
-}
-
 type Query {
   admin(id: String!): Admin!
   allAdmins: [Admin!]!
   item(id: String!): Item!
   allItems: [Item!]!
-  product(id: String!): Product!
-  allProducts: [Product!]!
   staff(username: String!): Staff!
   allStaff: [Staff!]!
   table(id: String!): Table!
