@@ -15,16 +15,20 @@ import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import { RouteComponentProps } from "react-router-dom";
 
+import AuthContext from '../../context/authContext';
+
 const loginMutation = gql`
   mutation LoginMutation($email: String!, $password: String!) {
     Login(email: $email, password: $password) {
       accessToken
+      userId
     }
   }
 `;
 
 export interface LoginMutation {
   accessToken: string;
+  userId: string;
 }
 
 export interface LoginMutationVariables {
@@ -33,6 +37,8 @@ export interface LoginMutationVariables {
 }
 
 class Login extends React.PureComponent<RouteComponentProps<{}>> {
+
+  static contextType = AuthContext;
 
   componentDidMount() {
     document.title = 'Login – Sapori Unici';
@@ -110,8 +116,14 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                           const response = await mutate({
                             variables: this.state
                           });
+                          this.context.login("a", "a");
                           console.log(response);
-                          this.props.history.push("/booking");
+                          if (response.data.accessToken!=null) {
+                            this.context.login(response.data.accessToken, response.data.userId);
+                          }
+                          else {
+                            console.log("error");
+                          }
                         }}
                       >
                         Sign In

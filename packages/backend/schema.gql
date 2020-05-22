@@ -45,6 +45,7 @@ input ItemInput {
 
 type LoginResponse {
   accessToken: String!
+  userId: String!
 }
 
 type Mutation {
@@ -94,6 +95,7 @@ type Query {
   table(id: String!): Table!
   allTables: [Table!]!
   user(id: String!): User!
+  getEmail(email: String!): User!
   allUsers: [User!]!
   Me: String!
 }

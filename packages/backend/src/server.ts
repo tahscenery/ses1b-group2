@@ -22,7 +22,7 @@ const main = async () => {
 
   // create mongoose connection
   await connectDB();
-
+  
   const app = express();
   const server = new ApolloServer({ schema });
   server.applyMiddleware({ app });

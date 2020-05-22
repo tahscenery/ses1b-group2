@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 import { Booking, FourOFour, Home, Locations, Login, SignUp, ViewMenu } from 'pages';
 import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
+
+import AuthContext from '../../context/authContext';
 
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
@@ -67,39 +69,83 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
 });
 
-class App extends Component {
+interface Props {
+  accessToken: string,
+  userId: string
+}
+
+class App extends React.Component<{}, Props> {
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      accessToken: null,
+      userId: null
+    };
+  }
+
+
+  login = (accessToken: string, userId: string) => {
+    this.setState({ accessToken: accessToken, userId: userId});
+  };
+
+  logout = () => {
+    this.setState({ accessToken: null, userId: null });
+  };
+
   render() {
     return (
       <ApolloProvider client={client}>
         <Router history={history}>
           <React.Fragment>
-            <ThemeProvider theme={theme}>
-              <Switch>
-                {/* Home */}
-                <Route exact path="/" component={Home} />
+            <AuthContext.Provider
+              value={{
+                accessToken: this.state.accessToken,
+                userId: this.state.userId,
+                login: this.login,
+                logout: this.logout
+              }}
+            >
+              <ThemeProvider theme={theme}>
+                <Switch>
+                  {!this.state.accessToken && <Redirect from="/" to="/login" exact />}
+                  {this.state.accessToken && <Redirect from="/" to="/booking" exact />}
+                  {this.state.accessToken && <Redirect from="/login" to="/booking" exact />}
 
-                {/* View Menu */}
-                <Route exact path="/menu" component={ViewMenu} />
+                  {/* Home */}
+                  <Route exact path="/" component={Home} />
 
-                {/* Locations */}
-                <Route path="/locations" component={Locations} />
+                  {/* View Menu */}
+                  <Route exact path="/menu" component={ViewMenu} />
 
-                {/* Sign Up */}
-                <Route path="/register" component={SignUp} />
+                  {/* Locations */}
+                  <Route path="/locations" component={Locations} />
+                  
+                  {/* Sign Up */}
+                  {!this.state.accessToken && (
+                  <Route path="/register" component={SignUp} />
+                  )}
 
-                {/* Login */}
-                <Route path="/login" component={Login} />
+                  {/* Login */}
+                  {!this.state.accessToken && (
+                  <Route path="/login" component={Login} />
+                  )}
 
-                {/* Booking */}
-                <Route path="/booking" component={Booking} />
+                  {/* Booking */}
+                  {this.state.accessToken && (
+                  <Route path="/booking" component={Booking} />
+                  )}
 
-                {/* Dashboard for Admin and Staff (WIP) */}
-                <Route path="/dashboard" component={Dashboard} />
+                  {/* Dashboard for Admin and Staff (WIP) */}
+                  {this.state.accessToken && (
+                  <Route path="/dashboard" component={Dashboard} />
+                  )}
 
-                {/* 404 */}
-                <Route component={FourOFour} />
-              </Switch>
-            </ThemeProvider>
+                  {/* 404 */}
+                  <Route component={FourOFour} />
+                </Switch>
+              </ThemeProvider>
+            </AuthContext.Provider>
           </React.Fragment>
         </Router>
       </ApolloProvider>

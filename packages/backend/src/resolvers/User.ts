@@ -19,6 +19,9 @@ import bcrypt from "bcrypt";
 class LoginResponse {
   @Field()
   accessToken: string;
+
+  @Field()
+  userId: string;
 }
 
 @Resolver(_of => User)
@@ -26,6 +29,11 @@ class UserResolver {
   @Query(() => User, { nullable: false })
   async user(@Arg("id") id: string) {
     return await UserModel.findById({ _id: id });
+  }
+
+  @Query((_returns) => User, { nullable: false })
+  async getEmail(@Arg("email") email : string) {
+    return await UserModel.findOne({ email: email});
   }
 
   @Query(() => [User])
@@ -50,11 +58,12 @@ class UserResolver {
     if (!verify) {
       throw new Error("Invalid Password");
     }
-
+    
     return {
       accessToken: sign({ userId: user.id }, "MySecretKey", {
         expiresIn: "15m"
-      })
+      }),
+      userId: user.id
     };
   }
 
@@ -107,7 +116,8 @@ class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteUser(@Arg("id") id: string) {
+  async deleteUser(@Arg("id") id: string) 
+  {
     await UserModel.deleteOne({ _id: id });
     return true;
   }
