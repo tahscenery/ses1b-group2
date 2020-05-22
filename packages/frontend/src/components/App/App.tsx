@@ -7,6 +7,8 @@ import { Booking, FourOFour, Home, Locations, Login, SignUp, ViewMenu } from 'pa
 import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
 
+import Forgot from '../../pages/ForgotPassword/Forgot';
+
 import AuthContext from '../../context/authContext';
 
 import { ApolloClient } from 'apollo-client';
@@ -129,6 +131,11 @@ class App extends React.Component<{}, Props> {
                   {/* Login */}
                   {!this.state.accessToken && (
                   <Route path="/login" component={Login} />
+                  )}
+
+                  {/* Forgot Password */}
+                  {!this.state.accessToken && (
+                  <Route path="/forgot-password" component={Forgot}/>
                   )}
 
                   {/* Booking */}

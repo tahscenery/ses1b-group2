@@ -35,7 +35,7 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
 
   state = {
     email: "bryancolin35@ymail.com",
-    password: "bryan"
+    password: "bryan1"
   };
 
   handleChange = (e: any) => {
@@ -121,7 +121,7 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                 </Mutation>
                 <div className="login-footer">
                   <Link
-                    href="#"
+                    href="/forgot-password"
                     variant="body2"
                     color="secondary"
                   >

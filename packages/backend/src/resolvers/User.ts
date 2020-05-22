@@ -92,12 +92,12 @@ class UserResolver {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-
+    
     const user = (
       await UserModel.create({
         name,
         email,
-        password: hashedPassword,
+        password: hashedPassword
       })
     ).save();
     return user;
@@ -127,6 +127,27 @@ class UserResolver {
       return false;
     }
 
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async ResetPassword(
+    @Arg("email") email: string,
+    @Arg("password") password: string
+  ) {
+    const existingUser = await UserModel.findOne({ email: email });
+    if (!existingUser) {
+      throw new Error("User not found.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 13);
+
+    try {
+      await UserModel.findByIdAndUpdate( {_id: existingUser.id}, {password: hashedPassword} );
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
     return true;
   }
 
