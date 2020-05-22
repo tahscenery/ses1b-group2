@@ -1,7 +1,7 @@
 import { ObjectType, Field, ID } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
 import { User } from "./User";
-import { Product } from "./Product";
+import { Item } from "./Item";
 
 @ObjectType({ description: "The Order model" })
 export class Order {
@@ -12,9 +12,9 @@ export class Order {
   @Property({ required: true })
   user : User;
 
-  @Field(_type => Product)
+  @Field(_type => Item)
   @Property({ required: true })
-  items: [Product];
+  items: [Item];
 }
 
 export const OrderModel = getModelForClass(Order);
