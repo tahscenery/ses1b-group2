@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import { MyTable } from './Table'
-// import { Query } from 'react-apollo';
-// import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
-// import ReactTable from 'react-table'
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 interface Row {
   id: string;
@@ -14,13 +10,13 @@ interface Row {
   password: string;
 }
 
-interface CustomerData {
-  allUsers: Row[];
-}
-
 interface TableState {
   columns: Array<Column<Row>>;
   datas: Row[];
+}
+
+interface CustomerData {
+  allUsers: Row[];
 }
 
 const GET_CUSTOMER = gql`
@@ -32,6 +28,44 @@ query getCustomer{
     password
   }
 }`;
+
+interface AddResponse {
+  Register: boolean;
+}
+
+interface CustomerInput {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const CREATE_CUSTOMER = gql`
+mutation addCustomer($name: String!, $email: String!, $password: String!) {
+  Register(name: $name, email: $email, password: $password)   
+}`;
+
+interface UpdateResponse {
+  updateUser: boolean;
+}
+
+const UPDATE_CUSTOMER = gql`
+mutation updateCustomer($name: String!, $email: String!, $password: String!) {
+  updateUser(name: $name, email: $email, password: $password)   
+}`;
+
+interface DeleteResponse {
+  deleteUser: boolean;
+}
+
+interface IdInput {
+  id: String;
+}
+
+const DELETE_CUSTOMER = gql`
+mutation deleteCustomer($id: String!){
+  deleteUser(id: $id)
+}`;
+
 
 export default function CustomerList() {
 
@@ -45,11 +79,14 @@ export default function CustomerList() {
       ],
     datas:
       [
-        {id:"1", name:"staff1", email:"staff@staff.com", password:"staff1"}
+        { id: "1", name: "staff1", email: "staff@staff.com", password: "staff1" }
       ]
   });
 
   const { loading, error, data } = useQuery<CustomerData>(GET_CUSTOMER);
+  const [addCustomer] = useMutation<AddResponse, CustomerInput>(CREATE_CUSTOMER);
+  const [updateCustomer] = useMutation<UpdateResponse, CustomerInput>(UPDATE_CUSTOMER);
+  const [deleteCustomer] = useMutation<DeleteResponse, IdInput>(DELETE_CUSTOMER);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>ERROR</p>;
@@ -68,6 +105,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                addCustomer({ variables: { name: newData.name, email: newData.email, password: newData.password } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -80,6 +118,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                updateCustomer({ variables: { name: newData.name, email: newData.email, password: newData.password } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -94,6 +133,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                deleteCustomer( {variables: { id: oldData.id}} );
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

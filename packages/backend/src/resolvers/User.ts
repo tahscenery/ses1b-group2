@@ -49,10 +49,8 @@ class UserResolver {
       if (!user) {
         throw new Error("No existing user");
       }
-
       return user;
     }
-
     throw new Error("No payload data");
   }
 
@@ -80,27 +78,6 @@ class UserResolver {
       }),
       userId: user.id
     };
-  }
-
-  @Mutation(() => User)
-  async createUser(
-    @Arg("data") { name, email, password }: UserInput
-  ): Promise<User> {
-    const existingUser = await UserModel.findOne({ email: email });
-    if (existingUser) {
-      throw new Error("User exists already.");
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 12);
-    
-    const user = (
-      await UserModel.create({
-        name,
-        email,
-        password: hashedPassword
-      })
-    ).save();
-    return user;
   }
 
   @Mutation(() => Boolean)
@@ -143,7 +120,61 @@ class UserResolver {
     const hashedPassword = await bcrypt.hash(password, 13);
 
     try {
-      await UserModel.findByIdAndUpdate( {_id: existingUser.id}, {password: hashedPassword} );
+      await UserModel.findByIdAndUpdate( {_id: existingUser.id}, {password: hashedPassword}, {new: true});
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+    return true;
+  }
+
+  @Mutation(() => User)
+  async createUser(
+    @Arg("data") { name, email, password }: UserInput
+  ): Promise<User> {
+    const existingUser = await UserModel.findOne({ email: email });
+    if (existingUser) {
+      throw new Error("User exists already.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    
+    const user = (
+      await UserModel.create({
+        name,
+        email,
+        password: hashedPassword
+      })
+    ).save();
+    return user;
+  }
+
+  @Mutation(() => Boolean)
+  async updateUser(
+    @Arg("name") name: string,
+    @Arg("email") email: string,
+    @Arg("password") password: string
+  ) {
+    const existingUser = await UserModel.findOne({ email: email });
+    if (!existingUser) {
+      throw new Error("User not found.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 13);
+
+    try {
+      if(password!=null)
+      {
+        await UserModel.findOneAndUpdate( {_id: existingUser.id},  {password: hashedPassword} ,{new: true});
+      }
+      if(name!=null)
+      {
+        await UserModel.findOneAndUpdate( {_id: existingUser.id},  {name: name} ,{new: true});
+      }
+      if(email!=null)
+      {
+        await UserModel.findOneAndUpdate( {_id: existingUser.id},  {email: email} ,{new: true});
+      }
     } catch (error) {
       console.log(error);
       return false;
