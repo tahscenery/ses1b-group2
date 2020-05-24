@@ -54,6 +54,8 @@ type Mutation {
   createItem(data: ItemInput!): Item!
   deleteItem(id: String!): Boolean!
   createStaff(data: StaffInput!): Staff!
+  addStaff(password: String!, email: String!, username: String!): Boolean!
+  updateStaff(password: String!, email: String!, username: String!): Boolean!
   deleteStaff(id: String!): Boolean!
   createTable(data: TableInput!): Table!
   deleteTable(id: String!): Boolean!

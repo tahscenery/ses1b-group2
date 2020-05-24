@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { graphql } from 'react-apollo';
 import { MyTable } from './Table'
 // import { Query } from 'react-apollo';
@@ -15,13 +15,13 @@ interface Row {
   password: string;
 }
 
-interface StaffData {
-  allStaff: Row[];
-}
-
 interface TableState {
   columns: Array<Column<Row>>;
   datas: Row[];
+}
+
+interface StaffData {
+  allStaff: Row[];
 }
 
 const GET_STAFF = gql`
@@ -32,6 +32,43 @@ query getStaff{
     email
     password
   }
+}`;
+
+interface AddResponse {
+  Register: boolean;
+}
+
+interface StaffInput {
+  username: string;
+  email: string;
+  password: string;
+}
+
+const CREATE_STAFF = gql`
+mutation addStaff($username: String!, $email: String!, $password: String!) {
+  addStaff(username: $username, email: $email, password: $password)   
+}`;
+
+interface UpdateResponse {
+  updateStaff: boolean;
+}
+
+const UPDATE_STAFF = gql`
+mutation updateStaff($username: String!, $email: String!, $password: String!) {
+  updateStaff(username: $username, email: $email, password: $password)   
+}`;
+
+interface DeleteResponse {
+  deleteStaff: boolean;
+}
+
+interface IdInput {
+  id: String;
+}
+
+const DELETE_STAFF = gql`
+mutation deleteStaff($id: String!){
+  deleteStaff(id: $id)
 }`;
 
 function Staff() {
@@ -51,6 +88,9 @@ function Staff() {
   });
 
   const { loading, error, data } = useQuery<StaffData>(GET_STAFF);
+  const [addStaff] = useMutation<AddResponse, StaffInput>(CREATE_STAFF);
+  const [updateStaff] = useMutation<UpdateResponse, StaffInput>(UPDATE_STAFF);
+  const [deleteStaff] = useMutation<DeleteResponse, IdInput>(DELETE_STAFF);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>ERROR</p>;
@@ -69,6 +109,7 @@ function Staff() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                addStaff({ variables: { username: newData.username, email: newData.email, password: newData.password } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -81,6 +122,7 @@ function Staff() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                updateStaff({ variables: { username: newData.username, email: newData.email, password: newData.password } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -95,6 +137,7 @@ function Staff() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                deleteStaff( {variables: { id: oldData.id}} );
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

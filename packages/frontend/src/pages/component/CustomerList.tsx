@@ -66,7 +66,6 @@ mutation deleteCustomer($id: String!){
   deleteUser(id: $id)
 }`;
 
-
 export default function CustomerList() {
 
   const [state, setState] = React.useState<TableState>({
