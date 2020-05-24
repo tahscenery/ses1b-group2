@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import { MyTable } from './Table'
-// import { Query } from 'react-apollo';
-// import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
-// import ReactTable from 'react-table'
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 interface Row {
   id: string;
-  number: number;
+  tableNumber: number;
   minCapacity: number;
   maxCapacity: number;
-}
-
-interface TableData {
-  allTables: Row[];
+  description: string;
 }
 
 interface TableState {
@@ -23,14 +16,57 @@ interface TableState {
   datas: Row[];
 }
 
+interface TableData {
+  allTables: Row[];
+}
+
 const GET_TABLE = gql`
 query getTable{
   allTables{
     id
-    number
+    tableNumber
     minCapacity
     maxCapacity
+    description
   }
+}`;
+
+interface AddResponse {
+  addTable: boolean;
+}
+
+interface Input {
+  tableNumber: number;
+  minCapacity: number;
+  maxCapacity: number;
+  description: string;
+}
+
+const ADD_TABLE = gql`
+mutation addTable($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
+  addTable(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description:$description)   
+}`;
+
+interface UpdateResponse {
+  updateTable: boolean;
+}
+
+const UPDATE_TABLE = gql`
+mutation updateTable($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
+  updateTable(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description:$description)   
+}`;
+
+interface DeleteResponse {
+  deleteTable: boolean;
+}
+
+interface IdInput {
+  id: String;
+}
+
+const DELETE_TABLE = gql`
+mutation deleteTable($id: String!){
+  deleteTable(id: $id)
 }`;
 
 export default function TableList() {
@@ -38,10 +74,11 @@ export default function TableList() {
   const [state, setState] = React.useState<TableState>({
     columns:
       [
-        { title: 'Id', field: 'id', type: 'numeric' },
-        { title: 'Table Number', field: 'number' },
+        { title: 'Id', field: 'id' },
+        { title: 'Table Number', field: 'tableNumber' },
         { title: 'Min Capacity', field: 'minCapacity' },
-        { title: 'Max Capacity', field: 'maxCapacity' }
+        { title: 'Max Capacity', field: 'maxCapacity' },
+        { title: 'Description', field: 'description' }
       ],
     datas:
       [
@@ -49,6 +86,9 @@ export default function TableList() {
   });
 
   const { loading, error, data } = useQuery<TableData>(GET_TABLE);
+  const [addTable] = useMutation<AddResponse, Input>(ADD_TABLE);
+  const [updateTable] = useMutation<UpdateResponse, Input>(UPDATE_TABLE);
+  const [deleteTable] = useMutation<DeleteResponse, IdInput>(DELETE_TABLE);
 
   if (loading) return <p>Loading</p>;
   if (error) return <p>ERROR</p>;
@@ -67,6 +107,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                addTable({ variables: { tableNumber: newData.tableNumber, minCapacity: newData.minCapacity, maxCapacity: newData.maxCapacity, description: newData.description } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -79,6 +120,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                updateTable({ variables: { tableNumber: newData.tableNumber, minCapacity: newData.minCapacity, maxCapacity: newData.maxCapacity, description: newData.description } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -93,6 +135,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
+                deleteTable({ variables: { id: oldData.id } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

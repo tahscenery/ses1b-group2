@@ -58,6 +58,8 @@ type Mutation {
   updateStaff(password: String!, email: String!, username: String!): Boolean!
   deleteStaff(id: String!): Boolean!
   createTable(data: TableInput!): Table!
+  addTable(description: String!, maxCapacity: Float!, minCapacity: Float!, tableNumber: Float!): Boolean!
+  updateTable(description: String!, maxCapacity: Float!, minCapacity: Float!, tableNumber: Float!): Boolean!
   deleteTable(id: String!): Boolean!
   Login(password: String!, email: String!): LoginResponse!
   Register(password: String!, email: String!, name: String!): Boolean!
@@ -100,14 +102,14 @@ input StaffInput {
 """The Table model"""
 type Table {
   id: ID!
-  number: Float!
+  tableNumber: Float!
   minCapacity: Float!
   maxCapacity: Float!
   description: String!
 }
 
 input TableInput {
-  number: Float!
+  tableNumber: Float!
   minCapacity: Float!
   maxCapacity: Float!
   description: String!

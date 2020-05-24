@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { graphql } from 'react-apollo';
-import { MyTable } from './Table'
 // import { Query } from 'react-apollo';
 // import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
 // import ReactTable from 'react-table'

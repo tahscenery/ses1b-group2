@@ -4,7 +4,7 @@ import { Table } from "../../entities/Table";
 @InputType()
 class TableInput implements Partial<Table>{
   @Field()
-  number: number;
+  tableNumber: number;
 
   @Field()
   minCapacity: number;
