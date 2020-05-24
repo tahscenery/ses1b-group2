@@ -8,10 +8,6 @@ export class Staff {
 
   @Field()
   @Property({ required: true })
-  key: string;
-
-  @Field()
-  @Property({ required: true })
   username: string;
 
   @Field()

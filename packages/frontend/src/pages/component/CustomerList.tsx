@@ -1,7 +1,7 @@
-import React /*, { Fragment }*/ from 'react';
+import React, { useState, useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { MyTable } from './Table'
 // import { Query } from 'react-apollo';
 // import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
@@ -9,9 +9,13 @@ import { MyTable } from './Table'
 
 interface Row {
   id: string;
-  username: string;
+  name: string;
   email: string;
   password: string;
+}
+
+interface CustomerData {
+  allUsers: Row[];
 }
 
 interface TableState {
@@ -19,18 +23,17 @@ interface TableState {
   datas: Row[];
 }
 
-const GET_DATA = gql`
-query staff{
-  returnAllStaffs{
+const GET_CUSTOMER = gql`
+query getCustomer{
+  allUsers{
     id
-    key
-    username
+    name
     email
     password
   }
 }`;
 
-export default function Customer() {
+export default function CustomerList() {
 
   const [state, setState] = React.useState<TableState>({
     columns:
@@ -42,47 +45,25 @@ export default function Customer() {
       ],
     datas:
       [
-        { id: "1", username: 'Bryan', email: "bryan@yahoo.com", password: "123" },
-        { id: "2", username: 'Colin', email: "colin@yahoo.com", password: "123" }
+        {id:"1", name:"staff1", email:"staff@staff.com", password:"staff1"}
       ]
   });
 
-  const { /* loading, error, */ data } = useQuery(GET_DATA);
+  const { loading, error, data } = useQuery<CustomerData>(GET_CUSTOMER);
+
+  if (loading) return <p>Loading</p>;
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>username</th>
-            <th>email</th>
-            <th>password</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data && data.returnAllStaffs.map((staff: any) => (
-            <tr>
-              <td>{staff.id}</td>
-              <td>{staff.username}</td>
-              <td>{staff.email}</td>
-              <td>{staff.password}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {
-        data && data.returnAllStaffs.map((staff:any) => (
-          <MyTable rows={staff} />
-        ))
-      }
-
       <MaterialTable
         title="Customer List"
         columns={state.columns}
-        data={state.datas}
+        data={data.allUsers}
 
         editable={{
+
           onRowAdd: (newData) =>
             new Promise((resolve) => {
               setTimeout(() => {
@@ -138,48 +119,29 @@ export default function Customer() {
 */
 
 /*
-<MaterialTable
-  title="Customer List"
-  columns={state.columns}
-  data={state.data}
-  editable={{
-    onRowAdd: (newData) =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-          setState((prevState) => {
-            const data = [...prevState.data];
-            data.push(newData);
-            return { ...prevState, data };
-          });
-        }, 600);
-      }),
-
-    onRowUpdate: (newData, oldData) =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-          if (oldData) {
-            setState((prevState) => {
-              const data = [...prevState.data];
-              data[data.indexOf(oldData)] = newData;
-              return { ...prevState, data };
-            });
-          }
-        }, 600);
-      }),
-
-    onRowDelete: (oldData) =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-          setState((prevState) => {
-            const data = [...prevState.data];
-            data.splice(data.indexOf(oldData), 1);
-            return { ...prevState, data };
-          });
-        }, 600);
-      }),
-  }}
-/>
+<table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>email</th>
+            <th>password</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data && data.returnAllStaffs.map((staff: any) => (
+            <tr>
+              <td>{staff.id}</td>
+              <td>{staff.username}</td>
+              <td>{staff.email}</td>
+              <td>{staff.password}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {
+        data && data.returnAllStaffs.map((staff:any) => (
+          <MyTable rows={staff} />
+        ))
+      }
 */

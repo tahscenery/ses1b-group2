@@ -83,7 +83,6 @@ type Query {
 """The Staff model"""
 type Staff {
   id: ID!
-  key: String!
   username: String!
   email: String!
   password: String!
@@ -98,14 +97,14 @@ input StaffInput {
 """The Table model"""
 type Table {
   id: ID!
-  tableNumber: Float!
+  number: Float!
   minCapacity: Float!
   maxCapacity: Float!
   description: String!
 }
 
 input TableInput {
-  tableNumber: Float!
+  number: Float!
   minCapacity: Float!
   maxCapacity: Float!
   description: String!

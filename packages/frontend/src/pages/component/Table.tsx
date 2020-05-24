@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 
 interface Props {
   rows: Array<{
-    key: string;
+    id: string;
     username: string;
     email: string;
     password: string;
@@ -31,8 +31,8 @@ export function MyTable({rows}: Props) {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow key={row.key}>
-              <TableCell>{row.key}</TableCell>
+            <TableRow key={row.id}>
+              <TableCell>{row.id}</TableCell>
               <TableCell>{row.username}</TableCell>
               <TableCell>{row.email}</TableCell>
               <TableCell>{row.password}</TableCell>

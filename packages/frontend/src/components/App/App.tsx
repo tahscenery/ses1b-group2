@@ -144,7 +144,7 @@ class App extends React.Component<{}, Props> {
                   )}
 
                   {/* Dashboard for Admin and Staff (WIP) */}
-                  {this.state.accessToken && (
+                  {!this.state.accessToken && (
                   <Route path="/dashboard" component={Dashboard} />
                   )}
 

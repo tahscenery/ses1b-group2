@@ -1,11 +1,12 @@
-import React /*, { Component, useState, Fragment } */ from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
-// import gql from 'graphql-tag';
-// import { Query, graphql } from 'react-apollo';
-// import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+import { graphql } from 'react-apollo';
+import { MyTable } from './Table'
+// import { Query } from 'react-apollo';
 // import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
-// import ReactTable from 'react-table';
-// import { MyTable } from "./Table";
+// import ReactTable from 'react-table'
 
 interface Row {
   id: string;
@@ -14,71 +15,61 @@ interface Row {
   password: string;
 }
 
+interface StaffData {
+  allStaff: Row[];
+}
+
 interface TableState {
   columns: Array<Column<Row>>;
   datas: Row[];
 }
 
-// const GET_STAFF = gql`
-// query {
-//   returnAllStaffs{
-//     id
-//     username
-//     email
-//     password
-//   }
-// }`;
+const GET_STAFF = gql`
+query getStaff{
+  allStaff{
+    id
+    username
+    email
+    password
+  }
+}`;
 
-// const ADD_STAFF = gql`
-// mutation($username: String, $email: String, $password: password){
-//   createStaff (username: $username, email: $email, password: $password) {
-//     username
-//     email
-//     password
-//   }
-// }`;
+function Staff() {
 
-// const DELETE_STAFF = gql`
-// mutation($id: String){
-//   deleteStaff (id: $id)
-// }`;
-
-class Staff extends React.Component<{}, TableState> {
-  constructor(props: TableState) {
-    super(props);
-    this.state = {
-      columns: [
+  const [state, setState] = React.useState<TableState>({
+    columns:
+      [
+        { title: 'Id', field: 'id', type: 'numeric' },
         { title: 'Username', field: 'username' },
         { title: 'Email', field: 'email' },
-        { title: 'Password', field: 'password' },
+        { title: 'Password', field: 'password' }
       ],
-      datas: [
-        { id: "", username: "", email: "", password: "" },
+    datas:
+      [
+        {id:"1", username:"staff1", email:"staff@staff.com", password:"staff1"}
       ]
-    }
-  }
+  });
 
-  componentDidMount() {
-    this.fetchData();
-  }
+  const { loading, error, data } = useQuery<StaffData>(GET_STAFF);
 
-  fetchData() {
-    //const { loading, error, data } = useQuery(GET_STAFF);
-  }
+  if (loading) return <p>Loading</p>;
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
 
-  render() {
-    return (
+  return (
+    <div>
       <MaterialTable
         title="Staff List"
-        columns={this.state.columns}
-        data={this.state.datas}
+        columns={state.columns}
+        data={data.allStaff}
 
         editable={{
+
           onRowAdd: (newData) =>
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                this.setState((prevState) => {
+                setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
                   return { ...prevState, data };
@@ -91,7 +82,7 @@ class Staff extends React.Component<{}, TableState> {
               setTimeout(() => {
                 resolve();
                 if (oldData) {
-                  this.setState((prevState) => {
+                  setState((prevState) => {
                     const data = [...prevState.datas];
                     data[data.indexOf(oldData)] = newData;
                     return { ...prevState, data };
@@ -104,7 +95,7 @@ class Staff extends React.Component<{}, TableState> {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                this.setState((prevState) => {
+                setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);
                   return { ...prevState, data };
@@ -113,8 +104,8 @@ class Staff extends React.Component<{}, TableState> {
             }),
         }}
       />
-    );
-  }
+    </div>
+  );
 }
 
 export default Staff;

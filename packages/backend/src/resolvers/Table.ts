@@ -16,16 +16,16 @@ class TableResolver {
 
   @Mutation(() => Table)
   async createTable(
-    @Arg("data") { tableNumber, minCapacity, maxCapacity, description }: TableInput
+    @Arg("data") { number, minCapacity, maxCapacity, description }: TableInput
   ): Promise<Table> {
-    const existingTable = TableModel.findOne( {tableNumber: tableNumber});
+    const existingTable = TableModel.findOne( {number: number});
     if(existingTable) {
       throw new Error("Table exists already.");
     }
 
     const Table = (
       await TableModel.create({
-        tableNumber,
+        number,
         minCapacity,
         maxCapacity,
         description

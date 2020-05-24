@@ -8,7 +8,7 @@ export class Table {
 
   @Field()
   @Property({ required: true })
-  tableNumber: number;
+  number: number;
 
   @Field()
   @Property({ required: true })

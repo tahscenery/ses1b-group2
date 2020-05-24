@@ -2,7 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-
+import cors from "cors";
 import * as resolvers from "./resolvers";
 import connectDB from "./connection";
 
@@ -25,6 +25,9 @@ const main = async () => {
   const app = express();
   const server = new ApolloServer({ schema });
   server.applyMiddleware({ app });
+
+  // Allow cros-origin
+  app.use(cors());
 
   const port = 4000;
   app.listen({ port }, () =>

@@ -5,8 +5,10 @@ import { CssBaseline, Drawer, AppBar, Toolbar, List, Typography, Divider, IconBu
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { secondaryListItems } from './List';
-import Staff from './Staff';
-import Customer from './Customer';
+
+import Staff from './StaffList';
+import Customer from './CustomerList';
+import Table from './TableList';
 
 const drawerWidth = 240;
 
@@ -146,11 +148,24 @@ export default function Dashboard() {
 
 
 
-            {/* Recent Orders */}
+            {/* Staff Lists */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Staff />
+              </Paper>
+            </Grid>
+
+            {/* Customer Lists */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Customer />
-                <Staff />
+              </Paper>
+            </Grid>
+
+            {/* Table Lists */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Table />
               </Paper>
             </Grid>
 
