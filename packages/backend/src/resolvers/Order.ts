@@ -22,7 +22,7 @@ class OrderResolver {
       throw new Error("Order exists already.");
     }
 
-    
+    try {
       await OrderModel.create({
         orderNumber,
         user_id,
@@ -31,6 +31,10 @@ class OrderResolver {
         location, 
         date
       });
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
 
     return true;
   }
