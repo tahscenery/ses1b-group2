@@ -1,89 +1,116 @@
 import React, { Component } from 'react';
+import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Button,
-  Container,
-  FormControlLabel,
-  Checkbox,
-  CssBaseline,
-  TextField,
+  Card,
   Grid,
-  Link,
+  CardContent,
   Typography,
 } from '@material-ui/core';
 
+import { QueryResult } from '@apollo/react-common';
 
-import './Booking.css';
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    cover: {
+      width: 151,
+    },
+    controls: {
+      display: 'flex',
+      alignItems: 'center',
+      paddingLeft: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+    },
+    playIcon: {
+      height: 38,
+      width: 38,
+    },
+  }),
+);
 
-class Table extends Component {
-  render() {
-    return (
-      <div className="image">
-        <Container component="main" maxWidth="xs">
+interface Props {
+  id: string;
+  tableNumber: number;
+  minCapacity: number;
+  maxCapacity: number;
+  description: string;
+}
 
-          <CssBaseline />
-          <div className="paper">
-            <form className="form" noValidate>
-              <Typography component="h1" variant="h2" color="secondary">
-                Sign in
-              </Typography>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              //inputRef=""
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              //inputRef=""
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="secondary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="button"
-              >
-                Sign In
-          </Button>
-              <div className="marginTop">
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2" color="secondary">
-                      Forgot password?
-              </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="#" variant="body2" color="secondary">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
+interface TableData {
+  allTables: Props[];
+}
+
+interface TableListRowProps {
+  table: Props;
+}
+
+const TableListRow = (props: TableListRowProps) => {
+
+  const classes = useStyles();
+  const theme = useTheme();
+
+  const { tableNumber, minCapacity, maxCapacity, description } = props.table;
+  return (
+    <Card className={classes.root} variant="outlined">
+      <CardContent>
+        <Grid container direction={'row'}>
+          <div className={classes.controls}>
+            <Grid item>
+              <div className={classes.controls}>
+                <Typography variant="h3">{description}</Typography>
               </div>
-            </form>
+            </Grid>
+            <Grid item>
+              <div className={classes.controls}>
+                <Typography variant="h3">Min Capacity: {minCapacity}</Typography>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className={classes.controls}>
+                <Typography variant="h3">Max Capacity: {maxCapacity}</Typography>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className={classes.controls}>
+                <Button variant="contained" color="primary">Select</Button>
+              </div>
+            </Grid>
           </div>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
+}
 
-        </Container>
-      </div>
-    );
-  }
+interface TableListProps<T> {
+  queryResult: QueryResult<T>;
+}
+
+const Table = ({ queryResult }: TableListProps<TableData>) => {
+  const { loading, error, data } = queryResult;
+
+  if (loading) { return <p>Loading</p>; }
+  if (error) { return <p>(ERROR) {error.message}</p>; }
+  if (!data) { return <p>(NO DATA)</p>; }
+
+  return (
+    <>
+      {data.allTables
+        .map((tables, index) => (
+          <TableListRow key={`TableListRow#${index}`} table={tables} />
+        ))}
+    </>
+  );
 }
 
 export default Table;
