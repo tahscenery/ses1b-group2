@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface Row {
   id: string;
@@ -87,7 +88,7 @@ export default function CustomerList() {
   const [updateCustomer] = useMutation<UpdateResponse, CustomerInput>(UPDATE_CUSTOMER);
   const [deleteCustomer] = useMutation<DeleteResponse, IdInput>(DELETE_CUSTOMER);
 
-  if (loading) return <p>Loading</p>;
+  if (loading) return<CircularProgress />;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 

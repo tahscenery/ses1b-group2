@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 // import { Query } from 'react-apollo';
 // import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
 // import ReactTable from 'react-table'
@@ -90,7 +92,7 @@ function Staff() {
   const [updateStaff] = useMutation<UpdateResponse, StaffInput>(UPDATE_STAFF);
   const [deleteStaff] = useMutation<DeleteResponse, IdInput>(DELETE_STAFF);
 
-  if (loading) return <p>Loading</p>;
+  if (loading) return<CircularProgress />;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
