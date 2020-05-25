@@ -3,6 +3,11 @@ import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 // import { Query } from 'react-apollo';
 // import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
@@ -93,7 +98,7 @@ function Staff() {
   const [deleteStaff] = useMutation<DeleteResponse, IdInput>(DELETE_STAFF);
 
   if (loading) return<LinearProgress />;
-  if (error) return <p>ERROR</p>;
+  if (error) return <Alert severity="error">This is an error message!</Alert>;
   if (!data) return <p>Not found</p>;
 
   return (

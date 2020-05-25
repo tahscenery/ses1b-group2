@@ -3,7 +3,11 @@ import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 interface Row {
   id: string;
@@ -95,7 +99,7 @@ export default function TableList() {
   const [deleteTable] = useMutation<DeleteResponse, IdInput>(DELETE_TABLE);
 
   if (loading) return <LinearProgress />;
-  if (error) return <p>ERROR</p>;
+  if (error) return <Alert severity="error">This is an error message!</Alert>;
   if (!data) return <p>Not found</p>;
 
   return (

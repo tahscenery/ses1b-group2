@@ -28,6 +28,7 @@
     "@graphql-codegen/typescript-react-apollo": "^1.13.5",
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.54",
     "@material-ui/styles": "^4.9.10",
     "@sapori-unici/backend": "0.1.0",
     "add": "^2.0.6",
