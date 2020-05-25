@@ -32,7 +32,7 @@ query getTable{
 }`;
 
 interface AddResponse {
-  addTable: boolean;
+  addTables: boolean;
 }
 
 interface Input {
@@ -43,18 +43,20 @@ interface Input {
 }
 
 const ADD_TABLE = gql`
-mutation addTable($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
-  addTable(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description:$description)   
-}`;
+mutation addTables($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
+  addTables(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description: $description)
+}
+`;
 
 interface UpdateResponse {
-  updateTable: boolean;
+  updateTables: boolean;
 }
 
 const UPDATE_TABLE = gql`
-mutation updateTable($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
-  updateTable(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description:$description)   
-}`;
+mutation updateTables($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
+  updateTables(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description:$description)   
+}
+`;
 
 interface DeleteResponse {
   deleteTable: boolean;
@@ -74,10 +76,10 @@ export default function TableList() {
   const [state, setState] = React.useState<TableState>({
     columns:
       [
-        { title: 'Id', field: 'id' },
-        { title: 'Table Number', field: 'tableNumber' },
-        { title: 'Min Capacity', field: 'minCapacity' },
-        { title: 'Max Capacity', field: 'maxCapacity' },
+        { title: 'Id', field: 'id', type:'numeric'},
+        { title: 'Table Number', field: 'tableNumber'},
+        { title: 'Min Capacity', field: 'minCapacity'},
+        { title: 'Max Capacity', field: 'maxCapacity'},
         { title: 'Description', field: 'description' }
       ],
     datas:
@@ -107,7 +109,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                addTable({ variables: { tableNumber: newData.tableNumber, minCapacity: newData.minCapacity, maxCapacity: newData.maxCapacity, description: newData.description } });
+                addTable({ variables: { tableNumber: (newData.tableNumber as number) , minCapacity: 1, maxCapacity: 4, description: newData.description } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);

@@ -9,6 +9,7 @@ import connectDB from "./connection";
 const main = async () => {
   const schema = await buildSchema({
     resolvers: [
+      resolvers.OrderResolver,
       resolvers.AdminResolver,
       resolvers.ItemResolver,
       resolvers.StaffResolver,

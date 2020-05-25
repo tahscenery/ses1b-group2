@@ -1,18 +1,29 @@
-import { InputType, Field } from "type-graphql";
+import { InputType, Field, ID } from "type-graphql";
 import { Order } from "../../entities/Order";
-import { User } from "../../entities/User";
-import { Item } from "../../entities/Item";
+import { ObjectId } from "mongodb";
+//import { User } from "../../entities/User";
+//import { Item } from "../../entities/Item";
 
 @InputType()
 class OrderInput implements Partial<Order>{
-  @Field()
-  number: number;
 
   @Field()
-  user: User;
+  orderNumber : number;
 
-  @Field(_type => Item)
-  items: [Item];
+  @Field(()=> ID)
+  user_id: ObjectId; 
+
+  @Field(()=> ID)
+  item_id: ObjectId; 
+
+  @Field()
+  date : Date;
+
+  @Field()
+  location : String;
+
+  @Field()
+  numberOfPeople : number;
 }
 
 export default OrderInput;

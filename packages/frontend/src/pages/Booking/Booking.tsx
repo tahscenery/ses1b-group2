@@ -12,9 +12,12 @@ import {
 import './Booking.css';
 
 
-class Booking extends Component {
 
-  render() {
+
+
+function Booking() {
+
+  
     return (
       <Grid container component="main" className="root">
         <CssBaseline />
@@ -32,8 +35,6 @@ class Booking extends Component {
                 <Date />
                 <People />
                 <Location />
-
-
             </form>
           </div>
         </Grid>
@@ -49,7 +50,7 @@ class Booking extends Component {
         </Grid>
       </Grid>
     );
-  }
+  
 }
 
 export default Booking;

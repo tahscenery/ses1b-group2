@@ -3,7 +3,7 @@ import { Order, OrderModel } from "../entities/Order";
 import OrderInput from "./inputs/OrderInput";
 
 @Resolver((_of) => Order)
-export class OrderResolver {
+class OrderResolver {
   @Query((_returns) => Order, { nullable: false })
   async order(@Arg("id") id: string) {
     return await OrderModel.findById({ _id: id});
@@ -14,21 +14,25 @@ export class OrderResolver {
     return await OrderModel.find();
   }
 
-  @Mutation(() => Order)
-  async createOrder(@Arg("data") {number, user, items}: OrderInput): Promise<Order> {
-    const existingOrder = OrderModel.findOne( {number: number});
+  @Mutation(() => Boolean)
+  async createOrder(@Arg("data") {orderNumber, user_id, item_id, date, location, numberOfPeople}: OrderInput): Promise<Boolean> {
+
+    const existingOrder = await OrderModel.findOne( {orderNumber: orderNumber});
     if (existingOrder) {
       throw new Error("Order exists already.");
     }
 
-    const Order = (
+    
       await OrderModel.create({
-        number,
-        user,
-        items
-      })
-    ).save();
-    return Order;
+        orderNumber,
+        user_id,
+        item_id,
+        numberOfPeople,
+        location, 
+        date
+      });
+
+    return true;
   }
 
   @Mutation(() => Boolean)
@@ -37,3 +41,5 @@ export class OrderResolver {
     return true;
   }
 }
+
+export default OrderResolver;

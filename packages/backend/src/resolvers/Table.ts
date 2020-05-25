@@ -35,7 +35,7 @@ class TableResolver {
   }
 
   @Mutation(() => Boolean)
-  async addTable(
+  async addTables(
     @Arg("tableNumber") tableNumber: number,
     @Arg("minCapacity") minCapacity: number,
     @Arg("maxCapacity") maxCapacity: number,
@@ -61,7 +61,7 @@ class TableResolver {
   }
 
   @Mutation(() => Boolean)
-  async updateTable(
+  async updateTables(
     @Arg("tableNumber") tableNumber: number,
     @Arg("minCapacity") minCapacity: number,
     @Arg("maxCapacity") maxCapacity: number,

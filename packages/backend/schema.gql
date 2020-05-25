@@ -15,6 +15,11 @@ input AdminInput {
   password: String!
 }
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 """The Item model"""
 type Item {
   id: ID!
@@ -58,8 +63,8 @@ type Mutation {
   updateStaff(password: String!, email: String!, username: String!): Boolean!
   deleteStaff(id: String!): Boolean!
   createTable(data: TableInput!): Table!
-  addTable(description: String!, maxCapacity: Float!, minCapacity: Float!, tableNumber: Float!): Boolean!
-  updateTable(description: String!, maxCapacity: Float!, minCapacity: Float!, tableNumber: Float!): Boolean!
+  addTables(description: String!, maxCapacity: Float!, minCapacity: Float!, tableNumber: Float!): Boolean!
+  updateTables(description: String!, maxCapacity: Float!, minCapacity: Float!, tableNumber: Float!): Boolean!
   deleteTable(id: String!): Boolean!
   Login(password: String!, email: String!): LoginResponse!
   Register(password: String!, email: String!, name: String!): Boolean!
@@ -67,6 +72,28 @@ type Mutation {
   createUser(data: UserInput!): User!
   updateUser(password: String!, email: String!, name: String!): Boolean!
   deleteUser(id: String!): Boolean!
+  createOrder(data: OrderInput!): Boolean!
+  deleteOrder(id: String!): Boolean!
+}
+
+"""The Order model"""
+type Order {
+  id: ID!
+  user_id: String!
+  item_id: String!
+  orderNumber: Float!
+  date: DateTime!
+  location: String!
+  numberOfPeople: Float!
+}
+
+input OrderInput {
+  orderNumber: Float!
+  user_id: ID!
+  item_id: ID!
+  date: DateTime!
+  location: String!
+  numberOfPeople: Float!
 }
 
 type Query {
@@ -83,6 +110,8 @@ type Query {
   allUsers: [User!]!
   me: User!
   Me: String!
+  order(id: String!): Order!
+  allOrders: [Order!]!
 }
 
 """The Staff model"""
