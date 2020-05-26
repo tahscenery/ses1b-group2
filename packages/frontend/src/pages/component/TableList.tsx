@@ -26,8 +26,8 @@ interface TableData {
   allTables: Row[];
 }
 
-const GET_TABLE = gql`
-query getTable{
+const DISPLAY_TABLE = gql`
+query displayTable{
   allTables{
     id
     tableNumber
@@ -93,7 +93,7 @@ export default function TableList() {
       ]
   });
 
-  const { loading, error, data } = useQuery<TableData>(GET_TABLE);
+  const { loading, error, data } = useQuery<TableData>(DISPLAY_TABLE);
   const [addTable] = useMutation<AddResponse, Input>(ADD_TABLE);
   const [updateTable] = useMutation<UpdateResponse, Input>(UPDATE_TABLE);
   const [deleteTable] = useMutation<DeleteResponse, IdInput>(DELETE_TABLE);

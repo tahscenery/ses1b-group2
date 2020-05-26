@@ -27,8 +27,8 @@ interface TableData {
   allTables: Row[];
 }
 
-const GET_TABLE = gql`
-query getTable{
+const TABLE_QUERY = gql`
+query TableQuery{
   allTables{
     id
     tableNumber
@@ -40,7 +40,7 @@ query getTable{
 
 function Booking() {
 
-  const query = useQuery<TableData>(GET_TABLE);
+  const query = useQuery<TableData>(TABLE_QUERY);
 
   return (
     <Grid container component="main" className="root">

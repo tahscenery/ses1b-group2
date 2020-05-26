@@ -23,15 +23,7 @@ interface TableState {
   datas: Row[];
 }
 
-const GET_TABLE = gql`
-query getTable{
-  allTables{
-    id
-    number
-    minCapacity
-    maxCapacity
-  }
-}`;
+
 
 export default function TableList() {
 
@@ -48,18 +40,14 @@ export default function TableList() {
       ]
   });
 
-  const { loading, error, data } = useQuery<TableData>(GET_TABLE);
 
-  if (loading) return <p>Loading</p>;
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Not found</p>;
 
   return (
     <div>
       <MaterialTable
         title="Table List"
         columns={state.columns}
-        data={data.allTables}
+        data={state.datas}
 
         editable={{
 
