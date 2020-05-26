@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import {getCustomer, addCustomer, addCustomerVariables, updateCustomer, updateCustomerVariables, deleteCustomer, deleteCustomerVariables} from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -21,10 +22,6 @@ interface TableState {
   datas: Row[];
 }
 
-interface CustomerData {
-  allUsers: Row[];
-}
-
 const GET_CUSTOMER = gql`
 query getCustomer{
   allUsers{
@@ -35,37 +32,15 @@ query getCustomer{
   }
 }`;
 
-interface AddResponse {
-  Register: boolean;
-}
-
-interface CustomerInput {
-  name: string;
-  email: string;
-  password: string;
-}
-
 const CREATE_CUSTOMER = gql`
 mutation addCustomer($name: String!, $email: String!, $password: String!) {
   Register(name: $name, email: $email, password: $password)   
 }`;
 
-interface UpdateResponse {
-  updateUser: boolean;
-}
-
 const UPDATE_CUSTOMER = gql`
 mutation updateCustomer($name: String!, $email: String!, $password: String!) {
   updateUser(name: $name, email: $email, password: $password)   
 }`;
-
-interface DeleteResponse {
-  deleteUser: boolean;
-}
-
-interface IdInput {
-  id: String;
-}
 
 const DELETE_CUSTOMER = gql`
 mutation deleteCustomer($id: String!){
@@ -88,10 +63,10 @@ export default function CustomerList() {
       ]
   });
 
-  const { loading, error, data } = useQuery<CustomerData>(GET_CUSTOMER);
-  const [addCustomer] = useMutation<AddResponse, CustomerInput>(CREATE_CUSTOMER);
-  const [updateCustomer] = useMutation<UpdateResponse, CustomerInput>(UPDATE_CUSTOMER);
-  const [deleteCustomer] = useMutation<DeleteResponse, IdInput>(DELETE_CUSTOMER);
+  const { loading, error, data } = useQuery<getCustomer>(GET_CUSTOMER);
+  const [add_Customer] = useMutation<addCustomer, addCustomerVariables>(CREATE_CUSTOMER);
+  const [update_Customer] = useMutation<updateCustomer, updateCustomerVariables>(UPDATE_CUSTOMER);
+  const [delete_Customer] = useMutation<deleteCustomer, deleteCustomerVariables>(DELETE_CUSTOMER);
   
   if (loading) return<LinearProgress />;
   if (error) return <Alert severity="error">This is an error message!</Alert>;
@@ -110,7 +85,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                addCustomer({ variables: { name: newData.name, email: newData.email, password: newData.password } });
+                add_Customer({ variables: { name: newData.name, email: newData.email, password: newData.password } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -123,7 +98,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                updateCustomer({ variables: { name: newData.name, email: newData.email, password: newData.password } });
+                update_Customer({ variables: { name: newData.name, email: newData.email, password: newData.password } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -138,7 +113,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                deleteCustomer( {variables: { id: oldData.id}} );
+                delete_Customer( {variables: { id: oldData.id}} );
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

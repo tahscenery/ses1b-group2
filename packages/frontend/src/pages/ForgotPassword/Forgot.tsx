@@ -13,20 +13,13 @@ import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
 import { RouteComponentProps } from "react-router-dom";
 
-const resetMutation = gql`
+import {resetMutation, resetMutationVariables} from '../../schemaTypes';
+
+const ResetMutation = gql`
   mutation resetMutation($email: String!, $password: String!) {
     ResetPassword(email:$email, password:$password) 
   }
 `;
-
-export interface ResetMutation {
-  ResetPassword: boolean
-}
-
-export interface ResetMutationVariables {
-  email: string;
-  password: string;
-}
 
 class Forgot extends React.PureComponent<RouteComponentProps<{}>> {
 
@@ -48,7 +41,7 @@ class Forgot extends React.PureComponent<RouteComponentProps<{}>> {
 
         <CssBaseline />
         <div className="back">
-          <Mutation<ResetMutation, ResetMutationVariables> mutation={resetMutation}>
+          <Mutation<resetMutation, resetMutationVariables> mutation={ResetMutation}>
             {mutate => (
               <div
                 style={{

@@ -4,14 +4,11 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import {getStaff, addStaff, addStaffVariables, updateStaff, updateStaffVariables, deleteStaff, deleteStaffVariables} from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-// import { Query } from 'react-apollo';
-// import { Card, CardBody, CardHeader, CardSubtitle, Spinner } from 'reactstrap';
-// import ReactTable from 'react-table'
 
 interface Row {
   id: string;
@@ -25,10 +22,6 @@ interface TableState {
   datas: Row[];
 }
 
-interface StaffData {
-  allStaff: Row[];
-}
-
 const GET_STAFF = gql`
 query getStaff{
   allStaff{
@@ -39,37 +32,15 @@ query getStaff{
   }
 }`;
 
-interface AddResponse {
-  Register: boolean;
-}
-
-interface StaffInput {
-  username: string;
-  email: string;
-  password: string;
-}
-
 const CREATE_STAFF = gql`
 mutation addStaff($username: String!, $email: String!, $password: String!) {
   addStaff(username: $username, email: $email, password: $password)   
 }`;
 
-interface UpdateResponse {
-  updateStaff: boolean;
-}
-
 const UPDATE_STAFF = gql`
 mutation updateStaff($username: String!, $email: String!, $password: String!) {
   updateStaff(username: $username, email: $email, password: $password)   
 }`;
-
-interface DeleteResponse {
-  deleteStaff: boolean;
-}
-
-interface IdInput {
-  id: String;
-}
 
 const DELETE_STAFF = gql`
 mutation deleteStaff($id: String!){
@@ -92,10 +63,10 @@ function Staff() {
       ]
   });
 
-  const { loading, error, data } = useQuery<StaffData>(GET_STAFF);
-  const [addStaff] = useMutation<AddResponse, StaffInput>(CREATE_STAFF);
-  const [updateStaff] = useMutation<UpdateResponse, StaffInput>(UPDATE_STAFF);
-  const [deleteStaff] = useMutation<DeleteResponse, IdInput>(DELETE_STAFF);
+  const { loading, error, data } = useQuery<getStaff>(GET_STAFF);
+  const [add_Staff] = useMutation<addStaff, addStaffVariables>(CREATE_STAFF);
+  const [update_Staff] = useMutation<updateStaff, updateStaffVariables>(UPDATE_STAFF);
+  const [delete_Staff] = useMutation<deleteStaff, deleteStaffVariables>(DELETE_STAFF);
 
   if (loading) return<LinearProgress />;
   if (error) return <Alert severity="error">This is an error message!</Alert>;
@@ -114,7 +85,7 @@ function Staff() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                addStaff({ variables: { username: newData.username, email: newData.email, password: newData.password } });
+                add_Staff({ variables: { username: newData.username, email: newData.email, password: newData.password } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -127,7 +98,7 @@ function Staff() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                updateStaff({ variables: { username: newData.username, email: newData.email, password: newData.password } });
+                update_Staff({ variables: { username: newData.username, email: newData.email, password: newData.password } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -142,7 +113,7 @@ function Staff() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                deleteStaff( {variables: { id: oldData.id}} );
+                delete_Staff( {variables: { id: oldData.id}} );
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

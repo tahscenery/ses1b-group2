@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import {displayTable, addTables, addTablesVariables, updateTables, updateTablesVariables, deleteTable, deleteTableVariables} from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -22,10 +23,6 @@ interface TableState {
   datas: Row[];
 }
 
-interface TableData {
-  allTables: Row[];
-}
-
 const DISPLAY_TABLE = gql`
 query displayTable{
   allTables{
@@ -37,40 +34,17 @@ query displayTable{
   }
 }`;
 
-interface AddResponse {
-  addTables: boolean;
-}
-
-interface Input {
-  tableNumber: number;
-  minCapacity: number;
-  maxCapacity: number;
-  description: string;
-}
-
 const ADD_TABLE = gql`
 mutation addTables($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
   addTables(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description: $description)
 }
 `;
 
-interface UpdateResponse {
-  updateTables: boolean;
-}
-
 const UPDATE_TABLE = gql`
 mutation updateTables($tableNumber: Float!, $minCapacity: Float!, $maxCapacity: Float!, $description: String!) {
   updateTables(tableNumber: $tableNumber, minCapacity: $minCapacity, maxCapacity: $maxCapacity, description:$description)   
 }
 `;
-
-interface DeleteResponse {
-  deleteTable: boolean;
-}
-
-interface IdInput {
-  id: String;
-}
 
 const DELETE_TABLE = gql`
 mutation deleteTable($id: String!){
@@ -93,10 +67,10 @@ export default function TableList() {
       ]
   });
 
-  const { loading, error, data } = useQuery<TableData>(DISPLAY_TABLE);
-  const [addTable] = useMutation<AddResponse, Input>(ADD_TABLE);
-  const [updateTable] = useMutation<UpdateResponse, Input>(UPDATE_TABLE);
-  const [deleteTable] = useMutation<DeleteResponse, IdInput>(DELETE_TABLE);
+  const { loading, error, data } = useQuery<displayTable>(DISPLAY_TABLE);
+  const [add_Table] = useMutation<addTables, addTablesVariables>(ADD_TABLE);
+  const [update_Table] = useMutation<updateTables, updateTablesVariables>(UPDATE_TABLE);
+  const [delete_Table] = useMutation<deleteTable, deleteTableVariables>(DELETE_TABLE);
 
   if (loading) return <LinearProgress />;
   if (error) return <Alert severity="error">This is an error message!</Alert>;
@@ -115,7 +89,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                addTable({ variables: { tableNumber: (newData.tableNumber as number) , minCapacity: 1, maxCapacity: 4, description: newData.description } });
+                add_Table({ variables: { tableNumber: (newData.tableNumber as number) , minCapacity: 1, maxCapacity: 4, description: newData.description } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -128,7 +102,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                updateTable({ variables: { tableNumber: newData.tableNumber, minCapacity: newData.minCapacity, maxCapacity: newData.maxCapacity, description: newData.description } });
+                update_Table({ variables: { tableNumber: newData.tableNumber, minCapacity: newData.minCapacity, maxCapacity: newData.maxCapacity, description: newData.description } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -143,7 +117,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                deleteTable({ variables: { id: oldData.id } });
+                delete_Table({ variables: { id: oldData.id } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);
