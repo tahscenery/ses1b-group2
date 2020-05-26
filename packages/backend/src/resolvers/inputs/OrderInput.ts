@@ -1,8 +1,6 @@
-import { InputType, Field, ID } from "type-graphql";
+import { InputType, Field } from "type-graphql";
 import { Order } from "../../entities/Order";
 import { ObjectId } from "mongodb";
-//import { User } from "../../entities/User";
-//import { Item } from "../../entities/Item";
 
 @InputType()
 class OrderInput implements Partial<Order>{
@@ -10,11 +8,14 @@ class OrderInput implements Partial<Order>{
   @Field()
   orderNumber : number;
 
-  @Field(()=> ID)
+  @Field(()=> String)
   user_id: ObjectId; 
 
-  @Field(()=> ID)
+  @Field(()=> String)
   item_id: ObjectId; 
+
+  @Field(()=> String)
+  table_id: ObjectId; 
 
   @Field()
   date : Date;

@@ -81,16 +81,19 @@ type Order {
   id: ID!
   user_id: String!
   item_id: String!
+  table_id: String!
   orderNumber: Float!
   date: DateTime!
   location: String!
   numberOfPeople: Float!
+  user: User!
 }
 
 input OrderInput {
   orderNumber: Float!
-  user_id: ID!
-  item_id: ID!
+  user_id: String!
+  item_id: String!
+  table_id: String!
   date: DateTime!
   location: String!
   numberOfPeople: Float!
