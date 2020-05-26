@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline, Drawer, AppBar, Toolbar, List, Typography, Divider, IconButton, Container, Grid, Paper  } from '@material-ui/core';
+import { CssBaseline, Drawer, AppBar, Toolbar, ListItem, ListItemIcon, ListItemText, Typography, Divider, IconButton, Container, Grid, Paper } from '@material-ui/core';
+import TableChartIcon from '@material-ui/icons/TableChart';
+import PeopleIcon from '@material-ui/icons/People';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { secondaryListItems } from './List';
 
 import Staff from './StaffList';
 import Customer from './CustomerList';
@@ -93,7 +94,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [show, setShow] = useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,11 +105,40 @@ export default function Dashboard() {
     setOpen(false);
   };
 
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const showStaff = () => {
+    setShow('staff');
+  };
 
+  const showCustomer = () => {
+    setShow('customer');
+  };
+
+  const showTable = () => {
+    setShow('table');
+  };
+  
+  let content = null;
+
+  switch (show) {
+    case 'staff':
+      content = <Staff />;
+      break;
+
+    case 'customer':
+      content = <Customer />;
+      break;
+
+    case 'table':
+      content = <Table />;
+      break;
+      
+    default:
+      content = <Typography align-items="center">Welcome to the Dashboard</Typography>;
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
+
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -115,62 +146,71 @@ export default function Dashboard() {
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}>
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-
         </Toolbar>
       </AppBar>
+
       <Drawer
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
-        open={open}
-      >
+        open={open}>
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <div>
+          <ListItem button onClick={showCustomer}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Customers" />
+          </ListItem>
+
+          <ListItem button onClick={showStaff}>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Staffs" />
+          </ListItem>
+
+          <ListItem button onClick={showTable}>
+            <ListItemIcon>
+              <TableChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Tables" />
+          </ListItem>
+
+          <ListItem button onClick={showTable}>
+            <ListItemIcon>
+              <TableChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Orders" />
+          </ListItem>
+        </div>
       </Drawer>
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-
           <Grid container spacing={3}>
 
-
-
-            {/* Staff Lists */}
+            {/*Content Lists */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Staff />
-              </Paper>
-            </Grid>
-
-            {/* Customer Lists */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Customer />
-              </Paper>
-            </Grid>
-
-            {/* Table Lists */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Table />
+                {content}
               </Paper>
             </Grid>
 
           </Grid>
-
         </Container>
       </main>
     </div>
