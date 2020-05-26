@@ -1,13 +1,17 @@
-import React, { Fragment } from 'react';
-import Date from './Context/DateTime';
-import People from './Context/People';
-import Location from './Context/Location';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import Table from './Table/Table';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Paper,
   CssBaseline,
   Grid,
-  Typography
+  Typography,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select
 } from '@material-ui/core';
 
 import './Booking.css';
@@ -38,7 +42,29 @@ query TableQuery{
   }
 }`;
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 160,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }),
+);
+
+
 function Booking() {
+
+  const classes = useStyles();
+  const [numberOfPeople, setNumberOfPeople] = useState(0);
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState<Date | null>(new Date('2020-01-18T21:11:54'));
+
+  const handleDateChange = (date: Date | null) => {
+    setDate(date);
+  };
 
   const query = useQuery<TableData>(TABLE_QUERY);
 
@@ -55,10 +81,74 @@ function Booking() {
 
             <Typography variant="h6" color="secondary">
               Date and Time
-              </Typography>
-            <Date />
-            <People />
-            <Location />
+            </Typography>
+
+            <DatePicker
+              selected={date}
+              onChange={handleDateChange}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="MMMM d, yyyy h:mm aa"
+            />
+
+            <Typography variant="h6" color="secondary">
+              Number of People
+            </Typography>
+
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel id="number">Number</InputLabel>
+              <Select
+                labelId="numberOfPeople"
+                id="numberOfPeople"
+                value={numberOfPeople}
+                onChange={e => setNumberOfPeople(e.target.value as number)}
+                label="Number of People">
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={9}>9</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={11}>11</MenuItem>
+                <MenuItem value={12}>12</MenuItem>
+                <MenuItem value={13}>13</MenuItem>
+                <MenuItem value={14}>14</MenuItem>
+                <MenuItem value={15}>15</MenuItem>
+                <MenuItem value={16}>16</MenuItem>
+                <MenuItem value={17}>17</MenuItem>
+                <MenuItem value={18}>18</MenuItem>
+                <MenuItem value={19}>19</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Typography variant="h6" color="secondary">
+              Location
+            </Typography>
+
+            <FormControl variant="outlined" style={{ minWidth: 160, margin: 'dense' }}>
+              <InputLabel id="location">Location</InputLabel>
+              <Select
+                labelId="location"
+                id="location"
+                value={location}
+                onChange={e => setLocation(e.target.value as string)}
+                label="location"
+              >
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value={1}>A</MenuItem>
+                <MenuItem value={2}>B</MenuItem>
+                <MenuItem value={3}>C</MenuItem>
+              </Select>
+            </FormControl>
+
           </form>
         </div>
       </Grid>
