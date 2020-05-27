@@ -1,20 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-
-import { Booking, FourOFour, Home, Locations, LoginOld, SignUp, ViewMenu } from 'pages';
-import Dashboard from '../../pages/component/Dashboard';
-import './App.css';
-
-import Forgot from '../../pages/ForgotPassword/Forgot';
-
-import AuthContext from '../../context/authContext';
-
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
+
+import './App.css';
+import AuthContext from 'context/authContext';
+import {
+  /* Booking, */
+  FourOFour,
+  Home,
+  Login,
+  Locations,
+  SignUp,
+  ViewMenu
+} from 'pages';
+// import Dashboard from '../../pages/component/Dashboard';
 
 const theme = createMuiTheme({
   palette: {
@@ -68,34 +72,39 @@ const history = createBrowserHistory();
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache: new InMemoryCache(),
-  link: new HttpLink({ uri: 'http://localhost:4000/graphql', /* credentials: 'include' */ }),
+  link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
 });
 
 interface Props {
   accessToken: string,
-  userId: string
+  userId: string,
+  isLoggedIn: boolean,
 }
 
 class App extends React.Component<{}, Props> {
-
   constructor(props: Props) {
     super(props);
     this.state = {
       accessToken: null,
-      userId: null
+      userId: null,
+      isLoggedIn: false,
     };
   }
 
-
   login = (accessToken: string, userId: string) => {
-    this.setState({ accessToken: accessToken, userId: userId});
+    this.setState({ accessToken: accessToken, userId: userId, isLoggedIn: true });
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('userId', userId);
   };
 
   logout = () => {
-    this.setState({ accessToken: null, userId: null });
+    this.setState({ accessToken: null, userId: null, isLoggedIn: false });
+    // localStorage.removeItem('accessToken');
+    // localStorage.removeItem('userId');
   };
 
   render() {
+    console.log(`is logged in: ${this.state.isLoggedIn}`);
     return (
       <ApolloProvider client={client}>
         <Router history={history}>
@@ -111,8 +120,8 @@ class App extends React.Component<{}, Props> {
               <ThemeProvider theme={theme}>
                 <Switch>
                   {!this.state.accessToken && <Redirect from="/" to="/login" exact />}
-                  {this.state.accessToken && <Redirect from="/" to="/booking" exact />}
-                  {this.state.accessToken && <Redirect from="/login" to="/booking" exact />}
+                  {/* {this.state.accessToken && <Redirect from="/" to="/booking" exact />} */}
+                  {/* {this.state.accessToken && <Redirect from="/login" to="/booking" exact />} */}
 
                   {/* Home */}
                   <Route exact path="/" component={Home} />
@@ -130,23 +139,23 @@ class App extends React.Component<{}, Props> {
 
                   {/* Login */}
                   {!this.state.accessToken && (
-                  <Route path="/login" component={LoginOld} />
+                    <Route path="/login" component={Login} />
                   )}
 
                   {/* Forgot Password */}
-                  {!this.state.accessToken && (
-                  <Route path="/forgot-password" component={Forgot}/>
-                  )}
+                  {/* {!this.state.accessToken && (
+                    <Route path="/forgot-password" component={Forgot}/>
+                  )} */}
 
                   {/* Booking */}
-                  {this.state.accessToken && (
-                  <Route path="/booking" component={Booking} />
-                  )}
+                  {/* {this.state.accessToken && (
+                    <Route path="/booking" component={Booking} />
+                  )} */}
 
                   {/* Dashboard for Admin and Staff (WIP) */}
-                  {!this.state.accessToken && (
-                  <Route path="/dashboard" component={Dashboard} />
-                  )}
+                  {/* {!this.state.accessToken && (
+                    <Route path="/dashboard" component={Dashboard} />
+                  )} */}
 
                   {/* 404 */}
                   <Route component={FourOFour} />
