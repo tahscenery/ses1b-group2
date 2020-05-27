@@ -3,7 +3,7 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-import { Booking, FourOFour, Home, Locations, Login, SignUp, ViewMenu } from 'pages';
+import { Booking, FourOFour, Home, Locations, LoginOld, SignUp, ViewMenu } from 'pages';
 import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
 
@@ -122,7 +122,7 @@ class App extends React.Component<{}, Props> {
 
                   {/* Locations */}
                   <Route path="/locations" component={Locations} />
-                  
+
                   {/* Sign Up */}
                   {!this.state.accessToken && (
                   <Route path="/register" component={SignUp} />
@@ -130,7 +130,7 @@ class App extends React.Component<{}, Props> {
 
                   {/* Login */}
                   {!this.state.accessToken && (
-                  <Route path="/login" component={Login} />
+                  <Route path="/login" component={LoginOld} />
                   )}
 
                   {/* Forgot Password */}

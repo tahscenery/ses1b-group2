@@ -74,6 +74,7 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                           fullWidth
                           required
                           autoFocus
+                          error={true}
                           value={this.state.email}
                           onChange={this.handleChange}
                         />

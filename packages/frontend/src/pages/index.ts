@@ -3,7 +3,8 @@ import Booking from './Booking';
 import FourOFour from './FourOFour';
 import Home from './Home';
 import Locations from './Locations';
-import Login from './Login';
+// import Login from './Login';
+import LoginOld from './Login';
 import SignUp from './SignUp';
 import ViewMenu from './ViewMenu';
 
@@ -12,7 +13,7 @@ export {
   FourOFour,
   Home,
   Locations,
-  Login,
+  LoginOld,
   SignUp,
   ViewMenu
 };

@@ -23,6 +23,18 @@ const REGISTER_USER = gql`
   }
 `;
 
+/*
+  mutation MakeBooking(
+    $user: User!,
+    $items: [Items!],
+    $numberOfPeople: Int!,
+    $location: String!,
+    $tableNumber: Int!,
+  ) {
+    createOrders()
+  }
+*/
+
 const SignUp = () => {
   useEffect(() => {
     document.title = 'Sign Up – Sapori Unici';
