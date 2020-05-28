@@ -1,4 +1,4 @@
-// import Booking from './Booking';
+import * as booking from './Booking';
 // import ForgotPassword from './ForgotPassword';
 import FourOFour from './FourOFour';
 import Home from './Home';
@@ -8,7 +8,7 @@ import SignUp from './SignUp';
 import ViewMenu from './ViewMenu';
 
 export {
-  // Booking,
+  booking,
   FourOFour,
   Home,
   Locations,
