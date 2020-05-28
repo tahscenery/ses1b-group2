@@ -115,7 +115,9 @@ class App extends React.Component<{}, Props> {
                   {this.state.accessToken && <Redirect from="/login" to="/booking" exact />}
 
                   {/* Home */}
-                  <Route exact path="/" component={Home} />
+                  {this.state.accessToken && (
+                  <Route exact path="/home" component={Home} />
+                  )}
 
                   {/* View Menu */}
                   <Route exact path="/menu" component={ViewMenu} />

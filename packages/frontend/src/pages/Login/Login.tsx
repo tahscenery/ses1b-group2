@@ -35,7 +35,9 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
 
   state = {
     email: "bryancolin35@ymail.com",
-    password: "bryan1"
+    password: "bryan1",
+    accessToken: "",
+    userId: ""
   };
 
   handleChange = (e: any) => {
@@ -64,7 +66,7 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                         flexDirection: "column",
                       }}
                     >
-                      <div>
+                      
                         <TextField
                           variant="outlined"
                           id="email"
@@ -77,8 +79,8 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                           value={this.state.email}
                           onChange={this.handleChange}
                         />
-                      </div>
-                      <div>
+                      
+                      
                         <TextField
                           variant="outlined"
                           id="password"
@@ -91,7 +93,7 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                           value={this.state.password}
                           onChange={this.handleChange}
                         />
-                      </div>
+                      
                       <div>
                         <Button
                           className="login-button"
@@ -104,14 +106,21 @@ class Login extends React.PureComponent<RouteComponentProps<{}>> {
                             const response = await mutate({
                               variables: this.state
                             });
-                            console.log(response);
+                            var text = JSON.stringify(response, function (key, value) {
+                              if (key == "accessToken") {
+                                return value.toUpperCase();
+                              } else {
+                                return value;
+                              }
+                            });
+                            this.setState({accessToken: text });
+                            console.log(this.state.email);
+                            console.log(this.state.userId);
+                            console.log(this.state.accessToken);
+                            console.log(JSON.stringify(response.data.accessToken));
+                            console.log(JSON.stringify(response.data.userId));
                             this.context.login("a", "a");
-                            if (response.data.accessToken!=null) {
-                              this.context.login(response.data.accessToken, response.data.userId);
-                            }
-                            else {
-                              console.log("error");
-                            }
+
                           }}>
                           Sign In
                         </Button>

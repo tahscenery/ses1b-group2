@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import {getCustomer, addCustomer, addCustomerVariables, updateCustomer, updateCustomerVariables, deleteCustomer, deleteCustomerVariables} from "../../schemaTypes";
+import { getCustomer, addCustomer, addCustomerVariables, updateCustomer, updateCustomerVariables, deleteCustomer, deleteCustomerVariables } from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -67,8 +67,8 @@ export default function CustomerList() {
   const [add_Customer] = useMutation<addCustomer, addCustomerVariables>(CREATE_CUSTOMER);
   const [update_Customer] = useMutation<updateCustomer, updateCustomerVariables>(UPDATE_CUSTOMER);
   const [delete_Customer] = useMutation<deleteCustomer, deleteCustomerVariables>(DELETE_CUSTOMER);
-  
-  if (loading) return<LinearProgress />;
+
+  if (loading) return <LinearProgress />;
   if (error) return <Alert severity="error">This is an error message!</Alert>;
   if (!data) return <p>Not found</p>;
 
@@ -78,7 +78,7 @@ export default function CustomerList() {
         title="Customer List"
         columns={state.columns}
         data={data.allUsers}
-
+        
         editable={{
 
           onRowAdd: (newData) =>
@@ -113,7 +113,7 @@ export default function CustomerList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                delete_Customer( {variables: { id: oldData.id}} );
+                delete_Customer({ variables: { id: oldData.id } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

@@ -288,6 +288,31 @@ export interface getMe {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: loggedin
+// ====================================================
+
+export interface loggedin_user {
+  __typename: "User";
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface loggedin {
+  user: loggedin_user;
+}
+
+export interface loggedinVariables {
+  id: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: LoginMutation
 // ====================================================
 

@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Table from './Table/Table';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
+  Button,
   Paper,
   CssBaseline,
   Grid,
@@ -11,8 +12,9 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  Select
+  Select,
 } from '@material-ui/core';
+
 
 import './Booking.css';
 
@@ -54,16 +56,18 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 function Booking() {
 
   const classes = useStyles();
   const [numberOfPeople, setNumberOfPeople] = useState(0);
   const [location, setLocation] = useState('');
   const [date, setDate] = useState<Date | null>(new Date('2020-01-18T21:11:54'));
+  //const [selectTable, setSelectedTable] = useState();
 
   const handleDateChange = (date: Date | null) => {
     setDate(date);
+    console.log(date);
+    console.log(numberOfPeople);
   };
 
   const query = useQuery<TableData>(TABLE_QUERY);
@@ -98,7 +102,7 @@ function Booking() {
             </Typography>
 
             <FormControl variant="outlined" className={classes.formControl}>
-              <InputLabel id="number">Number</InputLabel>
+              <InputLabel id="number">Number of People</InputLabel>
               <Select
                 labelId="numberOfPeople"
                 id="numberOfPeople"
@@ -160,10 +164,12 @@ function Booking() {
             </Typography>
           <form className="table-form">
             <React.Fragment>
-              <Table queryResult={query} />
+              <Table queryResult={query}/>
             </React.Fragment>
           </form>
         </div>
+
+        <Button variant="outlined">Next</Button>
       </Grid>
     </Grid>
   );
