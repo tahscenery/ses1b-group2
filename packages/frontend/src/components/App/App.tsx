@@ -9,15 +9,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import './App.css';
 import AuthContext from 'context/authContext';
-import {
-  /* Booking, */
-  FourOFour,
-  Home,
-  Login,
-  Locations,
-  SignUp,
-  ViewMenu
-} from 'pages';
+import { booking, FourOFour, Home, Login, Locations, SignUp, ViewMenu } from 'pages';
 // import Dashboard from '../../pages/component/Dashboard';
 
 const theme = createMuiTheme({
@@ -92,19 +84,21 @@ class App extends React.Component<{}, Props> {
   }
 
   login = (accessToken: string, userId: string) => {
-    this.setState({ accessToken: accessToken, userId: userId, isLoggedIn: true });
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('userId', userId);
+    this.setState({ accessToken: accessToken, userId: userId, isLoggedIn: true }, () => {
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('userId', userId);
+    });
   };
 
   logout = () => {
-    this.setState({ accessToken: null, userId: null, isLoggedIn: false });
-    // localStorage.removeItem('accessToken');
-    // localStorage.removeItem('userId');
+    this.setState({ accessToken: null, userId: null, isLoggedIn: false }, () => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('userId');
+    });
   };
 
   render() {
-    console.log(`is logged in: ${this.state.isLoggedIn}`);
+    // console.log(`is logged in: ${this.state.isLoggedIn}`);
     return (
       <ApolloProvider client={client}>
         <Router history={history}>
@@ -119,7 +113,7 @@ class App extends React.Component<{}, Props> {
             >
               <ThemeProvider theme={theme}>
                 <Switch>
-                  {!this.state.accessToken && <Redirect from="/" to="/login" exact />}
+                  {/* {!this.state.accessToken && <Redirect from="/" to="/login" exact />} */}
                   {/* {this.state.accessToken && <Redirect from="/" to="/booking" exact />} */}
                   {/* {this.state.accessToken && <Redirect from="/login" to="/booking" exact />} */}
 
@@ -149,8 +143,9 @@ class App extends React.Component<{}, Props> {
 
                   {/* Booking */}
                   {/* {this.state.accessToken && (
-                    <Route path="/booking" component={Booking} />
+                    <Route path="/booking" component={booking.Booking} />
                   )} */}
+                  <Route path="/booking" component={booking.Booking} />
 
                   {/* Dashboard for Admin and Staff (WIP) */}
                   {/* {!this.state.accessToken && (
