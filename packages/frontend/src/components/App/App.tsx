@@ -11,7 +11,7 @@ import './App.css';
 import NavBar from 'components/NavBar';
 import PrivateRoute from 'components/PrivateRoute';
 import AuthContext, { User } from 'context/authContext';
-import { makeBooking, FourOFour, Home, Login, Locations, SignUp, ViewMenu, Dashboard } from 'pages';
+import { FourOFour, Home, Login, Locations, MakeBooking, SignUp, ViewMenu, Dashboard } from 'pages';
 
 const theme = createMuiTheme({
   palette: {
@@ -78,10 +78,7 @@ const Routes = () => {
       <Route path="/login" component={Login} />
       {/* <Route path="/forgot-password" component={ForgotPassword} /> */}
 
-      <PrivateRoute path="/make-booking"><makeBooking.MakeBooking/></PrivateRoute>
-      <PrivateRoute path="/select-items"><makeBooking.SelectItems/></PrivateRoute>
-      <PrivateRoute path="/select-table"><makeBooking.SelectTable/></PrivateRoute>
-
+      <PrivateRoute path="/make-booking"><MakeBooking/></PrivateRoute>
       <PrivateRoute path="/dashboard"><Dashboard/></PrivateRoute>
 
       <Route component={FourOFour} />

@@ -1,9 +1,2 @@
-import MakeBooking from './pages/MakeBooking';
-import SelectItems from './pages/SelectItems';
-import SelectTable from './pages/SelectTable';
-
-export {
-  MakeBooking,
-  SelectItems,
-  SelectTable,
-};
+import MakeBooking from './MakeBooking';
+export default MakeBooking;
