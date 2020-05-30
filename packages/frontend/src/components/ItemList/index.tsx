@@ -16,12 +16,7 @@ function ItemList<T>({ queryResult, numberOfLoadingCards, children }: ItemListPr
   if (error) { return <p>(ERROR) {error.message}</p>; }
   if (!data) { return <p>(NO DATA)</p>; }
 
-  console.log(data);
-  return (
-    <>
-      {children(data)}
-    </>
-  );
+  return (<>{children(data)}</>);
 }
 
 export default ItemList;

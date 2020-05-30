@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Divider, List, ListItem, ListItemIcon, ListItemText, Typography, Radio } from '@material-ui/core';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import './SelectTable.css';
 import ItemList from 'components/ItemList';
 import BookingContext, { CurrentProgress } from 'context/bookingContext';
 
@@ -31,33 +30,9 @@ const GET_TABLES = gql`
   }
 `;
 
-interface TableRowItemProps {
-  item: Table;
-}
-
-const TableListRow = ({ item: table }: TableRowItemProps) => {
-  return (
-    <div className="table-list-row">
-      {/* <div className="table-list-row-header">
-        <Typography variant="h3">Table {table.tableNumber}</Typography>
-        <Button color="secondary" variant="outlined">Select</Button>
-      </div>
-      <p>{table.minCapacity} to {table.maxCapacity} people</p> */}
-      <div className="table-list-row-contents">
-        <label htmlFor={table.id}>
-          <div>
-            <Typography variant="h3">Table {table.tableNumber}</Typography>
-            <p>{table.minCapacity} to {table.maxCapacity} people</p>
-          </div>
-          <input type="radio" name="table" id={table.id} />
-        </label>
-      </div>
-    </div>
-  )
-}
-
 const SelectTable = () => {
   const context = useContext(BookingContext);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [selectedTable, setSelectedTable] = useState<string | null>(null);
 
   const queryResult = useQuery<TablesData>(GET_TABLES);
@@ -71,22 +46,46 @@ const SelectTable = () => {
     context.setCurrentProgress(CurrentProgress.SELECT_ITEMS);
   }
 
+  const handleToggle = (index: number, table: Table) => {
+    if (selectedIndex === index) {
+      setSelectedIndex(null);
+      setSelectedTable(null);
+    } else {
+      setSelectedIndex(index);
+      setSelectedTable(table.id);
+    }
+  }
+
   return (
     <div className="booking-form-container">
-      <Typography variant="h2">Select Table</Typography>
-      <div>
-        <form noValidate onSubmit={_ => {}}>
-          <ItemList queryResult={queryResult} numberOfLoadingCards={4}>
-            {results => results.allTables
-              .filter(table =>
-                table.minCapacity <= context.bookingDetails.numberOfPeople
-                && table.maxCapacity >= context.bookingDetails.numberOfPeople)
-              .map((item, index) => (
-                <TableListRow key={index} item={item}/>
-              ))}
-          </ItemList>
-        </form>
-      </div>
+      <Typography variant="h2">Select a table</Typography>
+      <p>Now select a table from the list below.</p>
+      <List>
+        <ItemList queryResult={queryResult} numberOfLoadingCards={4}>
+          {results => results.allTables
+            .filter(table =>
+              table.minCapacity <= context.bookingDetails.numberOfPeople
+              && table.maxCapacity >= context.bookingDetails.numberOfPeople)
+            .map((table, index) => (
+              <>
+                <ListItem
+                  button
+                  key={`ListItem#${index}`}
+                  selected={selectedIndex === index}
+                  onClick={_ => handleToggle(index, table)}>
+                  <ListItemText
+                    key={`ListItemText#${index}`}
+                    primary={`Table ${table.tableNumber}`}
+                    secondary={`Suitable for ${table.minCapacity} to ${table.maxCapacity} people`}/>
+                  <ListItemIcon>
+                    <Radio checked={selectedIndex === index} />
+                  </ListItemIcon>
+                </ListItem>
+                <Divider />
+              </>
+            ))}
+        </ItemList>
+      </List>
       <div className="booking-footer">
         <Button
           color="secondary"
@@ -98,6 +97,7 @@ const SelectTable = () => {
         <Button
           color="primary"
           variant="contained"
+          disabled={selectedTable === null || selectedTable === undefined}
           onClick={handleNext}
           size="large"
         >

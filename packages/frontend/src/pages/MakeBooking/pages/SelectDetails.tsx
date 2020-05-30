@@ -45,7 +45,8 @@ const SelectDetails = () => {
 
   return (
     <div className="booking-form-container">
-      <Typography variant="h2">Booking Details</Typography>
+      <Typography variant="h2">Make a booking</Typography>
+      <p>To start a booking, fill in the details below.</p>
       <form className="booking-form">
         <div>
           <Typography gutterBottom>Number of People</Typography>
