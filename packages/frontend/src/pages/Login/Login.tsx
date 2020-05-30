@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {
@@ -11,7 +12,6 @@ import {
 } from '@material-ui/core';
 
 import './Login.css';
-import NavBar from 'components/NavBar';
 import AuthContext from 'context/authContext';
 
 interface LoginResponse {
@@ -40,11 +40,13 @@ const Login = () => {
     document.title = 'Login - Sapori Unici';
   }, []);
 
-  // const history = useHistory();
+  const history = useHistory();
+  const location = useLocation<{ didRedirect: boolean, from: { pathname: string } }>();
+  const context = useContext(AuthContext);
+  const { didRedirect, from } = location.state || { from: { pathname: "/" } };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const context = useContext(AuthContext);
 
   const [loginUser, { error }] =
     useMutation<LoginResponse, LoginParams>(LOGIN_USER, {
@@ -53,7 +55,7 @@ const Login = () => {
 
   const handleLoginUser = () => {
     if (!email.toUpperCase().match(/^[A-Z0-9._%+-]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/g)) {
-      throw new Error("Email field doesn't appear to be a valid email address");
+      throw new Error(`Email field doesn't appear to be a valid email address: '${email}'`);
     }
 
     if (password.length < 8) {
@@ -66,7 +68,12 @@ const Login = () => {
         console.log(`DATA: ${JSON.stringify(response.data)}`);
         if (response.data) {
           const loginData = response.data.Login;
-          context.login(loginData.accessToken, loginData.userId);
+          context.login({
+            accessToken: loginData.accessToken,
+            userId: loginData.userId,
+            isAdmin: false,
+          });
+          history.replace(from);
         } else {
           console.log('Error: No data from response.');
         }
@@ -85,11 +92,11 @@ const Login = () => {
 
   return (
     <div>
-      <NavBar/>
       <div className="component-container">
         <div className="login-form">
           <Typography variant="h2">Login</Typography>
           <p>Sign in with your email and password below.</p>
+          {didRedirect ? <p>You must login to view this page first</p> : null}
           {error ? <p>(ERROR): {error.message}</p> : null}
           <form noValidate onSubmit={e => handleSubmit(e)}>
             <TextField

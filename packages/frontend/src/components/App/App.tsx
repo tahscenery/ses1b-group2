@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
@@ -8,9 +8,10 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import './App.css';
-import AuthContext from 'context/authContext';
-import { booking, FourOFour, Home, Login, Locations, SignUp, ViewMenu } from 'pages';
-// import Dashboard from '../../pages/component/Dashboard';
+import NavBar from 'components/NavBar';
+import PrivateRoute from 'components/PrivateRoute';
+import AuthContext, { User } from 'context/authContext';
+import { makeBooking, FourOFour, Home, Login, Locations, SignUp, ViewMenu, Dashboard } from 'pages';
 
 const theme = createMuiTheme({
   palette: {
@@ -67,101 +68,61 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:4000/graphql' }),
 });
 
-interface Props {
-  accessToken: string,
-  userId: string,
-  isLoggedIn: boolean,
+const Routes = () => {
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/menu" component={ViewMenu} />
+      <Route path="/locations" component={Locations} />
+      <Route path="/register" component={SignUp} />
+      <Route path="/login" component={Login} />
+      {/* <Route path="/forgot-password" component={ForgotPassword} /> */}
+
+      <PrivateRoute path="/make-booking"><makeBooking.MakeBooking/></PrivateRoute>
+      <PrivateRoute path="/select-items"><makeBooking.SelectItems/></PrivateRoute>
+      <PrivateRoute path="/select-table"><makeBooking.SelectTable/></PrivateRoute>
+
+      <PrivateRoute path="/dashboard"><Dashboard/></PrivateRoute>
+
+      <Route component={FourOFour} />
+    </Switch>
+  );
 }
 
-class App extends React.Component<{}, Props> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      accessToken: null,
-      userId: null,
-      isLoggedIn: false,
-    };
+const App = () => {
+  const getUserFromLocalStorage: () => User | null = () => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      return JSON.parse(userData);
+    }
+    return null;
   }
 
-  login = (accessToken: string, userId: string) => {
-    this.setState({ accessToken: accessToken, userId: userId, isLoggedIn: true }, () => {
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', userId);
-    });
-  };
+  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
 
-  logout = () => {
-    this.setState({ accessToken: null, userId: null, isLoggedIn: false }, () => {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('userId');
-    });
-  };
+  const login = (user: User) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
 
-  render() {
-    // console.log(`is logged in: ${this.state.isLoggedIn}`);
-    return (
-      <ApolloProvider client={client}>
-        <Router history={history}>
-          <React.Fragment>
-            <AuthContext.Provider
-              value={{
-                accessToken: this.state.accessToken,
-                userId: this.state.userId,
-                login: this.login,
-                logout: this.logout
-              }}
-            >
-              <ThemeProvider theme={theme}>
-                <Switch>
-                  {/* {!this.state.accessToken && <Redirect from="/" to="/login" exact />} */}
-                  {/* {this.state.accessToken && <Redirect from="/" to="/booking" exact />} */}
-                  {/* {this.state.accessToken && <Redirect from="/login" to="/booking" exact />} */}
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+    history.push("/logout");
+  }
 
-                  {/* Home */}
-                  <Route exact path="/" component={Home} />
-
-                  {/* View Menu */}
-                  <Route exact path="/menu" component={ViewMenu} />
-
-                  {/* Locations */}
-                  <Route path="/locations" component={Locations} />
-
-                  {/* Sign Up */}
-                  {!this.state.accessToken && (
-                  <Route path="/register" component={SignUp} />
-                  )}
-
-                  {/* Login */}
-                  {!this.state.accessToken && (
-                    <Route path="/login" component={Login} />
-                  )}
-
-                  {/* Forgot Password */}
-                  {/* {!this.state.accessToken && (
-                    <Route path="/forgot-password" component={Forgot}/>
-                  )} */}
-
-                  {/* Booking */}
-                  {/* {this.state.accessToken && (
-                    <Route path="/booking" component={booking.Booking} />
-                  )} */}
-                  <Route path="/booking" component={booking.Booking} />
-
-                  {/* Dashboard for Admin and Staff (WIP) */}
-                  {/* {!this.state.accessToken && (
-                    <Route path="/dashboard" component={Dashboard} />
-                  )} */}
-
-                  {/* 404 */}
-                  <Route component={FourOFour} />
-                </Switch>
-              </ThemeProvider>
-            </AuthContext.Provider>
-          </React.Fragment>
-        </Router>
-      </ApolloProvider>
-    );
-  };
+  return (
+    <ApolloProvider client={client}>
+      <AuthContext.Provider value={{ user, login, logout }}>
+        <ThemeProvider theme={theme}>
+          <Router history={history}>
+            <NavBar />
+            <Routes />
+          </Router>
+        </ThemeProvider>
+      </AuthContext.Provider>
+    </ApolloProvider>
+  );
 }
 
 export default App;

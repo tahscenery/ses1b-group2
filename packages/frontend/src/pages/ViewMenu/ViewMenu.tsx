@@ -5,7 +5,7 @@ import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import './ViewMenu.css';
-import NavBar from 'components/NavBar';
+// import NavBar from 'components/NavBar';
 import LoadingCard from './LoadingCard';
 
 enum Category {
@@ -86,7 +86,6 @@ const ViewMenu = () => {
 
   return (
     <div>
-      <NavBar/>
       <div className="view-menu-container">
         <div className="view-menu">
           <div className="view-menu-collection">

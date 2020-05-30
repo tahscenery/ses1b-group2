@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Link, TextField, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import './SignUp.css';
-import NavBar from 'components/NavBar';
+import AuthContext from 'context/authContext';
 
 interface RegisterResponse {
   Register: boolean;
@@ -28,6 +28,7 @@ const SignUp = () => {
     document.title = 'Sign Up – Sapori Unici';
   }, []);
 
+  // const context = useContext(AuthContext);
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -67,7 +68,6 @@ const SignUp = () => {
       .then(res => {
         console.log(`DATA: ${JSON.stringify(res.data)}`);
         console.log('Redirecting...');
-        history.push('/login');
       })
       .catch(error => console.error(error));
   }
@@ -83,7 +83,6 @@ const SignUp = () => {
 
   return (
     <div>
-      <NavBar/>
       <div className="component-container">
         <div className="sign-up-form">
           <Typography variant="h2">Sign Up</Typography>

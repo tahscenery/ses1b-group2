@@ -1,4 +1,5 @@
-import * as booking from './Booking';
+import * as makeBooking from './MakeBooking';
+import Dashboard from './Dashboard';
 // import ForgotPassword from './ForgotPassword';
 import FourOFour from './FourOFour';
 import Home from './Home';
@@ -8,7 +9,8 @@ import SignUp from './SignUp';
 import ViewMenu from './ViewMenu';
 
 export {
-  booking,
+  makeBooking,
+  Dashboard,
   FourOFour,
   Home,
   Locations,

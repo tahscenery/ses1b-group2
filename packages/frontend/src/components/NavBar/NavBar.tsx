@@ -1,11 +1,16 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, IconButton, Typography } from '@material-ui/core'
 import Menu from '@material-ui/icons/Menu';
 import Close from '@material-ui/icons/Close'
 
 import './NavBar.css';
+import AuthContext, { User } from 'context/authContext';
 
 const NavBar = () => {
+  const history = useHistory();
+  const context = useContext(AuthContext);
+
   const [shouldShowMenu, setShouldShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -19,6 +24,12 @@ const NavBar = () => {
         navBarMenu.classList.remove('collapsed');
       }
     }
+  }
+
+  const handleSignOut = () => {
+    context.logout();
+    console.log('Logged out');
+    history.push('/login');
   }
 
   return (
@@ -39,8 +50,21 @@ const NavBar = () => {
             <ul>
               <li><Button variant="outlined" color="primary" href="/menu">Our Menu</Button></li>
               <li><Button variant="outlined" color="primary" href="/locations">Locations</Button></li>
-              <li><Button variant="outlined" color="primary" href="/register">Sign Up</Button></li>
-              <li><Button variant="outlined" color="primary" href="/login">Login</Button></li>
+              {context.user ? (
+                <>
+                  {context.user.isAdmin ? (
+                    <li><Button variant="outlined" color="primary" href="/make-booking">Make Booking</Button></li>
+                  ) : (
+                    <li><Button variant="outlined" color="primary" href="/make-booking">Make Booking</Button></li>
+                  )}
+                  <li><Button variant="outlined" color="primary" onClick={handleSignOut}>Sign Out</Button></li>
+                </>
+              ) : (
+                <>
+                  <li><Button variant="outlined" color="primary" href="/register">Sign Up</Button></li>
+                  <li><Button variant="outlined" color="primary" href="/login">Login</Button></li>
+                </>
+              )}
             </ul>
           </nav>
         </div>

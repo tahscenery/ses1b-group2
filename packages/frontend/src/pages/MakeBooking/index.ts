@@ -1,9 +1,9 @@
-import Booking from './pages/Booking';
+import MakeBooking from './pages/MakeBooking';
 import SelectItems from './pages/SelectItems';
 import SelectTable from './pages/SelectTable';
 
 export {
-  Booking,
+  MakeBooking,
   SelectItems,
   SelectTable,
 };

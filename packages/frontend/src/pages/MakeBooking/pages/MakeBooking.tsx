@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { Button, MenuItem, Slider, TextField, Typography } from '@material-ui/core';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-import './Booking.css';
-import NavBar from 'components/NavBar';
+import './MakeBooking.css';
 
-const Booking = () => {
+const MakeBooking = () => {
   // const history = useHistory();
 
   const [numberOfPeople, setNumberOfPeople] = useState(0);
@@ -40,7 +39,7 @@ const Booking = () => {
 
   return (
     <div>
-      <NavBar/>
+      {/* <NavBar/> */}
       <div className="component-container">
         <div className="booking-form-container">
           <Typography variant="h2">Booking</Typography>
@@ -99,4 +98,4 @@ const Booking = () => {
   );
 }
 
-export default Booking;
+export default MakeBooking;
