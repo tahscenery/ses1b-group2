@@ -10,7 +10,7 @@ const SelectDetails = () => {
   const context = useContext(BookingContext);
   const history = useHistory();
 
-  const [numberOfPeople, setNumberOfPeople] = useState(context.bookingDetails.numberOfPeople);
+  const [numberOfPeople, setNumberOfPeople] = useState(context.bookingDetails.numberOfPeople || 1);
   const [location, setLocation] = useState<string | null>(context.bookingDetails.location);
   const [selectedDate, setSelectedDate] = useState<Date | null>(context.bookingDetails.selectedDate);
 
@@ -91,7 +91,7 @@ const SelectDetails = () => {
           variant="contained"
           onClick={handleNext}
           size="large"
-          disabled={location === null || selectedDate === null}
+          disabled={location === null && selectedDate === null}
         >
           Next
         </Button>

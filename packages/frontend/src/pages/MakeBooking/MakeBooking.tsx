@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 
 import './MakeBooking.css';
 import BookingContext, { BookingDetails, CurrentProgress } from 'context/bookingContext';
@@ -8,6 +7,10 @@ import SelectItems from './pages/SelectItems';
 import SelectTable from './pages/SelectTable';
 
 const MakeBooking = () => {
+  useEffect(() => {
+    document.title = 'Make Booking – Sapori Unici';
+  });
+
   const [currentProgress, _setCurrentProgress] = useState(CurrentProgress.SELECT_DETAILS);
   const [bookingDetails, _setBookingDetails] = useState<BookingDetails>({});
 
