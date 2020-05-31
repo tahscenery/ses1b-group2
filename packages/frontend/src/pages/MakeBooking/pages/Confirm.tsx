@@ -4,6 +4,7 @@ import { Button, Paper, Typography } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation } from '@apollo/react-hooks';
+import StripeCheckout from 'react-stripe-checkout';
 import gql from 'graphql-tag';
 
 import './Confirm.css';
@@ -43,6 +44,30 @@ const CREATE_ORDER = gql`
   }
 `;
 
+export interface CreateSubscriptionMutation_createSubcription {
+  __typename: "User";
+  id: string;
+  email: string;
+}
+
+export interface CreateSubscriptionMutation {
+  createSubcription: CreateSubscriptionMutation_createSubcription;
+}
+
+export interface CreateSubscriptionMutationVariables {
+  source: string;
+  id: string;
+}
+
+const CREATE_SUBSCRIPTION = gql`
+  mutation CreateSubscriptionMutation($source: String!, $id: String!) {
+    createSubcription(source: $source, id: $id) {
+      id
+      email
+    }
+  }
+`;
+
 const useStyles = makeStyles({
   tableEmphasis: {
     fontWeight: "bold",
@@ -63,6 +88,8 @@ const Confirm = () => {
 
   const [createOrder, {}] =
     useMutation<CreateOrderResponse, CreateOrderParams>(CREATE_ORDER);
+
+  const [pay] = useMutation<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>(CREATE_SUBSCRIPTION);
 
   const styles = useStyles();
 
@@ -94,6 +121,11 @@ const Confirm = () => {
           .catch(error => console.error(`An error occurred: ${error}`));
       })
       .catch(error => console.error(`An error occurred: ${error}`));
+  }
+
+  const handleToken = () => {
+    //pay({variables: {source:"", id: authContext.user.userId}});
+    history.push('/dashboard');
   }
 
   let total = 0;
@@ -198,8 +230,18 @@ const Confirm = () => {
           size="large"
           onClick={handleConfirm}
         >
-          Confirm and Pay
+          Confirm
         </Button>
+        {bookingDetails.selectedItems.map((item, index) => (
+          <StripeCheckout
+            stripeKey="pk_test_uAMIN59vqRuzrMicoGTAyacQ00EKaAXDAl"
+            token={handleToken}
+            billingAddress
+            shippingAddress
+            amount={item.price * 100}
+            name="Sapori Unici"
+          />
+        ))}
       </div>
     </div>
   )

@@ -5,6 +5,9 @@ import { buildSchema } from "type-graphql";
 import cors from "cors";
 import * as resolvers from "./resolvers";
 import connectDB from "./connection";
+import {stripe} from "./stripe";
+
+stripe;
 
 const main = async () => {
   const schema = await buildSchema({

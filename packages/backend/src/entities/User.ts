@@ -18,6 +18,12 @@ export class User implements Identifiable {
   @Field()
   @Property({ required: true })
   password: string;
+
+  @Field()
+  stripe_id: string;
+
+  @Field()
+  type: string;
 }
 
 export const UserModel = getModelForClass(User);

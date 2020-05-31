@@ -36,6 +36,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.3",
     "reflect-metadata": "^0.1.13",
+    "stripe": "^8.56.0",
     "type-graphql": "^0.17.6",
     "typeorm": "^0.2.24"
   }
