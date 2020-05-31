@@ -188,6 +188,7 @@ class UserResolver {
     await UserModel.deleteOne({ _id: id });
     return true;
   }
+  
 }
 
 export default UserResolver;
