@@ -53,9 +53,9 @@ const NavBar = () => {
               {context.user ? (
                 <>
                   {context.user.isAdmin ? (
-                    <li><Button variant="outlined" color="primary" href="/make-booking">Make Booking</Button></li>
+                    <li><Button variant="outlined" color="primary" href="/admin">Admin</Button></li>
                   ) : (
-                    <li><Button variant="outlined" color="primary" href="/make-booking">Make Booking</Button></li>
+                    <li><Button variant="outlined" color="primary" href="/dashboard">My Bookings</Button></li>
                   )}
                   <li><Button variant="outlined" color="primary" onClick={handleSignOut}>Sign Out</Button></li>
                 </>

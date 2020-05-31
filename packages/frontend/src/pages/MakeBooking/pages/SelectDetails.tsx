@@ -47,7 +47,7 @@ const SelectDetails = () => {
     <div className="booking-form-container">
       <Typography variant="h2">Make a booking</Typography>
       <p>To start a booking, fill in the details below.</p>
-      <form className="booking-form">
+      <form className="booking-form" onSubmit={e => e.preventDefault()}>
         <div>
           <Typography gutterBottom>Number of People</Typography>
           <Slider

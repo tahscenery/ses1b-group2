@@ -29,6 +29,11 @@ const LOGIN_USER = gql`
   }
 `;
 
+interface FormErrors {
+  email: boolean;
+  password: boolean;
+}
+
 const Login = () => {
   useEffect(() => {
     document.title = 'Login - Sapori Unici';
@@ -42,19 +47,34 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [loginUser, { error }] =
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FormErrors>({
+    email: false,
+    password: false,
+  });
+
+  const [loginUser, { error: loginError }] =
     useMutation<LoginResponse, LoginParams>(LOGIN_USER, {
       variables: { email, password }
     });
 
+  const handleChange = (newValue: string, setter: (_: string) => void) => {
+    setter(newValue);
+    setErrors({ email: false, password: false });
+  }
+
   const handleLoginUser = () => {
     if (!email.toUpperCase().match(/^[A-Z0-9._%+-]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/g)) {
-      throw new Error(`Email field doesn't appear to be a valid email address: '${email}'`);
+      setErrors({ ...errors, email: true });
+      throw new Error("The provided email address doesn't appear to be a valid");
     }
 
-    if (password.length < 8) {
-      throw new Error('Password must contain at least 8 characters');
+    if (password.length === 0 || password.length < 8) {
+      setErrors({ ...errors, password: true });
+      throw new Error("Please input your password");
     }
+
+    setErrors({ email: false, password: false });
 
     console.log('Logging user in...');
     loginUser()
@@ -81,6 +101,7 @@ const Login = () => {
       handleLoginUser();
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.message);
     }
   }
 
@@ -92,8 +113,13 @@ const Login = () => {
         <div className="login-form">
           <Typography variant="h2">Login</Typography>
           <p>Sign in with your email and password below.</p>
-          {didRedirect ? <Alert severity="error">{redirectMessage}</Alert> : null}
-          {error ? <Alert severity="error">{error.message}</Alert> : null}
+          {didRedirect ? <Alert severity="warning">{redirectMessage}</Alert> : null}
+          {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
+          {loginError ? (
+            loginError.graphQLErrors.map((error, index) => (
+              <Alert key={`alert-${index}`} severity="error">{error.message}</Alert>
+            ))
+          ) : null}
           <form noValidate onSubmit={e => handleSubmit(e)}>
             <TextField
               variant="outlined"
@@ -104,7 +130,9 @@ const Login = () => {
               fullWidth
               required
               autoFocus
-              onChange={e => setEmail(e.target.value)}
+              focused={errors.email}
+              error={errors.email}
+              onChange={e => handleChange(e.target.value, setEmail)}
             />
             <TextField
               variant="outlined"
@@ -115,7 +143,9 @@ const Login = () => {
               margin="normal"
               fullWidth
               required
-              onChange={e => setPassword(e.target.value)}
+              focused={errors.password}
+              error={errors.password}
+              onChange={e => handleChange(e.target.value, setPassword)}
             />
             <FormControlLabel
               label="Remember me"
