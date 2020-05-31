@@ -1,0 +1,19 @@
+.list {
+  overflow: auto;
+  flex-grow: 1;
+  max-height: 400px;
+}
+
+.list-category {
+  padding: 10px 0;
+  background-color: white;
+}
+
+.list-category-subheader {
+  padding: 15px 0;
+}
+
+.list-category ul {
+  background-color: inherit;
+  padding: 0;
+}
