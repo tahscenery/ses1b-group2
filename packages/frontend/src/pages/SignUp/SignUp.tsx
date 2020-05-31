@@ -1,20 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+// import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Link, TextField, Typography } from '@material-ui/core';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import gql from 'graphql-tag';
 
 import './SignUp.css';
-import AuthContext from 'context/authContext';
-
-interface RegisterResponse {
-  Register: boolean;
-}
+// import AuthContext from 'context/authContext';
 
 interface RegisterParams {
   name: string;
   email: string;
   password: string;
+}
+
+interface RegisterResponse {
+  Register: boolean;
 }
 
 const REGISTER_USER = gql`
@@ -23,29 +24,34 @@ const REGISTER_USER = gql`
   }
 `;
 
+const Alert = (props: AlertProps) => {
+  return <MuiAlert elevation={2} variant="filled" {...props} />
+}
+
 const SignUp = () => {
   useEffect(() => {
     document.title = 'Sign Up – Sapori Unici';
   }, []);
 
   // const context = useContext(AuthContext);
-  const history = useHistory();
+  // const history = useHistory();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
-  const [registerUser, { error, data }] =
+  const [registerUser, { error: registerError, data }] =
     useMutation<RegisterResponse, RegisterParams>(REGISTER_USER, {
       variables: { name, email, password }
     });
 
   const handleRegisterUser = () => {
-    console.log(`Name: ${name}`);
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
-    console.log(`Confirm Password: ${confirmPassword}`);
+    // console.log(`Name: ${name}`);
+    // console.log(`Email: ${email}`);
+    // console.log(`Password: ${password}`);
+    // console.log(`Confirm Password: ${confirmPassword}`);
 
     if (name.length < 2) {
       throw new Error("Name must have at least two characters");
@@ -78,6 +84,7 @@ const SignUp = () => {
       handleRegisterUser();
     } catch (error) {
       console.log(error);
+      setError(error.message);
     }
   }
 
@@ -87,8 +94,9 @@ const SignUp = () => {
         <div className="sign-up-form">
           <Typography variant="h2">Sign Up</Typography>
           <p>Don't have an account? Fill in the details below to get started.</p>
-          {error ? <p>(ERRROR): {error.message}</p> : null}
-          {data && data.Register ? <p>Success!</p> : null}
+          {error ? <Alert severity="error">{error}</Alert> : null}
+          {registerError ? <Alert severity="error">{registerError.message}</Alert> : null}
+          {data && data.Register ? <Alert severity="success">Success!</Alert> : null}
           <form noValidate onSubmit={e => handleSubmit(e)}>
             <TextField
               variant="outlined"

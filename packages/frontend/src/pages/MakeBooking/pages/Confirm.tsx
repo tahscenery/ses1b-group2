@@ -1,11 +1,47 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import './Confirm.css';
 import AuthContext from 'context/authContext';
 import BookingContext, { BookingDetails, CurrentProgress } from 'context/bookingContext';
+
+interface CreateOrderParams {
+  userId: string;
+  tableId: string;
+  date: Date;
+  location: string;
+  numberOfPeople: number;
+  items: string[];
+}
+
+interface CreateOrderResponse {
+  createOrder: boolean;
+}
+
+const CREATE_ORDER = gql`
+  mutation createOrder(
+    $userId: String!,
+    $tableId: String!,
+    $date: DateTime!,
+    $location: String!,
+    $numberOfPeople: Float!,
+    $items: [String!]!
+  ) {
+    createOrder(data: {
+      userId: $userId,
+      tableId: $tableId,
+      date: $date,
+      location: $location,
+      numberOfPeople: $numberOfPeople,
+      items: $items
+    })
+  }
+`;
 
 const useStyles = makeStyles({
   tableEmphasis: {
@@ -20,9 +56,13 @@ const handlePayment = (bookingDetails: BookingDetails) => {
 }
 
 const Confirm = () => {
-  // const authContext = useContext(AuthContext);
+  const history = useHistory();
+  const authContext = useContext(AuthContext);
   const bookingContext = useContext(BookingContext);
   const bookingDetails = bookingContext.bookingDetails;
+
+  const [createOrder, { error, data }] =
+    useMutation<CreateOrderResponse, CreateOrderParams>(CREATE_ORDER);
 
   const styles = useStyles();
 
@@ -32,7 +72,23 @@ const Confirm = () => {
 
   const handleConfirm = () => {
     handlePayment(bookingDetails)
-      .then(_ => console.log("TODO..."))
+      .then(_ => {
+        const variables = {
+          userId: authContext.user.userId,
+          tableId: bookingDetails.selectedTable.id,
+          date: bookingDetails.selectedDate,
+          location: bookingDetails.location,
+          numberOfPeople: bookingDetails.numberOfPeople,
+          items: bookingDetails.selectedItems.map(item => item.id),
+        };
+
+        createOrder({ variables })
+          .then(res => {
+            console.log(`DATA: ${JSON.stringify(res.data)}`);
+            history.push('/dashboard', { didCreateOrder: true })
+          })
+          .catch(error => console.error(`An error occurred: ${error}`));
+      })
       .catch(error => console.error(`An error occurred: ${error}`));
   }
 

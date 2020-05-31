@@ -1,15 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
+import { Button, Checkbox, FormControlLabel, Link, TextField, Typography } from '@material-ui/core';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import gql from 'graphql-tag';
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Link,
-  TextField,
-  Typography
-} from '@material-ui/core';
 
 import './Login.css';
 import AuthContext from 'context/authContext';
@@ -34,6 +28,10 @@ const LOGIN_USER = gql`
     }
   }
 `;
+
+const Alert = (props: AlertProps) => {
+  return <MuiAlert elevation={2} variant="filled" {...props} />
+}
 
 const Login = () => {
   useEffect(() => {
@@ -90,14 +88,16 @@ const Login = () => {
     }
   }
 
+  const redirectMessage = "You must be logged in to view this page first.";
+
   return (
     <div>
       <div className="component-container">
         <div className="login-form">
           <Typography variant="h2">Login</Typography>
           <p>Sign in with your email and password below.</p>
-          {didRedirect ? <p>You must login to view this page first</p> : null}
-          {error ? <p>(ERROR): {error.message}</p> : null}
+          {didRedirect ? <Alert severity="error">{redirectMessage}</Alert> : null}
+          {error ? <Alert severity="error">{error.message}</Alert> : null}
           <form noValidate onSubmit={e => handleSubmit(e)}>
             <TextField
               variant="outlined"

@@ -79,10 +79,9 @@ type Mutation {
 """The Order model"""
 type Order {
   id: ID!
-  user_id: String!
-  item_id: String!
-  table_id: String!
-  orderNumber: Float!
+  userId: String!
+  tableId: String!
+  items: [String!]!
   date: DateTime!
   location: String!
   numberOfPeople: Float!
@@ -90,10 +89,9 @@ type Order {
 }
 
 input OrderInput {
-  orderNumber: Float!
-  user_id: String!
-  item_id: String!
-  table_id: String!
+  userId: String!
+  items: [String!]!
+  tableId: String!
   date: DateTime!
   location: String!
   numberOfPeople: Float!

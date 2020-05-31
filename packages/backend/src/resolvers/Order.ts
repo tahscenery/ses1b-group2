@@ -18,21 +18,28 @@ class OrderResolver {
   }
 
   @Mutation(() => Boolean)
-  async createOrder(@Arg("data") {orderNumber, user_id, item_id, table_id, date, location, numberOfPeople}: OrderInput): Promise<Boolean> {
-
-    const existingOrder = await OrderModel.findOne( {orderNumber: orderNumber});
-    if (existingOrder) {
-      throw new Error("Order exists already.");
-    }
+  async createOrder(
+    @Arg("data") {
+      userId,
+      items,
+      tableId,
+      date,
+      location,
+      numberOfPeople
+    }: OrderInput
+  ): Promise<Boolean> {
+    // const existingOrder = await OrderModel.findOne({ orderNumber: orderNumber });
+    // if (existingOrder) {
+    //   throw new Error("Order exists already.");
+    // }
 
     try {
       await OrderModel.create({
-        orderNumber,
-        user_id,
-        item_id,
-        table_id,
+        userId,
+        items,
+        tableId,
         numberOfPeople,
-        location, 
+        location,
         date
       });
     } catch (error) {
@@ -52,21 +59,21 @@ class OrderResolver {
   @FieldResolver(_type => (User))
   async user(@Root() order: Order): Promise<User> {
     console.log(order, "user!")
-    return (await UserModel.findById(order._doc.user_id))!;
-  }
-/*
-  @FieldResolver(_type => (Item))
-  async item(@Root() order: Order): Promise<Item> {
-    console.log(order, "item!")
-    return (await ItemModel.findById(order._doc.item_id))!;
+    // return (await UserModel.findById(order._doc.user_id))!;
+    return (await UserModel.findById(order.userId))!;
   }
 
-  @FieldResolver(_type => (Table))
-  async table(@Root() order: Order): Promise<Table> {
-    console.log(order, "table!")
-    return (await TableModel.findById(order._doc.table_id))!;
-  }
-  */
+  // @FieldResolver(_type => (Item))
+  // async item(@Root() order: Order): Promise<Item> {
+  //   console.log(order, "item!")
+  //   return (await ItemModel.findById(order._doc.item_id))!;
+  // }
+
+  // @FieldResolver(_type => (Table))
+  // async table(@Root() order: Order): Promise<Table> {
+  //   console.log(order, "table!")
+  //   return (await TableModel.findById(order._doc.table_id))!;
+  // }
 }
 
 export default OrderResolver;
