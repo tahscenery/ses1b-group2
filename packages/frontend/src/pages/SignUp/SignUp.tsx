@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Link, TextField, Typography } from '@material-ui/core';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import gql from 'graphql-tag';
 
 import './SignUp.css';
 // import AuthContext from 'context/authContext';
+import Alert from 'components/Alert';
 
 interface RegisterParams {
   name: string;
@@ -23,10 +23,6 @@ const REGISTER_USER = gql`
     Register(name: $name, email: $email, password: $password)
   }
 `;
-
-const Alert = (props: AlertProps) => {
-  return <MuiAlert elevation={2} variant="filled" {...props} />
-}
 
 const SignUp = () => {
   useEffect(() => {

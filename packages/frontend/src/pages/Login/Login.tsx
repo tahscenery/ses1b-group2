@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Checkbox, FormControlLabel, Link, TextField, Typography } from '@material-ui/core';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import gql from 'graphql-tag';
 
 import './Login.css';
 import AuthContext from 'context/authContext';
+import Alert from 'components/Alert';
 
 interface LoginResponse {
   Login: {
@@ -28,10 +28,6 @@ const LOGIN_USER = gql`
     }
   }
 `;
-
-const Alert = (props: AlertProps) => {
-  return <MuiAlert elevation={2} variant="filled" {...props} />
-}
 
 const Login = () => {
   useEffect(() => {
