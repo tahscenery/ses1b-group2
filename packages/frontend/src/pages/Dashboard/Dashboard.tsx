@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 
 
 const Dashboard = () => {
-  const location = useLocation<{ didCreateOrder: boolean }>();
+  const location = useLocation<{ didCreateOrder?: boolean }>();
 
   const authContext = useContext(AuthContext);
   const bookingContext = useContext(BookingContext);

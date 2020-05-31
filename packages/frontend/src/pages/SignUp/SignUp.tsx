@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Link, TextField, Typography } from '@material-ui/core';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import gql from 'graphql-tag';
 
 import './SignUp.css';
-// import AuthContext from 'context/authContext';
+import AuthContext from 'context/authContext';
+import Alert from 'components/Alert';
 
 interface RegisterParams {
   name: string;
@@ -24,8 +24,11 @@ const REGISTER_USER = gql`
   }
 `;
 
-const Alert = (props: AlertProps) => {
-  return <MuiAlert elevation={2} variant="filled" {...props} />
+interface FormErrors {
+  name: boolean;
+  email: boolean;
+  password: boolean;
+  confirmPassword: boolean;
 }
 
 const SignUp = () => {
@@ -33,47 +36,63 @@ const SignUp = () => {
     document.title = 'Sign Up – Sapori Unici';
   }, []);
 
-  // const context = useContext(AuthContext);
-  // const history = useHistory();
+  const history = useHistory();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FormErrors>({
+    name: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
 
   const [registerUser, { error: registerError, data }] =
     useMutation<RegisterResponse, RegisterParams>(REGISTER_USER, {
       variables: { name, email, password }
     });
 
-  const handleRegisterUser = () => {
-    // console.log(`Name: ${name}`);
-    // console.log(`Email: ${email}`);
-    // console.log(`Password: ${password}`);
-    // console.log(`Confirm Password: ${confirmPassword}`);
+  const handleChange = (newValue: string, setter: (_: string) => void) => {
+    setter(newValue);
+    setErrors({ name: false, email: false, password: false, confirmPassword: false });
+  }
 
+  const checkInput = () => {
     if (name.length < 2) {
+      setErrors({ ...errors, name: true });
       throw new Error("Name must have at least two characters");
     }
 
     if (!email.toUpperCase().match(/^[A-Z0-9._%+-]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/g)) {
-      throw new Error("Email field doesn't appear to be a valid email address");
+      setErrors({ ...errors, email: true });
+      throw new Error("The provided email address doesn't appear to be a valid");
     }
 
     if (password.length < 8) {
+      setErrors({ ...errors, password: true });
       throw new Error('Password must contain at least 8 characters');
     }
 
     if (password !== confirmPassword) {
+      setErrors({ ...errors, confirmPassword: true });
       throw new Error('Passwords do not match');
     }
+  }
 
+  const handleRegisterUser = () => {
+    checkInput();
+
+    setErrors({ name: false, email: false, password: false, confirmPassword: false });
     console.log('Registering user...');
     registerUser()
       .then(res => {
         console.log(`DATA: ${JSON.stringify(res.data)}`);
-        console.log('Redirecting...');
+        console.log('Logging in...');
+        history.push('/login');
       })
       .catch(error => console.error(error));
   }
@@ -84,7 +103,7 @@ const SignUp = () => {
       handleRegisterUser();
     } catch (error) {
       console.log(error);
-      setError(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -94,8 +113,12 @@ const SignUp = () => {
         <div className="sign-up-form">
           <Typography variant="h2">Sign Up</Typography>
           <p>Don't have an account? Fill in the details below to get started.</p>
-          {error ? <Alert severity="error">{error}</Alert> : null}
-          {registerError ? <Alert severity="error">{registerError.message}</Alert> : null}
+          {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
+          {registerError ? (
+            registerError.graphQLErrors.map((error, index) => (
+              <Alert key={`alert-${index}`} severity="error">{error.message}</Alert>
+            ))
+          ) : null}
           {data && data.Register ? <Alert severity="success">Success!</Alert> : null}
           <form noValidate onSubmit={e => handleSubmit(e)}>
             <TextField
@@ -107,7 +130,9 @@ const SignUp = () => {
               fullWidth
               required
               autoFocus
-              onChange={e => setName(e.target.value)}
+              focused={errors.name}
+              error={errors.name}
+              onChange={e => handleChange(e.target.value, setName)}
             />
             <TextField
               variant="outlined"
@@ -117,7 +142,9 @@ const SignUp = () => {
               margin="normal"
               fullWidth
               required
-              onChange={e => setEmail(e.target.value)}
+              focused={errors.email}
+              error={errors.email}
+              onChange={e => handleChange(e.target.value, setEmail)}
             />
             <TextField
               variant="outlined"
@@ -127,7 +154,9 @@ const SignUp = () => {
               margin="normal"
               fullWidth
               required
-              onChange={e => setPassword(e.target.value)}
+              focused={errors.password}
+              error={errors.password}
+              onChange={e => handleChange(e.target.value, setPassword)}
             />
             <TextField
               variant="outlined"
@@ -137,7 +166,9 @@ const SignUp = () => {
               margin="normal"
               fullWidth
               required
-              onChange={e => setConfirmPassword(e.target.value)}
+              focused={errors.confirmPassword}
+              error={errors.confirmPassword}
+              onChange={e => handleChange(e.target.value, setConfirmPassword)}
             />
             <Button
               className="sign-up-button"
