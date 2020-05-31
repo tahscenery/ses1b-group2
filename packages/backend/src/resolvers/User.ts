@@ -13,6 +13,7 @@ import { UserInput } from "./inputs";
 import { isAuth } from "./isAuth";
 import { MyContext } from "./MyContext";
 import { sign } from "jsonwebtoken";
+import { stripe } from "../stripe";
 import bcrypt from "bcrypt";
 
 @ObjectType()
@@ -24,7 +25,7 @@ class LoginResponse {
   userId: string;
 }
 
-@Resolver(_of => User)
+@Resolver((_of) => User)
 class UserResolver {
   @Query(() => User, { nullable: false })
   async user(@Arg("id") id: string) {
@@ -32,8 +33,8 @@ class UserResolver {
   }
 
   @Query((_returns) => User, { nullable: false })
-  async getEmail(@Arg("email") email : string) {
-    return await UserModel.findOne({ email: email});
+  async getEmail(@Arg("email") email: string) {
+    return await UserModel.findOne({ email: email });
   }
 
   @Query(() => [User])
@@ -62,7 +63,7 @@ class UserResolver {
 
   @Mutation(() => LoginResponse)
   async Login(@Arg("email") email: string, @Arg("password") password: string) {
-    const user = await UserModel.findOne({ email:  email });
+    const user = await UserModel.findOne({ email: email });
     if (!user) {
       throw new Error("Could not find user");
     }
@@ -71,12 +72,12 @@ class UserResolver {
     if (!verify) {
       throw new Error("Invalid Password");
     }
-    
+
     return {
       accessToken: sign({ userId: user.id }, "MySecretKey", {
-        expiresIn: "15m"
+        expiresIn: "15m",
       }),
-      userId: user.id
+      userId: user.id,
     };
   }
 
@@ -97,7 +98,7 @@ class UserResolver {
       await UserModel.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
       });
     } catch (error) {
       console.log(error);
@@ -120,7 +121,11 @@ class UserResolver {
     const hashedPassword = await bcrypt.hash(password, 13);
 
     try {
-      await UserModel.findByIdAndUpdate( {_id: existingUser.id}, {password: hashedPassword}, {new: true});
+      await UserModel.findByIdAndUpdate(
+        { _id: existingUser.id },
+        { password: hashedPassword },
+        { new: true }
+      );
     } catch (error) {
       console.log(error);
       return false;
@@ -138,12 +143,12 @@ class UserResolver {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    
+
     const user = (
       await UserModel.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
       })
     ).save();
     return user;
@@ -163,17 +168,26 @@ class UserResolver {
     const hashedPassword = await bcrypt.hash(password, 13);
 
     try {
-      if(password!=null)
-      {
-        await UserModel.findOneAndUpdate( {_id: existingUser.id},  {password: hashedPassword} ,{new: true});
+      if (password != null) {
+        await UserModel.findOneAndUpdate(
+          { _id: existingUser.id },
+          { password: hashedPassword },
+          { new: true }
+        );
       }
-      if(name!=null)
-      {
-        await UserModel.findOneAndUpdate( {_id: existingUser.id},  {name: name} ,{new: true});
+      if (name != null) {
+        await UserModel.findOneAndUpdate(
+          { _id: existingUser.id },
+          { name: name },
+          { new: true }
+        );
       }
-      if(email!=null)
-      {
-        await UserModel.findOneAndUpdate( {_id: existingUser.id},  {email: email} ,{new: true});
+      if (email != null) {
+        await UserModel.findOneAndUpdate(
+          { _id: existingUser.id },
+          { email: email },
+          { new: true }
+        );
       }
     } catch (error) {
       console.log(error);
@@ -183,12 +197,37 @@ class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteUser(@Arg("id") id: string) 
-  {
+  async deleteUser(@Arg("id") id: string) {
     await UserModel.deleteOne({ _id: id });
     return true;
   }
-  
+
+  @Mutation(() => User)
+  async createSubcription(
+    @Arg("source") source: string,
+    @Arg("id") id: string
+  ) {
+    const user = await UserModel.findById({ _id: id });
+
+    if (!user) {
+      throw new Error();
+    }
+
+    try {
+      const customer = await stripe.customers.create({
+        email: user.email,
+        source,
+        plan: "price_HNB8tiEIaPMHyA",
+      });
+
+      user.stripe_id = customer.id;
+      user.type = "paid";
+      await user.save();
+    } catch (error) {
+      console.log(error);
+    }
+    return user;
+  }
 }
 
 export default UserResolver;

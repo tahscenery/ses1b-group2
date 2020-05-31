@@ -61,7 +61,8 @@ const Dashboard = () => {
                 <TableCell className={styles.tableEmphasis} component="th">
                   Booking id
                   </TableCell>
-                <TableCell> test</TableCell>
+
+                <TableCell>test</TableCell>
                 <TableCell> people</TableCell>
                 <TableCell> people</TableCell>
               </TableRow>
