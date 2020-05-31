@@ -5,6 +5,7 @@ import BookingContext, { BookingDetails, CurrentProgress } from 'context/booking
 import SelectDetails from './pages/SelectDetails';
 import SelectItems from './pages/SelectItems';
 import SelectTable from './pages/SelectTable';
+import Confirm from './pages/Confirm';
 
 const MakeBooking = () => {
   useEffect(() => {
@@ -32,6 +33,8 @@ const MakeBooking = () => {
         return (<SelectTable/>)
       case CurrentProgress.SELECT_ITEMS:
         return (<SelectItems/>)
+      case CurrentProgress.CONFIRM:
+        return (<Confirm/>)
       default:
         return (<SelectDetails/>)
     }

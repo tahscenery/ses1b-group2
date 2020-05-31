@@ -4,14 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import './SelectItems.css';
-import BookingContext, { CurrentProgress } from 'context/bookingContext';
-
-enum Category {
-  ENTREE = "ENTREE",
-  SALAD = "SALAD",
-  MAIN = "MAIN",
-  DESSERT = "DESSERT",
-}
+import BookingContext, { Category, CurrentProgress, Item } from 'context/bookingContext';
 
 const nameForCategory = (category: Category) => {
   switch (category) {
@@ -21,15 +14,6 @@ const nameForCategory = (category: Category) => {
     case Category.DESSERT:  return "Desserts"
     default:                return `Category ${category}`
   }
-}
-
-interface Item {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  category: Category;
-  image: string;
 }
 
 interface ItemsData {
@@ -56,12 +40,6 @@ const SelectItems = () => {
   const [selectedItems, setSelectedItems] = useState<Array<Item>>([]);
   const [total, setTotal] = useState(0);
 
-  // let total = 0;
-  // for (let item of selectedItems) {
-  //   total += item.price;
-  // }
-  // console.log(`$${total.toFixed(2)}`);
-
   const handleToggle = (item: Item) => {
     const currentItemIndex = selectedItems.indexOf(item);
     const newSelectedItems = [...selectedItems];
@@ -82,8 +60,8 @@ const SelectItems = () => {
   }
 
   const handleNext = () => {
-    context.setBookingDetails({ selectedItems: selectedItems.map(item => item.id) });
-    context.setCurrentProgress(CurrentProgress.SELECT_DETAILS);
+    context.setBookingDetails({ selectedItems });
+    context.setCurrentProgress(CurrentProgress.CONFIRM);
   }
 
   if (loading) { return <p>Loading...</p> }
@@ -128,6 +106,7 @@ const SelectItems = () => {
                               checked={selectedItems.includes(item)} />
                           </ListItemIcon>
                       </ListItem>
+                      <Divider />
                     </>
                   ))}
               </ul>

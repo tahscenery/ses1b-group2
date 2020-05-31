@@ -11,7 +11,7 @@
 .booking-footer {
   display: flex;
   justify-content: flex-end;
-  padding-top: 20px;
+  padding: 20px 0;
 }
 
 .booking-footer button {

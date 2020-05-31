@@ -4,15 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import ItemList from 'components/ItemList';
-import BookingContext, { CurrentProgress } from 'context/bookingContext';
-
-interface Table {
-  id: string;
-  tableNumber: number;
-  minCapacity: number;
-  maxCapacity: number;
-  description: string;
-}
+import BookingContext, { CurrentProgress, Table } from 'context/bookingContext';
 
 interface TablesData {
   allTables: Table[];
@@ -33,7 +25,7 @@ const GET_TABLES = gql`
 const SelectTable = () => {
   const context = useContext(BookingContext);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [selectedTable, setSelectedTable] = useState<string | null>(null);
+  const [selectedTable, setSelectedTable] = useState<Table | null>(null);
 
   const queryResult = useQuery<TablesData>(GET_TABLES);
 
@@ -52,7 +44,7 @@ const SelectTable = () => {
       setSelectedTable(null);
     } else {
       setSelectedIndex(index);
-      setSelectedTable(table.id);
+      setSelectedTable(table);
     }
   }
 
