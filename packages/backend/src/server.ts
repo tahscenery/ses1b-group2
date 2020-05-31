@@ -5,6 +5,11 @@ import { buildSchema } from "type-graphql";
 import cors from "cors";
 import * as resolvers from "./resolvers";
 import connectDB from "./connection";
+import "dotenv/config";
+import {stripe} from "./stripe";
+//import * as session from "express-session";
+
+stripe;
 
 const main = async () => {
   const schema = await buildSchema({

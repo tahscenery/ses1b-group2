@@ -10,6 +10,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Staff from './StaffList';
 import Customer from './CustomerList';
 import Table from './TableList';
+import Order from './OrderList';
+
 
 const drawerWidth = 240;
 
@@ -116,7 +118,11 @@ export default function Dashboard() {
   const showTable = () => {
     setShow('table');
   };
-  
+
+  const showOrder = () => {
+    setShow('order');
+  };
+
   let content = null;
 
   switch (show) {
@@ -131,9 +137,13 @@ export default function Dashboard() {
     case 'table':
       content = <Table />;
       break;
-      
+
+    case 'order':
+      content = <Order />;
+      break;
+
     default:
-      content = <Typography align-items="center">Welcome to the Dashboard</Typography>;
+      content = <Typography>Welcome to the Dashboard</Typography>;
   }
   return (
     <div className={classes.root}>
@@ -189,7 +199,7 @@ export default function Dashboard() {
             <ListItemText primary="Tables" />
           </ListItem>
 
-          <ListItem button onClick={showTable}>
+          <ListItem button onClick={showOrder}>
             <ListItemIcon>
               <TableChartIcon />
             </ListItemIcon>

@@ -3,7 +3,7 @@ import { Route, Router, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
-import { Booking, FourOFour, Home, Locations, Login, SignUp, ViewMenu } from 'pages';
+import { Booking, FourOFour, Home, Locations, Login, SignUp, ViewMenu, Payment } from 'pages';
 import Dashboard from '../../pages/component/Dashboard';
 import './App.css';
 
@@ -111,8 +111,8 @@ class App extends React.Component<{}, Props> {
               <ThemeProvider theme={theme}>
                 <Switch>
                   {!this.state.accessToken && <Redirect from="/" to="/login" exact />}
-                  {this.state.accessToken && <Redirect from="/" to="/booking" exact />}
-                  {this.state.accessToken && <Redirect from="/login" to="/booking" exact />}
+                  {this.state.accessToken && <Redirect from="/" to="/payment" exact />}
+                  {this.state.accessToken && <Redirect from="/login" to="/payment" exact />}
 
                   {/* Home */}
                   {this.state.accessToken && (
@@ -124,6 +124,9 @@ class App extends React.Component<{}, Props> {
 
                   {/* Locations */}
                   <Route path="/locations" component={Locations} />
+
+                  {/* Payment */}
+                  <Route path="/payment" component={Payment} />
                   
                   {/* Sign Up */}
                   {!this.state.accessToken && (
