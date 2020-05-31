@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { QueryResult } from '@apollo/react-common';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 

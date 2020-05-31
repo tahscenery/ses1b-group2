@@ -113,6 +113,7 @@ type Query {
   Me: String!
   order(id: String!): Order!
   allOrders: [Order!]!
+  allOrdersForUser(userId: String!): [Order!]!
 }
 
 """The Staff model"""

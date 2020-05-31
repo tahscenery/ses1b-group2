@@ -1,8 +1,9 @@
 import { ObjectType, Field, ID } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
-import { Ref } from "../types";
-import { User } from "./User";
+// import { Ref } from "../types";
+// import { User } from "./User";
 import { Table } from "./Table";
+import { ObjectId } from "mongodb";
 import { __Type } from "graphql";
 
 @ObjectType({ description: "The Order model" })
@@ -25,21 +26,23 @@ export class Order {
   // table_id: Ref<Table>;
   // //_doc: any; // This still doesn't work // No duplicate identifier _doc
 
+  // @Field(() => String)
+  // @Property({ ref: User, required: true })
+  // userId: Ref<User>;
+
   @Field(() => String)
-  @Property({ ref: User, required: true })
-  userId: Ref<User>;
+  @Property({ required: true })
+  // userId: Ref<User>;
+  userId: ObjectId;
 
   @Field(() => String)
   @Property({ ref: Table, required: true })
-  tableId: Ref<Table>;
+  // tableId: Ref<Table>;
+  tableId: ObjectId;
 
   @Field(() => [String])
   @Property({ required: true })
   items: string[];
-
-  // @Field()
-  // @Property({ required: true })
-  // orderNumber: number;
 
   @Field()
   @Property({ required: true })

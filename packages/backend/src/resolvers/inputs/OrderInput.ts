@@ -7,7 +7,7 @@ class OrderInput implements Partial<Order>{
   // @Field()
   // orderNumber : number;
 
-  @Field(()=> String)
+  @Field(() => String)
   userId: ObjectId;
 
   // @Field(()=> String)

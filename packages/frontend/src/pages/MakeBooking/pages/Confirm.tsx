@@ -61,7 +61,7 @@ const Confirm = () => {
   const bookingContext = useContext(BookingContext);
   const bookingDetails = bookingContext.bookingDetails;
 
-  const [createOrder, { error, data }] =
+  const [createOrder, {}] =
     useMutation<CreateOrderResponse, CreateOrderParams>(CREATE_ORDER);
 
   const styles = useStyles();
@@ -85,7 +85,11 @@ const Confirm = () => {
         createOrder({ variables })
           .then(res => {
             console.log(`DATA: ${JSON.stringify(res.data)}`);
-            history.push('/dashboard', { didCreateOrder: true })
+            if (res.data.createOrder) {
+              history.push('/dashboard', { didCreateOrder: true })
+            } else {
+              console.error(`Failed to create order`);
+            }
           })
           .catch(error => console.error(`An error occurred: ${error}`));
       })

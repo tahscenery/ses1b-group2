@@ -17,6 +17,12 @@ class OrderResolver {
     return await OrderModel.find();
   }
 
+  @Query(() => [Order])
+  async allOrdersForUser(@Arg("userId") userId: string) {
+    const order = await this.allOrders();
+    return order.filter(order => order.userId.toHexString() == userId);
+  }
+
   @Mutation(() => Boolean)
   async createOrder(
     @Arg("data") {
