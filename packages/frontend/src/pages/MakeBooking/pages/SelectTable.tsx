@@ -97,9 +97,9 @@ const SelectTable = () => {
         <Button
           color="primary"
           variant="contained"
-          disabled={selectedTable === null || selectedTable === undefined}
-          onClick={handleNext}
           size="large"
+          onClick={handleNext}
+          disabled={selectedTable === null || selectedTable === undefined}
         >
           Next
         </Button>

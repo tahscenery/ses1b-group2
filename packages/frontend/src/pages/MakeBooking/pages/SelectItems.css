@@ -17,3 +17,9 @@
   background-color: inherit;
   padding: 0;
 }
+
+.booking-select-items-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}

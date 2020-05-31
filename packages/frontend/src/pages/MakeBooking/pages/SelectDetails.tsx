@@ -11,8 +11,8 @@ const SelectDetails = () => {
   const history = useHistory();
 
   const [numberOfPeople, setNumberOfPeople] = useState(context.bookingDetails.numberOfPeople || 1);
-  const [location, setLocation] = useState<string | null>(context.bookingDetails.location);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(context.bookingDetails.selectedDate);
+  const [location, setLocation] = useState<string | null>(context.bookingDetails.location || null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(context.bookingDetails.selectedDate || null);
 
   const handleCancel = () => {
     history.push("/")
@@ -90,9 +90,9 @@ const SelectDetails = () => {
         <Button
           color="primary"
           variant="contained"
-          onClick={handleNext}
           size="large"
-          disabled={location === null && selectedDate === null}
+          onClick={handleNext}
+          disabled={(location === null || location === undefined) || (selectedDate === null || selectedDate === undefined)}
         >
           Next
         </Button>

@@ -54,12 +54,13 @@ const SelectItems = () => {
   const { loading, error, data } = useQuery<ItemsData>(GET_ITEMS);
 
   const [selectedItems, setSelectedItems] = useState<Array<Item>>([]);
+  const [total, setTotal] = useState(0);
 
-  let total = 0;
-  for (let item of selectedItems) {
-    total += item.price;
-  }
-  console.log(`$${total.toFixed(2)}`);
+  // let total = 0;
+  // for (let item of selectedItems) {
+  //   total += item.price;
+  // }
+  // console.log(`$${total.toFixed(2)}`);
 
   const handleToggle = (item: Item) => {
     const currentItemIndex = selectedItems.indexOf(item);
@@ -67,8 +68,10 @@ const SelectItems = () => {
 
     if (currentItemIndex === -1) {
       newSelectedItems.push(item);
+      setTotal(total + item.price);
     } else {
       newSelectedItems.splice(currentItemIndex, 1);
+      setTotal(total - item.price);
     }
 
     setSelectedItems(newSelectedItems);
@@ -131,22 +134,26 @@ const SelectItems = () => {
             </li>
           ))}
       </List>
-      <div className="booking-footer">
-        <Button
-          color="secondary"
-          onClick={handlePrevious}
-          size="large"
-        >
-          Previous
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={handleNext}
-          size="large"
-        >
-          Proceed to Checkout
-        </Button>
+      <div className="booking-select-items-footer">
+        <p>Total: ${`${total.toFixed(2)}`}</p>
+        <div className="booking-footer">
+          <Button
+            color="secondary"
+            onClick={handlePrevious}
+            size="large"
+          >
+            Previous
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            size="large"
+            onClick={handleNext}
+            disabled={total === 0}
+          >
+            Proceed to Checkout
+          </Button>
+        </div>
       </div>
     </div>
   )
