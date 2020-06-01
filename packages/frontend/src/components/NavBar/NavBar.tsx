@@ -32,6 +32,10 @@ const NavBar = () => {
     history.push('/login');
   }
 
+  if (window.location.pathname === "/admin") {
+    return null;
+  }
+
   return (
     <div className="nav-bar-container">
       <div className="nav-bar">
