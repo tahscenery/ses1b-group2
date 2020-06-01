@@ -102,6 +102,31 @@ export interface deleteCustomerVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: getOrder
+// ====================================================
+
+export interface getOrder_allOrders {
+  __typename: "Order";
+  id: string;
+  orderNumber: number;
+  date: any;
+  location: string;
+  numberOfPeople: number;
+  user_id: string;
+  item_id: string;
+  table_id: string;
+}
+
+export interface getOrder {
+  allOrders: getOrder_allOrders[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: getStaff
 // ====================================================
 
@@ -288,6 +313,31 @@ export interface getMe {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: loggedin
+// ====================================================
+
+export interface loggedin_user {
+  __typename: "User";
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface loggedin {
+  user: loggedin_user;
+}
+
+export interface loggedinVariables {
+  id: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: LoginMutation
 // ====================================================
 
@@ -304,6 +354,30 @@ export interface LoginMutation {
 export interface LoginMutationVariables {
   email: string;
   password: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreateSubscriptionMutation
+// ====================================================
+
+export interface CreateSubscriptionMutation_createSubcription {
+  __typename: "User";
+  id: string;
+  email: string;
+}
+
+export interface CreateSubscriptionMutation {
+  createSubcription: CreateSubscriptionMutation_createSubcription;
+}
+
+export interface CreateSubscriptionMutationVariables {
+  source: string;
+  id: string;
 }
 
 /* tslint:disable */

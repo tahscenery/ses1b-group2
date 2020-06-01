@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
 import { Theme, createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Button,
@@ -9,31 +9,23 @@ import {
 } from '@material-ui/core';
 
 import { QueryResult } from '@apollo/react-common';
+import { useFilters } from 'react-table';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-    },
-    details: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    content: {
-      flex: '1 0 auto',
-    },
-    cover: {
-      width: 151,
+      width: '450px',
+      height: '80px',
+      alignItems: 'right',
+      marginTop: '50px',
+      marginLeft: '250px',
     },
     controls: {
       display: 'flex',
       alignItems: 'center',
       paddingLeft: theme.spacing(1),
       paddingBottom: theme.spacing(1),
-    },
-    playIcon: {
-      height: 38,
-      width: 38,
     },
   }),
 );
@@ -57,9 +49,15 @@ interface TableListRowProps {
 const TableListRow = (props: TableListRowProps) => {
 
   const classes = useStyles();
-  const theme = useTheme();
+  const [selectTable, setSelectTable] = useState('');
+  const { minCapacity, maxCapacity, description, id } = props.table;
 
-  const { tableNumber, minCapacity, maxCapacity, description } = props.table;
+  const handleChange = () => {
+    setSelectTable(id);
+    console.log(id);
+    console.log(minCapacity);
+  };
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -72,17 +70,21 @@ const TableListRow = (props: TableListRowProps) => {
             </Grid>
             <Grid item>
               <div className={classes.controls}>
-                <Typography variant="h3">Min Capacity: {minCapacity}</Typography>
+                <Typography variant="subtitle1">Min Capacity: {minCapacity}</Typography>
               </div>
             </Grid>
             <Grid item>
               <div className={classes.controls}>
-                <Typography variant="h3">Max Capacity: {maxCapacity}</Typography>
+                <Typography variant="subtitle1">Max Capacity: {maxCapacity}</Typography>
               </div>
             </Grid>
             <Grid item>
               <div className={classes.controls}>
-                <Button variant="contained" color="primary">Select</Button>
+                <Button 
+                variant="contained" 
+                color="primary" 
+                onChange={handleChange}
+                >Select</Button>
               </div>
             </Grid>
           </div>
@@ -107,7 +109,7 @@ const Table = ({ queryResult }: TableListProps<TableData>) => {
     <>
       {data.allTables
         .map((tables, index) => (
-          <TableListRow key={`TableListRow#${index}`} table={tables} />
+          <TableListRow key={`TableListRow#${index}`} table={tables}/>
         ))}
     </>
   );

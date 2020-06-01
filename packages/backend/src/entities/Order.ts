@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
-import { Ref } from "../types";
+import { Ref } from "@typegoose/typegoose";
 import { User } from "./User";
 import { Item } from "./Item";
 import { Table } from "./Table";
@@ -10,7 +10,7 @@ import { __Type } from "graphql";
 export class Order {
   @Field(() => ID)
   id: string;
-
+  
   @Field(_type => String)
   @Property({ ref: User, required: true })
   user_id: Ref<User>;
@@ -41,7 +41,7 @@ export class Order {
   @Field()
   @Property({ required: true })
   numberOfPeople : number;
-
+  
 }
 
 export const OrderModel = getModelForClass(Order);

@@ -7,8 +7,10 @@ import Locations from './Locations';
 import LoginOld from './Login';
 import SignUp from './SignUp';
 import ViewMenu from './ViewMenu';
+import Payment from './Payment';
 
 export {
+  Payment,
   Booking,
   FourOFour,
   Home,

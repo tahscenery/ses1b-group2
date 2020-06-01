@@ -72,6 +72,7 @@ type Mutation {
   createUser(data: UserInput!): User!
   updateUser(password: String!, email: String!, name: String!): Boolean!
   deleteUser(id: String!): Boolean!
+  createSubcription(id: String!, source: String!): User!
   createOrder(data: OrderInput!): Boolean!
   deleteOrder(id: String!): Boolean!
 }
@@ -153,6 +154,8 @@ type User {
   name: String!
   email: String!
   password: String!
+  stripe_id: String!
+  type: String!
 }
 
 input UserInput {
