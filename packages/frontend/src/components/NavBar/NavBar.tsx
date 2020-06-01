@@ -49,7 +49,7 @@ const NavBar = () => {
           <nav id="nav-bar-menu" className="nav-bar-menu collapsed">
             <ul>
               <li><Button variant="outlined" color="primary" href="/menu">Our Menu</Button></li>
-              <li><Button variant="outlined" color="primary" href="/locations">Locations</Button></li>
+              {/* <li><Button variant="outlined" color="primary" href="/locations">Locations</Button></li> */}
               {context.user ? (
                 <>
                   {context.user.isAdmin ? (

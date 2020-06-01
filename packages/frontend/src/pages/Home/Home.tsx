@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { Typography } from '@material-ui/core';
 
 import './Home.css';
-// import NavBar from 'components/NavBar';
-// import Slideshow from 'components/Slider/Slide';
-// import Footer from 'components/Footer';
 
 const Home = () => {
   useEffect(() => {
@@ -13,10 +9,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      {/* <div className='attach'> */}
-        {/* <Slideshow/> */}
-      {/* </div> */}
+    <div className="component-container">
+      <Typography variant="h2">Welcome to Sapori Unici</Typography>
+      <img
+        className="restauarnt-image"
+        src={`https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80`}
+        alt="restaurant-image"
+        />
     </div>
   );
 }
