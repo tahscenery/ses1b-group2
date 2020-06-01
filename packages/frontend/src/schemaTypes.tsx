@@ -103,6 +103,23 @@ export interface getOrder {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: deleteBookings
+// ====================================================
+
+export interface deleteBookings {
+  deleteOrder: boolean;
+}
+
+export interface deleteBookingsVariables {
+  id: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: getStaff
 // ====================================================
 
@@ -276,6 +293,23 @@ export interface getOrders {
 
 export interface getOrdersVariables {
   userId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: deleteOrder
+// ====================================================
+
+export interface deleteOrder {
+  deleteOrder: boolean;
+}
+
+export interface deleteOrderVariables {
+  id: string;
 }
 
 /* tslint:disable */

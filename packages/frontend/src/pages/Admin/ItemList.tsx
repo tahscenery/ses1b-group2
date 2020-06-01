@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import {getOrder, addTables, addTablesVariables, updateTables, updateTablesVariables, deleteTable, deleteTableVariables} from "../../schemaTypes";
+import { getCustomer, addCustomer, addCustomerVariables, updateCustomer, updateCustomerVariables, deleteCustomer, deleteCustomerVariables } from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -12,11 +12,9 @@ function Alert(props: AlertProps) {
 
 interface Row {
   id: string;
-  date: Date;
-  location: string;
-  numberOfPeople: number;
-  userId: string;
-  tableId: string;
+  name: string;
+  email: string;
+  password: string;
 }
 
 interface TableState {
@@ -24,64 +22,35 @@ interface TableState {
   datas: Row[];
 }
 
-const DISPLAY_ORDER = gql`
-query getOrder {
-  allOrders {
-    id
-    date
-    location
-    numberOfPeople
-    userId
-    tableId
-  }
-}`;
 
-export interface deleteOrder {
-  deleteOrder: boolean;
-}
 
-export interface deleteOrderVariables {
-  id: string;
-}
-
-const DELETE_BOOKINGS = gql`
-  mutation deleteBookings($id: String!) {
-    deleteOrder(id: $id) 
-  }
-`;
-
-export default function OrderList() {
+export default function ItemList() {
 
   const [state, setState] = React.useState<TableState>({
     columns:
       [
-        { title: 'Id', field: 'id'},
-        { title: 'Date', field: 'date'},
-        { title: 'Location', field: 'location'},
-        { title: 'Number of People', field: 'numberOfPeople'},
-        { title: 'Customer', field: 'userId'},
-        { title: 'Table', field: 'tableId'},
+        { title: 'Id', field: 'id', type: 'numeric' },
+        { title: 'Name', field: 'name' },
+        { title: 'Email', field: 'email' },
+        { title: 'Password', field: 'password' }
       ],
     datas:
       [
+        { id: "1", name: "staff1", email: "staff@staff.com", password: "staff1" }
       ]
   });
 
-  const { loading, error, data } = useQuery<getOrder>(DISPLAY_ORDER);
-  const [deleteOrder] = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS);
+  
 
 
-  if (loading) return <LinearProgress />;
-  if (error) return <Alert severity="error">This is an error message!</Alert>;
-  if (!data) return <p>Not found</p>;
 
   return (
     <div>
       <MaterialTable
-        title="Table List"
+        title="Customer List"
         columns={state.columns}
-        data={data.allOrders}
-
+        data={state.datas}
+        
         editable={{
 
           onRowAdd: (newData) =>
@@ -111,12 +80,12 @@ export default function OrderList() {
                 }
               }, 600);
             }),
-            
+
           onRowDelete: (oldData) =>
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                deleteOrder({ variables: { id: oldData.id }});
+                
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);
@@ -129,3 +98,42 @@ export default function OrderList() {
     </div>
   );
 }
+
+/*
+<Card>
+  <CardHeader>Query - Displaying all data</CardHeader>
+  <CardBody>
+    <pre>
+      {JSON.stringify(getAllCustomers.data, null, 2)}
+    </pre>
+  </CardBody>
+</Card>
+*/
+
+/*
+<table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>email</th>
+            <th>password</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data && data.returnAllStaffs.map((staff: any) => (
+            <tr>
+              <td>{staff.id}</td>
+              <td>{staff.username}</td>
+              <td>{staff.email}</td>
+              <td>{staff.password}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {
+        data && data.returnAllStaffs.map((staff:any) => (
+          <MyTable rows={staff} />
+        ))
+      }
+*/
