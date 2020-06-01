@@ -62,11 +62,11 @@ const SelectTable = () => {
               <>
                 <ListItem
                   button
-                  key={`ListItem#${index}`}
+                  key={`list-item-${index}`}
                   selected={selectedIndex === index}
                   onClick={_ => handleToggle(index, table)}>
                   <ListItemText
-                    key={`ListItemText#${index}`}
+                    key={`list-item-text-${index}`}
                     primary={`Table ${table.tableNumber}`}
                     secondary={`Suitable for ${table.minCapacity} to ${table.maxCapacity} people`}/>
                   <ListItemIcon>

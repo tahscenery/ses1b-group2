@@ -125,7 +125,7 @@ const Confirm = () => {
 
   const handleToken = () => {
     //pay({variables: {source:"", id: authContext.user.userId}});
-    history.push('/dashboard');
+    history.push('/dashboard', { didCreateOrder: true });
   }
 
   let total = 0;

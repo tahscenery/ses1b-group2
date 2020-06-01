@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-// import { useLocation } from 'react-router-dom';
-import { Button, Paper, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
+import { Avatar, Button, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import AuthContext from 'context/authContext';
@@ -33,37 +33,60 @@ const GET_BOOKINGS = gql`
 `;
 
 interface BookingsListRowProps {
+  index: number;
   booking: Booking;
 }
 
 const BookingsListRow = (props: BookingsListRowProps) => {
   const { id, date, location, numberOfPeople, items } = props.booking;
+  console.log(props.index);
   return (
-    <Paper>
-      <p>{id}</p>
-      <p>{date}</p>
-      <p>{location}</p>
-      <p>{numberOfPeople}</p>
-      <p>{JSON.stringify(items)}</p>
-    </Paper>
+    <>
+      <ListItem
+        button
+        key={`list-item-${props.index}`}>
+          <ListItemAvatar>
+            <Avatar>{`${props.index}`}</Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            key={`list-item-text-${props.index}`}
+            primary={`${location} - ${numberOfPeople} people`}
+            secondary={date.toLocaleString()}/>
+        <Divider/>
+      </ListItem>
+    </>
   );
 }
 
 const Dashboard = () => {
-  // const location = useLocation<{ didCreateOrder?: boolean }>();
+  const location = useLocation<{ didCreateOrder: boolean }>();
   const { user } = useContext(AuthContext);
   const queryResult = useQuery<BookingsData>(GET_BOOKINGS, {
     variables: { userId: user.userId }
   });
 
+  console.log(location.state);
+
+  let didCreateOrder = false;
+  if (location.state !== undefined) {
+    didCreateOrder = location.state.didCreateOrder;
+  }
+
   return (
     <div className="component-container">
       <Typography variant="h2">My Bookings</Typography>
-      <ItemList queryResult={queryResult} numberOfLoadingCards={4}>
-        {results => results.allOrdersForUser.map((booking, index) => (
-          <BookingsListRow key={index} booking={booking} />
-        ))}
-      </ItemList>
+      {didCreateOrder ? (
+        <Alert severity="info">Your booking has been successfully created.</Alert>
+      ) : null}
+      <List>
+        <ItemList queryResult={queryResult} numberOfLoadingCards={4}>
+          {results => results.allOrdersForUser
+            .sort((prev, curr) => prev.date < curr.date ? -1 : prev.date > curr.date ? 1 : 0)
+            .map((booking, index) => (
+              <BookingsListRow index={index} booking={booking} />
+            ))}
+        </ItemList>
+      </List>
       <Button
         variant="contained"
         color="primary"

@@ -85,7 +85,7 @@ const SelectItems = () => {
                 </ListSubheader>
                 {data.allItems
                   .filter(item => item.category === category)
-                  .sort((a, b) => a.price < b.price ? -1 : a.price > b.price ? 1 : 0)
+                  // .sort((a, b) => a.price < b.price ? -1 : a.price > b.price ? 1 : 0)
                   .map(item => (
                     <>
                       <ListItem
