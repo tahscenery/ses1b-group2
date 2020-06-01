@@ -68,7 +68,7 @@ class OrderResolver {
     // return (await UserModel.findById(order._doc.user_id))!;
     return (await UserModel.findById(order.userId))!;
   }
-
+  
   // @FieldResolver(_type => (Item))
   // async item(@Root() order: Order): Promise<Item> {
   //   console.log(order, "item!")

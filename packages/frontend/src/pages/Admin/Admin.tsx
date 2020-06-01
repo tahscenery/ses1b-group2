@@ -11,6 +11,7 @@ import Staff from './StaffList';
 import Customer from './CustomerList';
 import Table from './TableList';
 import Order from './OrderList';
+import Item from './ItemList';
 
 const drawerWidth = 240;
 
@@ -122,6 +123,10 @@ export default function Admin() {
     setShow('order');
   };
 
+  const showItem = () => {
+    setShow('item');
+  };
+
   let content = null;
 
   switch (show) {
@@ -139,6 +144,10 @@ export default function Admin() {
 
     case 'order':
       content = <Order />;
+      break;
+
+    case 'item':
+      content = <Item />;
       break;
 
     default:
@@ -203,6 +212,13 @@ export default function Admin() {
               <TableChartIcon />
             </ListItemIcon>
             <ListItemText primary="Orders" />
+          </ListItem>
+
+          <ListItem button onClick={showItem}>
+            <ListItemIcon>
+              <TableChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Items" />
           </ListItem>
         </div>
       </Drawer>
