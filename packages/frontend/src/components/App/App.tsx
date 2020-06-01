@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Route, Router, Switch, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { ApolloClient } from 'apollo-client';
@@ -69,6 +70,9 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 const Routes = () => {
+  const location = useLocation();
+  console.log(location.pathname);
+
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -114,7 +118,7 @@ const App = () => {
       <AuthContext.Provider value={{ user, login, logout }}>
         <ThemeProvider theme={theme}>
           <Router history={history}>
-            <NavBar />
+            <NavBar/>
             <Routes />
           </Router>
         </ThemeProvider>
