@@ -110,7 +110,7 @@ class ForgotPassword extends React.PureComponent<RouteComponentProps<{}>> {
         <div className="component-container">
           <div className="login-form">
             <Typography variant="h2">Forgot Password</Typography>
-            <p>Forgot your password? Fill inthe details below to reset your password.</p>
+            <p>Forgot your password? Fill in the details below to reset your password.</p>
             <Mutation<resetMutation, resetMutationVariables> mutation={ResetMutation}>
               {mutate => (
                 <>
