@@ -1,21 +1,23 @@
-import Booking from './Booking';
-// import ForgotPassword from './ForgotPassword';
+import Admin from './Admin';
+import Dashboard from './Dashboard';
+import ForgotPassword from './ForgotPassword';
 import FourOFour from './FourOFour';
 import Home from './Home';
 import Locations from './Locations';
-// import Login from './Login';
-import LoginOld from './Login';
+import Login from './Login';
+import MakeBooking from './MakeBooking';
 import SignUp from './SignUp';
 import ViewMenu from './ViewMenu';
-import Payment from './Payment';
 
 export {
-  Payment,
-  Booking,
+  Admin,
+  Dashboard,
   FourOFour,
+  ForgotPassword,
   Home,
   Locations,
-  LoginOld,
+  Login,
+  MakeBooking,
   SignUp,
   ViewMenu
 };

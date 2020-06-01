@@ -1,8 +1,9 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { prop as Property, getModelForClass } from "@typegoose/typegoose";
+import { Identifiable } from "../types";
 
 @ObjectType({ description: "The User model" })
-export class User {
+export class User implements Identifiable {
   @Field(() => ID)
   id: string;
 

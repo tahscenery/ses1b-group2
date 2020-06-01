@@ -217,13 +217,12 @@ class UserResolver {
       const customer = await stripe.customers.create({
         email: user.email,
         source,
-        plan: 'price_HNB8tiEIaPMHyA',
+        plan: "price_HNB8tiEIaPMHyA",
       });
 
       user.stripe_id = customer.id;
       user.type = "paid";
       await user.save();
-
     } catch (error) {
       console.log(error);
     }

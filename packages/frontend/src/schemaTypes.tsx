@@ -4,28 +4,6 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: TableQuery
-// ====================================================
-
-export interface TableQuery_allTables {
-  __typename: "Table";
-  id: string;
-  tableNumber: number;
-  minCapacity: number;
-  maxCapacity: number;
-  description: string;
-}
-
-export interface TableQuery {
-  allTables: TableQuery_allTables[];
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: getCustomer
 // ====================================================
 
@@ -108,13 +86,11 @@ export interface deleteCustomerVariables {
 export interface getOrder_allOrders {
   __typename: "Order";
   id: string;
-  orderNumber: number;
   date: any;
   location: string;
   numberOfPeople: number;
-  user_id: string;
-  item_id: string;
-  table_id: string;
+  userId: string;
+  tableId: string;
 }
 
 export interface getOrder {
@@ -282,6 +258,32 @@ export interface deleteTableVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: getOrders
+// ====================================================
+
+export interface getOrders_allOrdersForUser {
+  __typename: "Order";
+  id: string;
+  date: any;
+  location: string;
+  numberOfPeople: number;
+  items: string[];
+}
+
+export interface getOrders {
+  allOrdersForUser: getOrders_allOrdersForUser[];
+}
+
+export interface getOrdersVariables {
+  userId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: resetMutation
 // ====================================================
 
@@ -300,60 +302,44 @@ export interface resetMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: getMe
+// GraphQL mutation operation: LoginUser
 // ====================================================
 
-export interface getMe {
-  Me: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL query operation: loggedin
-// ====================================================
-
-export interface loggedin_user {
-  __typename: "User";
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface loggedin {
-  user: loggedin_user;
-}
-
-export interface loggedinVariables {
-  id: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: LoginMutation
-// ====================================================
-
-export interface LoginMutation_Login {
+export interface LoginUser_Login {
   __typename: "LoginResponse";
   accessToken: string;
   userId: string;
 }
 
-export interface LoginMutation {
-  Login: LoginMutation_Login;
+export interface LoginUser {
+  Login: LoginUser_Login;
 }
 
-export interface LoginMutationVariables {
+export interface LoginUserVariables {
   email: string;
   password: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: createOrder
+// ====================================================
+
+export interface createOrder {
+  createOrder: boolean;
+}
+
+export interface createOrderVariables {
+  userId: string;
+  tableId: string;
+  date: any;
+  location: string;
+  numberOfPeople: number;
+  items: string[];
 }
 
 /* tslint:disable */
@@ -386,6 +372,51 @@ export interface CreateSubscriptionMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: getItemsSelectItems
+// ====================================================
+
+export interface getItemsSelectItems_allItems {
+  __typename: "Item";
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: ItemCategory;
+  image: string;
+}
+
+export interface getItemsSelectItems {
+  allItems: getItemsSelectItems_allItems[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: getTables
+// ====================================================
+
+export interface getTables_allTables {
+  __typename: "Table";
+  id: string;
+  tableNumber: number;
+  minCapacity: number;
+  maxCapacity: number;
+  description: string;
+}
+
+export interface getTables {
+  allTables: getTables_allTables[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: RegisterUser
 // ====================================================
 
@@ -405,10 +436,10 @@ export interface RegisterUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: getItems
+// GraphQL query operation: getItemsViewMenu
 // ====================================================
 
-export interface getItems_allItems {
+export interface getItemsViewMenu_allItems {
   __typename: "Item";
   name: string;
   description: string;
@@ -416,8 +447,8 @@ export interface getItems_allItems {
   category: ItemCategory;
 }
 
-export interface getItems {
-  allItems: getItems_allItems[];
+export interface getItemsViewMenu {
+  allItems: getItemsViewMenu_allItems[];
 }
 
 /* tslint:disable */

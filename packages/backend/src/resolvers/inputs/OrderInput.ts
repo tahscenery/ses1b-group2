@@ -4,27 +4,29 @@ import { ObjectId } from "mongodb";
 
 @InputType()
 class OrderInput implements Partial<Order>{
+  // @Field()
+  // orderNumber : number;
+
+  @Field(() => String)
+  userId: ObjectId;
+
+  // @Field(()=> String)
+  // itemId: ObjectId;
+
+  @Field(() => [String])
+  items: string[];
+
+  @Field(() => String)
+  tableId: ObjectId;
 
   @Field()
-  orderNumber : number;
-
-  @Field(()=> String)
-  user_id: ObjectId; 
-
-  @Field(()=> String)
-  item_id: ObjectId; 
-
-  @Field(()=> String)
-  table_id: ObjectId; 
+  date: Date;
 
   @Field()
-  date : Date;
+  location: string;
 
   @Field()
-  location : String;
-
-  @Field()
-  numberOfPeople : number;
+  numberOfPeople: number;
 }
 
 export default OrderInput;

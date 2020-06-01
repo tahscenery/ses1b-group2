@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { QueryResult } from '@apollo/react-common';
 import { Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import './ViewMenu.css';
-import NavBar from 'components/NavBar';
-import LoadingCard from './LoadingCard';
+import ItemList from 'components/ItemList';
 
 enum Category {
   ENTREE = "ENTREE",
@@ -27,7 +25,7 @@ interface ItemsData {
 }
 
 const GET_ITEMS = gql`
-  query getItems {
+  query getItemsViewMenu {
     allItems {
       name
       description
@@ -54,29 +52,6 @@ const ItemListRow = (props: ItemListRowProps) => {
   );
 }
 
-interface ItemListProps<T> {
-  queryResult: QueryResult<T>;
-  filters: Array<Category>;
-}
-
-const ItemList = ({ queryResult, filters } : ItemListProps<ItemsData>) => {
-  const { loading, error, data } = queryResult;
-
-  if (loading) { return <LoadingCard numberOfItems={4} />; }
-  if (error) { return <p>(ERROR) {error.message}</p>; }
-  if (!data) { return <p>(NO DATA)</p>; }
-
-  return (
-    <>
-      {data.allItems
-        .filter(item => filters.includes(item.category))
-        .map((item, index) => (
-          <ItemListRow key={`ItemListRow#${index}`} item={item} />
-        ))}
-    </>
-  );
-}
-
 const ViewMenu = () => {
   useEffect(() => {
     document.title = 'Menu – Sapori Unici';
@@ -86,20 +61,37 @@ const ViewMenu = () => {
 
   return (
     <div>
-      <NavBar/>
       <div className="view-menu-container">
         <div className="view-menu">
           <div className="view-menu-collection">
             <Typography variant="h2">Entrée & Salads</Typography>
-            <ItemList queryResult={query} filters={[Category.ENTREE, Category.SALAD]} />
+            <ItemList queryResult={query} numberOfLoadingCards={4}>
+              {results => results.allItems
+                .filter(item => item.category === Category.ENTREE || item.category === Category.SALAD)
+                .map((item, index) => (
+                  <ItemListRow key={`ItemListRow#${index}`} item={item} />
+                ))}
+            </ItemList>
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Mains</Typography>
-            <ItemList queryResult={query} filters={[Category.MAIN]} />
+            <ItemList queryResult={query} numberOfLoadingCards={4}>
+              {results => results.allItems
+                .filter(item => item.category === Category.MAIN)
+                .map((item, index) => (
+                  <ItemListRow key={`ItemListRow#${index}`} item={item} />
+                ))}
+            </ItemList>
           </div>
           <div className="view-menu-collection">
             <Typography variant="h2">Desserts & Drinks</Typography>
-            <ItemList queryResult={query} filters={[Category.DESSERT]} />
+            <ItemList queryResult={query} numberOfLoadingCards={4}>
+              {results => results.allItems
+                .filter(item => item.category === Category.DESSERT)
+                .map((item, index) => (
+                  <ItemListRow key={`ItemListRow#${index}`} item={item} />
+                ))}
+            </ItemList>
           </div>
         </div>
       </div>
