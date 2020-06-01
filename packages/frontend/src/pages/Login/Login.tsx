@@ -80,12 +80,22 @@ const Login = () => {
     loginUser()
       .then(response => {
         console.log(`DATA: ${JSON.stringify(response.data)}`);
+
+        const isAdmin = (email: string) => {
+          return (
+            email === "admin@sapori-unici.com"
+            || email === "staff1@sapori-unici.com"
+            || email === "staff2@sapori-unici.com"
+            || email === "staff3@sapori-unici.com"
+          );
+        }
+
         if (response.data) {
           const loginData = response.data.Login;
           context.login({
             accessToken: loginData.accessToken,
             userId: loginData.userId,
-            isAdmin: false,
+            isAdmin: isAdmin(email),
           });
           history.replace(from);
         } else {
