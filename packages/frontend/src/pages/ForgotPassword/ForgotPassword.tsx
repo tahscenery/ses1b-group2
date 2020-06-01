@@ -1,171 +1,96 @@
-import React, { Component } from 'react';
-import {
-  Button,
-  Container,
-  CssBaseline,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button, TextField, Typography, } from '@material-ui/core';
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import './ForgotPassword.css';
 
-import { Mutation } from "react-apollo";
-import { gql } from "apollo-boost";
-import { RouteComponentProps } from "react-router-dom";
+interface ResetResponse {
+  Login: {
+    accessToken: string;
+    userId: string;
+  };
+}
 
-import {resetMutation, resetMutationVariables} from '../../schemaTypes';
+interface ResetParams {
+  email: string;
+  password: string;
+}
 
-const ResetMutation = gql`
-  mutation resetMutation($email: String!, $password: String!) {
-    ResetPassword(email:$email, password:$password)
+const RESET_PASSWORD = gql`
+  mutation resetPassword($email: String!, $password: String!) {
+    ResetPassword(email: $email, password: $password)
   }
 `;
 
-class ForgotPassword extends React.PureComponent<RouteComponentProps<{}>> {
-  state = {
-    email: "",
-    password: ""
-  };
+const ForgotPassword = () => {
+  const history = useHistory();
 
-  handleChange = (e: any) => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
+  const [email, setEmail] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+
+  const [resetPassword, {}] =
+    useMutation<ResetResponse, ResetParams>(RESET_PASSWORD, {
+      variables: { email, password }
     });
-  };
 
-  render() {
-    // return (
-    //   <Container component="main" maxWidth="xs">
-    //     <CssBaseline />
-    //     <div className="back">
-    //       <Mutation<resetMutation, resetMutationVariables> mutation={ResetMutation}>
-    //         {mutate => (
-    //           <div
-    //             style={{
-    //               paddingTop: "150px",
-    //               display: "flex",
-    //               flexDirection: "column",
-    //             }}
-    //           >
-    //             <Typography component="h1" variant="h2" color="primary">
-    //               Forgot Password
-    //             </Typography>
-    //             <Typography component="h1" variant="subtitle1" color="initial">
-    //               Input a new password
-    //             </Typography>
-    //             <TextField
-    //               variant="outlined"
-    //               margin="normal"
-    //               required
-    //               fullWidth
-    //               id="email"
-    //               label="Email Address"
-    //               name="email"
-    //               autoComplete="email"
-    //               autoFocus
-    //               value={this.state.email}
-    //               onChange={this.handleChange}
-    //             />
-    //             <TextField
-    //               variant="outlined"
-    //               margin="normal"
-    //               required
-    //               fullWidth
-    //               id="password"
-    //               label="New Password"
-    //               name="password"
-    //               autoComplete="password"
-    //               autoFocus
-    //               value={this.state.password}
-    //               onChange={this.handleChange}
-    //             />
-    //             <div
-    //             style={{
-    //               paddingTop: "20px"}}
-    //             ></div>
-    //             <Button
-    //               type="submit"
-    //               fullWidth
-    //               variant="contained"
-    //               color="primary"
-    //               className="button"
-    //               onClick={async () => {
-    //                 const response = await mutate({
-    //                   variables: this.state
-    //                 });
-    //                 console.log(response);
-    //                 this.props.history.push('/login');
-    //               }}> Reset
-    //             </Button>
-    //           </div>
-    //         )}
-    //       </Mutation>
-    //     </div>
-    //   </Container>
-
-    // );
-    return (
-      <div>
-        <div className="component-container">
-          <div className="login-form">
-            <Typography variant="h2">Forgot Password</Typography>
-            <p>Forgot your password? Fill in the details below to reset your password.</p>
-            <Mutation<resetMutation, resetMutationVariables> mutation={ResetMutation}>
-              {mutate => (
-                <>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="password"
-                    label="New Password"
-                    name="password"
-                    autoComplete="password"
-                    autoFocus
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                  />
-                  <div className="login-footer">
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className="login-button"
-                      onClick={async () => {
-                        const response = await mutate({
-                          variables: this.state
-                        });
-                        console.log(response);
-                        this.props.history.push('/login');
-                      }}
-                    >
-                        Reset
-                    </Button>
-                  </div>
-                </>
-              )}
-            </Mutation>
-          </div>
-        </div>
-      </div>
-    );
+  const handleChange = (newValue: string, setter: (_: string) => void) => {
+    setter(newValue);
   }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    resetPassword()
+      .then(response => {
+        console.log(`DATA: ${JSON.stringify(response.data)}`);
+        history.push('/login');
+      })
+      .catch(error => console.error(error))
+  }
+
+  return (
+    <div className="component-container">
+      <div className="forgot-password-form">
+        <Typography variant="h2">Forgot Password</Typography>
+        <p>Forgot your password? Fill in the details below to reset it.</p>
+        <form noValidate onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            id="email"
+            label="Email"
+            autoComplete="email"
+            margin="normal"
+            fullWidth
+            required
+            autoFocus
+            onChange={e => handleChange(e.target.value, setEmail)}
+          />
+          <TextField
+            variant="outlined"
+            id="password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            margin="normal"
+            fullWidth
+            required
+            onChange={e => handleChange(e.target.value, setPassword)}
+          />
+          <Button
+            className="forgot-password-reset-button"
+            type="submit"
+            color="primary"
+            variant="contained"
+            size="large"
+            fullWidth
+          >
+            Reset Password
+          </Button>
+        </form>
+      </div>
+    </div>
+  )
 }
 
 export default ForgotPassword;
