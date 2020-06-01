@@ -2,6 +2,14 @@ import { Resolver, Mutation, Arg, Query } from "type-graphql";
 import { Item, ItemModel } from "../entities/Item";
 import { ItemInput } from "./inputs";
 
+export enum ItemCategory {
+  ENTREE,
+  SALAD,
+  MAIN,
+  DESSERT
+}
+
+
 @Resolver()
 class ItemResolver {
   @Query(() => Item, { nullable: false })
@@ -31,8 +39,71 @@ class ItemResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteItem(@Arg("id") id: string) {
-    await ItemModel.deleteOne({ id });
+  async addItem(
+    @Arg("name") name: string,
+    @Arg("description") description: string,
+    @Arg("price") price: number,
+    @Arg("category") category: ItemCategory,
+  ) {
+    
+    try {
+      await ItemModel.create({
+        name,
+        description,
+        price,
+        category,
+      });
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async updateItem(
+    @Arg("name") name: string,
+    @Arg("description") description: string,
+    @Arg("price") price: number,
+    @Arg("category") category: ItemCategory,
+  ) {
+    const existingItem = await ItemModel.findOne({ name: name });
+    if (!existingItem) {
+      throw new Error("Item not found.");
+    }
+    
+    try {
+      if (description != null) {
+        await ItemModel.findOneAndUpdate(
+          { _id: existingItem.id },
+          { description: description },
+          { new: true }
+        );
+      }
+      if (price != null) {
+        await ItemModel.findOneAndUpdate(
+          { _id: existingItem.id },
+          { price: price },
+          { new: true }
+        );
+      }
+      if (category != null) {
+        await ItemModel.findOneAndUpdate(
+          { _id: existingItem.id },
+          { category: category },
+          { new: true }
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async deleteItem(@Arg("name") name: string) {
+    await ItemModel.deleteOne({ name: name });
     return true;
   }
 }

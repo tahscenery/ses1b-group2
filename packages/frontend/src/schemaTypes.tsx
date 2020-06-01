@@ -80,6 +80,84 @@ export interface deleteCustomerVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: getItems
+// ====================================================
+
+export interface getItems_allItems {
+  __typename: "Item";
+  name: string;
+  description: string;
+  price: number;
+  category: ItemCategory;
+}
+
+export interface getItems {
+  allItems: getItems_allItems[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: addItems
+// ====================================================
+
+export interface addItems {
+  addItem: boolean;
+}
+
+export interface addItemsVariables {
+  name: string;
+  description: string;
+  price: number;
+  category: ItemCategory;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: updateItems
+// ====================================================
+
+export interface updateItems {
+  updateItem: boolean;
+}
+
+export interface updateItemsVariables {
+  name: string;
+  description: string;
+  price: number;
+  category: ItemCategory;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: deleteItem
+// ====================================================
+
+export interface deleteItem {
+  deleteItem: boolean;
+}
+
+export interface deleteItemVariables {
+  name: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: getOrder
 // ====================================================
 

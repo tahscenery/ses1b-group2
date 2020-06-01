@@ -89,7 +89,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                add_Table({ variables: { tableNumber: (newData.tableNumber as number) , minCapacity: 1, maxCapacity: 4, description: newData.description } });
+                add_Table({ variables: { tableNumber: (newData.tableNumber as number) , minCapacity: newData.minCapacity as number, maxCapacity: newData.maxCapacity as number, description: newData.description } });
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -102,7 +102,7 @@ export default function TableList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                update_Table({ variables: { tableNumber: newData.tableNumber, minCapacity: newData.minCapacity, maxCapacity: newData.maxCapacity, description: newData.description } });
+                update_Table({ variables: { tableNumber: newData.tableNumber as number, minCapacity: newData.minCapacity as number, maxCapacity: newData.maxCapacity as number, description: newData.description } });
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];

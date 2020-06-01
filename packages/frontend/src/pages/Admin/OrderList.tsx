@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import {getOrder, addTables, addTablesVariables, updateTables, updateTablesVariables, deleteTable, deleteTableVariables} from "../../schemaTypes";
+import {getOrder, deleteBookings, deleteBookingsVariables} from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,14 +36,6 @@ query getOrder {
   }
 }`;
 
-export interface deleteOrder {
-  deleteOrder: boolean;
-}
-
-export interface deleteOrderVariables {
-  id: string;
-}
-
 const DELETE_BOOKINGS = gql`
   mutation deleteBookings($id: String!) {
     deleteOrder(id: $id) 
@@ -68,7 +60,7 @@ export default function OrderList() {
   });
 
   const { loading, error, data } = useQuery<getOrder>(DISPLAY_ORDER);
-  const [deleteOrder] = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS);
+  const [deleteOrder] = useMutation<deleteBookings, deleteBookingsVariables>(DELETE_BOOKINGS);
 
 
   if (loading) return <LinearProgress />;

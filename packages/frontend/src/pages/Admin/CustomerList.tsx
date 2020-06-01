@@ -78,7 +78,7 @@ export default function CustomerList() {
         title="Customer List"
         columns={state.columns}
         data={data.allUsers}
-        
+
         editable={{
 
           onRowAdd: (newData) =>

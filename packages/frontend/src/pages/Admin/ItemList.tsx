@@ -4,17 +4,24 @@ import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { getCustomer, addCustomer, addCustomerVariables, updateCustomer, updateCustomerVariables, deleteCustomer, deleteCustomerVariables } from "../../schemaTypes";
+import { getItems, addItems, addItemsVariables, updateItems, updateItemsVariables, deleteItem, deleteItemVariables } from "../../schemaTypes";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
+enum ItemCategory {
+  ENTREE = "ENTREE",
+  SALAD = "SALAD",
+  MAIN = "MAIN",
+  DESSERT = "DESSERT",
+}
+
 interface Row {
-  id: string;
   name: string;
-  email: string;
-  password: string;
+  description: string;
+  price: number;
+  category: ItemCategory;
 }
 
 interface TableState {
@@ -22,34 +29,63 @@ interface TableState {
   datas: Row[];
 }
 
+const GET_ITEMS = gql`
+query getItems{
+  allItems{
+    name
+    description
+    price
+    category
 
+  }
+}`;
+
+const ADD_ITEMS = gql`
+mutation addItems($name: String!, $description: String!, $price: Float!, $category: ItemCategory!){
+  addItem(name: $name, description: $description, price: $price, category:$category)
+}`;
+
+const UPDATE_ITEMS = gql`
+mutation updateItems($name: String!, $description: String!, $price: Float!, $category: ItemCategory!){
+  updateItem(name: $name, description: $description, price: $price, category:$category)
+}`;
+
+const DELETE_ITEMS = gql`
+mutation deleteItem($name: String!){
+  deleteItem(name: $name)
+}`;
 
 export default function ItemList() {
 
   const [state, setState] = React.useState<TableState>({
     columns:
       [
-        { title: 'Id', field: 'id', type: 'numeric' },
         { title: 'Name', field: 'name' },
-        { title: 'Email', field: 'email' },
-        { title: 'Password', field: 'password' }
+        { title: 'Description', field: 'description' },
+        { title: 'Price', field: 'price' },
+        { title: 'Category', field: 'category' },
       ],
     datas:
       [
-        { id: "1", name: "staff1", email: "staff@staff.com", password: "staff1" }
+        
       ]
   });
 
-  
+  const { loading, error, data} = useQuery<getItems>(GET_ITEMS);
+  const [add_Item] = useMutation<addItems,addItemsVariables>(ADD_ITEMS);
+  const [update_Item] = useMutation<updateItems,updateItemsVariables>(UPDATE_ITEMS);
+  const [delete_Item] = useMutation<deleteItem,deleteItemVariables>(DELETE_ITEMS);
 
-
+  if (loading) return <LinearProgress />;
+  if (error) return <Alert severity="error">This is an error message!</Alert>;
+  if (!data) return <p>Not found</p>;
 
   return (
     <div>
       <MaterialTable
-        title="Customer List"
+        title="Item List"
         columns={state.columns}
-        data={state.datas}
+        data={data.allItems}
         
         editable={{
 
@@ -57,7 +93,7 @@ export default function ItemList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                
+                add_Item({variables: {name: newData.name, description: newData.description, price: newData.price as number, category: newData.category}})
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -70,7 +106,7 @@ export default function ItemList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                
+                update_Item({variables: {name: newData.name, description: newData.description, price: newData.price as number, category: newData.category}})
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -85,7 +121,7 @@ export default function ItemList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                
+                delete_Item({variables: {name: oldData.name}});
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);

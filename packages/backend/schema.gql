@@ -57,7 +57,9 @@ type Mutation {
   createAdmin(data: AdminInput!): Admin!
   deleteAdmin(id: String!): Boolean!
   createItem(data: ItemInput!): Item!
-  deleteItem(id: String!): Boolean!
+  addItem(category: Float!, price: Float!, description: String!, name: String!): Boolean!
+  updateItem(category: Float!, price: Float!, description: String!, name: String!): Boolean!
+  deleteItem(name: String!): Boolean!
   createStaff(data: StaffInput!): Staff!
   addStaff(password: String!, email: String!, username: String!): Boolean!
   updateStaff(password: String!, email: String!, username: String!): Boolean!
