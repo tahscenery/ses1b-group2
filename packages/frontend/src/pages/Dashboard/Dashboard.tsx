@@ -39,13 +39,12 @@ export interface deleteOrder {
 export interface deleteOrderVariables {
   id: string;
 }
-/*
+
 const DELETE_BOOKINGS = gql`
   mutation deleteOrder($id: String!) {
-    deleteOrder(id: $id) {
-    }
+    deleteOrder(id: $id) 
   }
-`;*/
+`;
 
 interface BookingsListRowProps {
   index: number;
@@ -53,10 +52,11 @@ interface BookingsListRowProps {
 }
 
 const BookingsListRow = (props: BookingsListRowProps) => {
-  const { date, location, numberOfPeople } = props.booking;
+  const { date, location, numberOfPeople, id } = props.booking;
   console.log(props.index);
 
-  //const deleteOrder = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS);
+  const [deleteOrder, {}] = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS, { variables: { id: id } });
+
   return (
     <>
       <ListItem
@@ -73,7 +73,7 @@ const BookingsListRow = (props: BookingsListRowProps) => {
         <Button
           variant="contained"
           color="primary"
-        >
+          onClick={_ => deleteOrder()}>
           Cancel Booking
         </Button>
       </ListItem>
