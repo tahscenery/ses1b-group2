@@ -25,7 +25,7 @@ interface ItemsData {
 }
 
 const GET_ITEMS = gql`
-  query getItems {
+  query getItemsViewMenu {
     allItems {
       name
       description

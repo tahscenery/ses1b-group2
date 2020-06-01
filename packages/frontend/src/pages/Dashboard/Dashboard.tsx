@@ -38,7 +38,7 @@ interface BookingsListRowProps {
 }
 
 const BookingsListRow = (props: BookingsListRowProps) => {
-  const { id, date, location, numberOfPeople, items } = props.booking;
+  const { date, location, numberOfPeople } = props.booking;
   console.log(props.index);
   return (
     <>
