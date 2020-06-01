@@ -118,76 +118,74 @@ const Login = () => {
   const redirectMessage = "You must be logged in to view this page first.";
 
   return (
-    <div>
-      <div className="component-container">
-        <div className="login-form">
-          <Typography variant="h2">Login</Typography>
-          <p>Sign in with your email and password below.</p>
-          {didRedirect ? <Alert severity="warning">{redirectMessage}</Alert> : null}
-          {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
-          {loginError ? (
-            loginError.graphQLErrors.map((error, index) => (
-              <Alert key={`alert-${index}`} severity="error">{error.message}</Alert>
-            ))
-          ) : null}
-          <form noValidate onSubmit={e => handleSubmit(e)}>
-            <TextField
-              variant="outlined"
-              id="email"
-              label="Email"
-              autoComplete="email"
-              margin="normal"
-              fullWidth
-              required
-              autoFocus
-              focused={errors.email}
-              error={errors.email}
-              onChange={e => handleChange(e.target.value, setEmail)}
-            />
-            <TextField
-              variant="outlined"
-              id="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              margin="normal"
-              fullWidth
-              required
-              focused={errors.password}
-              error={errors.password}
-              onChange={e => handleChange(e.target.value, setPassword)}
-            />
-            <FormControlLabel
-              label="Remember me"
-              control={<Checkbox value="remember" color="primary"/>}
-            />
-            <Button
-              className="login-button"
-              type="submit"
-              color="primary"
-              variant="contained"
-              size="large"
-              fullWidth
-            >
-              Sign In
-            </Button>
-          </form>
-          <div className="login-footer">
-            <Link
-              href="/forgot-password"
-              variant="body2"
-              color="secondary"
-            >
-              Forgot Password?
-            </Link>
-            <Link
-              href="/register"
-              variant="body2"
-              color="secondary"
-            >
-              Don't have an account? Sign Up
-            </Link>
-          </div>
+    <div className="component-container">
+      <div className="login-form">
+        <Typography variant="h2">Login</Typography>
+        <p>Sign in with your email and password below.</p>
+        {didRedirect ? <Alert severity="warning">{redirectMessage}</Alert> : null}
+        {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
+        {loginError ? (
+          loginError.graphQLErrors.map((error, index) => (
+            <Alert key={`alert-${index}`} severity="error">{error.message}</Alert>
+          ))
+        ) : null}
+        <form noValidate onSubmit={e => handleSubmit(e)}>
+          <TextField
+            variant="outlined"
+            id="email"
+            label="Email"
+            autoComplete="email"
+            margin="normal"
+            fullWidth
+            required
+            autoFocus
+            focused={errors.email}
+            error={errors.email}
+            onChange={e => handleChange(e.target.value, setEmail)}
+          />
+          <TextField
+            variant="outlined"
+            id="password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            margin="normal"
+            fullWidth
+            required
+            focused={errors.password}
+            error={errors.password}
+            onChange={e => handleChange(e.target.value, setPassword)}
+          />
+          <FormControlLabel
+            label="Remember me"
+            control={<Checkbox value="remember" color="primary"/>}
+          />
+          <Button
+            className="login-button"
+            type="submit"
+            color="primary"
+            variant="contained"
+            size="large"
+            fullWidth
+          >
+            Sign In
+          </Button>
+        </form>
+        <div className="login-footer">
+          <Link
+            href="/forgot-password"
+            variant="body2"
+            color="secondary"
+          >
+            Forgot Password?
+          </Link>
+          <Link
+            href="/register"
+            variant="body2"
+            color="secondary"
+          >
+            Don't have an account? Sign Up
+          </Link>
         </div>
       </div>
     </div>

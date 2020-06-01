@@ -50,8 +50,8 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div>
-      <div className="component-container">
+    <div className="component-container">
+      <div className="forgot-password-form">
         <Typography variant="h2">Forgot Password</Typography>
         <p>Forgot your password? Fill in the details below to reset it.</p>
         <form noValidate onSubmit={handleSubmit}>
@@ -78,14 +78,14 @@ const ForgotPassword = () => {
             onChange={e => handleChange(e.target.value, setPassword)}
           />
           <Button
-            className="login-button"
+            className="forgot-password-reset-button"
             type="submit"
             color="primary"
             variant="contained"
             size="large"
             fullWidth
           >
-            Sign In
+            Reset Password
           </Button>
         </form>
       </div>

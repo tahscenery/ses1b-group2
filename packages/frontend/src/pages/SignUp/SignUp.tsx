@@ -108,88 +108,86 @@ const SignUp = () => {
   }
 
   return (
-    <div>
-      <div className="component-container">
-        <div className="sign-up-form">
-          <Typography variant="h2">Sign Up</Typography>
-          <p>Don't have an account? Fill in the details below to get started.</p>
-          {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
-          {registerError ? (
-            registerError.graphQLErrors.map((error, index) => (
-              <Alert key={`alert-${index}`} severity="error">{error.message}</Alert>
-            ))
-          ) : null}
-          {data && data.Register ? <Alert severity="success">Success!</Alert> : null}
-          <form noValidate onSubmit={e => handleSubmit(e)}>
-            <TextField
-              variant="outlined"
-              id="name"
-              label="Name"
-              autoComplete="name"
-              margin="normal"
-              fullWidth
-              required
-              autoFocus
-              focused={errors.name}
-              error={errors.name}
-              onChange={e => handleChange(e.target.value, setName)}
-            />
-            <TextField
-              variant="outlined"
-              id="email"
-              label="Email"
-              autoComplete="email"
-              margin="normal"
-              fullWidth
-              required
-              focused={errors.email}
-              error={errors.email}
-              onChange={e => handleChange(e.target.value, setEmail)}
-            />
-            <TextField
-              variant="outlined"
-              id="password"
-              label="Password"
-              type="password"
-              margin="normal"
-              fullWidth
-              required
-              focused={errors.password}
-              error={errors.password}
-              onChange={e => handleChange(e.target.value, setPassword)}
-            />
-            <TextField
-              variant="outlined"
-              id="confirm-password"
-              label="Confirm Password"
-              type="password"
-              margin="normal"
-              fullWidth
-              required
-              focused={errors.confirmPassword}
-              error={errors.confirmPassword}
-              onChange={e => handleChange(e.target.value, setConfirmPassword)}
-            />
-            <Button
-              className="sign-up-button"
-              type="submit"
-              color="primary"
-              variant="contained"
-              size="large"
-              fullWidth
-            >
-              Sign Up
-            </Button>
-          </form>
-          <div className="sign-up-footer">
-            <Link
-              href="/login"
-              variant="body2"
-              color="secondary"
-            >
-              I have an account
-            </Link>
-          </div>
+    <div className="component-container">
+      <div className="sign-up-form">
+        <Typography variant="h2">Sign Up</Typography>
+        <p>Don't have an account? Fill in the details below to get started.</p>
+        {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
+        {registerError ? (
+          registerError.graphQLErrors.map((error, index) => (
+            <Alert key={`alert-${index}`} severity="error">{error.message}</Alert>
+          ))
+        ) : null}
+        {data && data.Register ? <Alert severity="success">Success!</Alert> : null}
+        <form noValidate onSubmit={e => handleSubmit(e)}>
+          <TextField
+            variant="outlined"
+            id="name"
+            label="Name"
+            autoComplete="name"
+            margin="normal"
+            fullWidth
+            required
+            autoFocus
+            focused={errors.name}
+            error={errors.name}
+            onChange={e => handleChange(e.target.value, setName)}
+          />
+          <TextField
+            variant="outlined"
+            id="email"
+            label="Email"
+            autoComplete="email"
+            margin="normal"
+            fullWidth
+            required
+            focused={errors.email}
+            error={errors.email}
+            onChange={e => handleChange(e.target.value, setEmail)}
+          />
+          <TextField
+            variant="outlined"
+            id="password"
+            label="Password"
+            type="password"
+            margin="normal"
+            fullWidth
+            required
+            focused={errors.password}
+            error={errors.password}
+            onChange={e => handleChange(e.target.value, setPassword)}
+          />
+          <TextField
+            variant="outlined"
+            id="confirm-password"
+            label="Confirm Password"
+            type="password"
+            margin="normal"
+            fullWidth
+            required
+            focused={errors.confirmPassword}
+            error={errors.confirmPassword}
+            onChange={e => handleChange(e.target.value, setConfirmPassword)}
+          />
+          <Button
+            className="sign-up-button"
+            type="submit"
+            color="primary"
+            variant="contained"
+            size="large"
+            fullWidth
+          >
+            Sign Up
+          </Button>
+        </form>
+        <div className="sign-up-footer">
+          <Link
+            href="/login"
+            variant="body2"
+            color="secondary"
+          >
+            I have an account
+          </Link>
         </div>
       </div>
     </div>
