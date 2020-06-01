@@ -21,7 +21,7 @@ interface ItemsData {
 }
 
 const GET_ITEMS = gql`
-  query getItems {
+  query getItemsSelectItems {
     allItems {
       id
       name
