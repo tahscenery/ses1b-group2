@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useLocation } from 'react-router-dom';
 import { Avatar, Button, Divider, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
@@ -32,6 +32,21 @@ const GET_BOOKINGS = gql`
   }
 `;
 
+export interface deleteOrder {
+  deleteOrder: boolean;
+}
+
+export interface deleteOrderVariables {
+  id: string;
+}
+/*
+const DELETE_BOOKINGS = gql`
+  mutation deleteOrder($id: String!) {
+    deleteOrder(id: $id) {
+    }
+  }
+`;*/
+
 interface BookingsListRowProps {
   index: number;
   booking: Booking;
@@ -40,20 +55,29 @@ interface BookingsListRowProps {
 const BookingsListRow = (props: BookingsListRowProps) => {
   const { id, date, location, numberOfPeople, items } = props.booking;
   console.log(props.index);
+
+  //const deleteOrder = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS);
   return (
     <>
       <ListItem
         button
         key={`list-item-${props.index}`}>
-          <ListItemAvatar>
-            <Avatar>{`${props.index}`}</Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            key={`list-item-text-${props.index}`}
-            primary={`${location} - ${numberOfPeople} people`}
-            secondary={date.toLocaleString()}/>
-        <Divider/>
+        <ListItemAvatar>
+          <Avatar>{`${props.index}`}</Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          key={`list-item-text-${props.index}`}
+          primary={`${location} - ${numberOfPeople} people`}
+          secondary={date.toLocaleString()} />
+        <Divider />
+        <Button
+          variant="contained"
+          color="primary"
+        >
+          Cancel Booking
+        </Button>
       </ListItem>
+
     </>
   );
 }
