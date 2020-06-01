@@ -125,6 +125,29 @@ const Confirm = () => {
 
   const handleToken = () => {
     //pay({variables: {source:"", id: authContext.user.userId}});
+    handlePayment(bookingDetails)
+      .then(_ => {
+        const variables = {
+          userId: authContext.user.userId,
+          tableId: bookingDetails.selectedTable.id,
+          date: bookingDetails.selectedDate,
+          location: bookingDetails.location,
+          numberOfPeople: bookingDetails.numberOfPeople,
+          items: bookingDetails.selectedItems.map(item => item.id),
+        };
+
+        createOrder({ variables })
+          .then(res => {
+            console.log(`DATA: ${JSON.stringify(res.data)}`);
+            if (res.data.createOrder) {
+              history.push('/dashboard', { didCreateOrder: true })
+            } else {
+              console.error(`Failed to create order`);
+            }
+          })
+          .catch(error => console.error(`An error occurred: ${error}`));
+      })
+      .catch(error => console.error(`An error occurred: ${error}`));
     history.push('/dashboard', { didCreateOrder: true });
   }
 
@@ -232,16 +255,15 @@ const Confirm = () => {
         >
           Confirm
         </Button>
-        {bookingDetails.selectedItems.map((item, index) => (
+        
           <StripeCheckout
             stripeKey="pk_test_uAMIN59vqRuzrMicoGTAyacQ00EKaAXDAl"
             token={handleToken}
             billingAddress
             shippingAddress
-            amount={item.price * 100}
+            amount={total * 100}
             name="Sapori Unici"
           />
-        ))}
       </div>
     </div>
   )
