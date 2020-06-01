@@ -21,6 +21,7 @@ interface Row {
 
 interface TableState {
   columns: Array<Column<Row>>;
+  datas: Row[];
 }
 
 const DISPLAY_ORDER = gql`
@@ -35,18 +36,32 @@ query getOrder {
   }
 }`;
 
+export interface deleteOrder {
+  deleteOrder: boolean;
+}
+
+export interface deleteOrderVariables {
+  id: string;
+}
+
+const DELETE_BOOKINGS = gql`
+  mutation deleteOrder($id: String!) {
+    deleteOrder(id: $id) 
+  }
+`;
+
+
 export default function OrderList() {
 
   const [state, setState] = React.useState<TableState>({
     columns:
       [
-        { title: 'Id', field: 'id', type:'numeric'},
-        // { title: 'Order Number', field: 'orderNumber'},
+        { title: 'Id', field: 'id'},
+        { title: 'Date', field: 'date'},
+        { title: 'Location', field: 'location'},
+        { title: 'Number of People', field: 'numberOfPeople'},
         { title: 'Customer', field: 'userId'},
         { title: 'Table', field: 'tableId'},
-        { title: 'Date & Time', field: 'date' },
-        { title: 'Location', field: 'location' },
-        { title: 'Number of People', field: 'numberOfPeople' },
       ],
     datas:
       [
@@ -54,6 +69,7 @@ export default function OrderList() {
   });
 
   const { loading, error, data } = useQuery<getOrder>(DISPLAY_ORDER);
+  const [deleteOrder] = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS);
 
 
   if (loading) return <LinearProgress />;
@@ -63,7 +79,7 @@ export default function OrderList() {
   return (
     <div>
       <MaterialTable
-        title="Booking List"
+        title="Table List"
         columns={state.columns}
         data={data.allOrders}
 
@@ -73,7 +89,7 @@ export default function OrderList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-
+                
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.push(newData);
@@ -86,7 +102,7 @@ export default function OrderList() {
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-
+                
                 if (oldData) {
                   setState((prevState) => {
                     const data = [...prevState.datas];
@@ -96,12 +112,12 @@ export default function OrderList() {
                 }
               }, 600);
             }),
-
+            
           onRowDelete: (oldData) =>
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-
+                deleteOrder({ variables: { id: oldData.id }});
                 setState((prevState) => {
                   const data = [...prevState.datas];
                   data.splice(data.indexOf(oldData), 1);
