@@ -136,11 +136,13 @@ const Confirm = () => {
           items: bookingDetails.selectedItems.map(item => item.id),
         };
 
+        console.log(variables);
+
         createOrder({ variables })
           .then(res => {
             console.log(`DATA: ${JSON.stringify(res.data)}`);
             if (res.data.createOrder) {
-              history.push('/dashboard', { didCreateOrder: true })
+              history.push('/dashboard', { didCreateOrder: true });
             } else {
               console.error(`Failed to create order`);
             }

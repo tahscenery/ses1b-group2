@@ -42,7 +42,7 @@ export interface deleteOrderVariables {
 
 const DELETE_BOOKINGS = gql`
   mutation deleteOrder($id: String!) {
-    deleteOrder(id: $id) 
+    deleteOrder(id: $id)
   }
 `;
 
@@ -52,10 +52,13 @@ interface BookingsListRowProps {
 }
 
 const BookingsListRow = (props: BookingsListRowProps) => {
-  const { date, location, numberOfPeople, id } = props.booking;
-  console.log(props.index);
+  const { date: _date, location, numberOfPeople, id } = props.booking;
+  const date = new Date(_date.toString());
 
-  const [deleteOrder, {}] = useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS, { variables: { id: id } });
+  const [deleteOrder, {}] =
+    useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS, {
+      variables: { id: id }
+    });
 
   return (
     <>
@@ -68,7 +71,7 @@ const BookingsListRow = (props: BookingsListRowProps) => {
         <ListItemText
           key={`list-item-text-${props.index}`}
           primary={`${location} - ${numberOfPeople} people`}
-          secondary={date.toLocaleString()} />
+          secondary={date.toLocaleString()}/>
         <Divider />
         <Button
           variant="contained"
@@ -88,8 +91,6 @@ const Dashboard = () => {
   const queryResult = useQuery<BookingsData>(GET_BOOKINGS, {
     variables: { userId: user.userId }
   });
-
-  console.log(location.state);
 
   let didCreateOrder = false;
   if (location.state !== undefined) {

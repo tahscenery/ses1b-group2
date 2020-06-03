@@ -44,7 +44,7 @@ export class Order {
   @Property({ required: true })
   items: string[];
 
-  @Field()
+  @Field(() => Date)
   @Property({ required: true })
   date: Date;
 

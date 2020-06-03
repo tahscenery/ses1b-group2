@@ -19,7 +19,7 @@ class OrderInput implements Partial<Order>{
   @Field(() => String)
   tableId: ObjectId;
 
-  @Field()
+  @Field(() => Date)
   date: Date;
 
   @Field()

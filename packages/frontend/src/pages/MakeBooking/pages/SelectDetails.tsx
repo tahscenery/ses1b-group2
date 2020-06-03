@@ -66,8 +66,8 @@ const SelectDetails = () => {
           value={location}
           onChange={e => setLocation(e.target.value)}
         >
-          <MenuItem key={`menu-item-1`} value={'Ultimo'}/>
-          <MenuItem disabled key={`menu-item-2`} value={'- Coming soon -'}/>
+          <MenuItem key={`menu-item-1`} value={'Ultimo'}>{'Ultimo'}</MenuItem>
+          <MenuItem disabled key={`menu-item-2`} value={'- Coming soon -'}>{'- Coming Soon -'}</MenuItem>
         </TextField>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <DateTimePicker
