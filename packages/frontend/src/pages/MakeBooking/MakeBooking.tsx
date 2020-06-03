@@ -21,7 +21,6 @@ const MakeBooking = () => {
   }
 
   const setBookingDetails = (details: BookingDetails) => {
-    console.log({ ...bookingDetails, ...details });
     _setBookingDetails({ ...bookingDetails, ...details });
   }
 

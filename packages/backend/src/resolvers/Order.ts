@@ -31,7 +31,8 @@ class OrderResolver {
       tableId,
       date,
       location,
-      numberOfPeople
+      numberOfPeople,
+      totalPrice,
     }: OrderInput
   ): Promise<Boolean> {
     // const existingOrder = await OrderModel.findOne({ orderNumber: orderNumber });
@@ -42,11 +43,12 @@ class OrderResolver {
     try {
       await OrderModel.create({
         userId,
-        items,
         tableId,
-        numberOfPeople,
+        date,
         location,
-        date
+        numberOfPeople,
+        totalPrice,
+        items,
       });
     } catch (error) {
       console.log(error);
@@ -68,7 +70,7 @@ class OrderResolver {
     // return (await UserModel.findById(order._doc.user_id))!;
     return (await UserModel.findById(order.userId))!;
   }
-  
+
   // @FieldResolver(_type => (Item))
   // async item(@Root() order: Order): Promise<Item> {
   //   console.log(order, "item!")

@@ -7,7 +7,7 @@ import LoadingCard from './LoadingCard';
 interface ItemListProps<T> {
   queryResult: QueryResult<T>;
   numberOfLoadingCards: number;
-  children: (results: T) => Array<JSX.Element>;
+  children: (results: T) => JSX.Element | JSX.Element[];
 }
 
 function ItemList<T>({ queryResult, numberOfLoadingCards, children }: ItemListProps<T>) {
@@ -17,7 +17,7 @@ function ItemList<T>({ queryResult, numberOfLoadingCards, children }: ItemListPr
   if (error) { return <Alert severity="error">{error.message}</Alert>; }
   if (!data) { return <Alert severity="info">No data found</Alert> }
 
-  return (<>{children(data)}</>);
+  return <>{children(data)}</>;
 }
 
 export default ItemList;

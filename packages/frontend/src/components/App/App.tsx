@@ -71,9 +71,6 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 const Routes = () => {
-  const location = useLocation();
-  console.log(location.pathname);
-
   return (
     <Switch>
       <Route exact path="/" component={Home} />

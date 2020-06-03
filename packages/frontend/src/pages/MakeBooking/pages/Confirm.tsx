@@ -18,6 +18,7 @@ interface CreateOrderParams {
   location: string;
   numberOfPeople: number;
   items: string[];
+  totalPrice: number;
 }
 
 interface CreateOrderResponse {
@@ -31,6 +32,7 @@ const CREATE_ORDER = gql`
     $date: DateTime!,
     $location: String!,
     $numberOfPeople: Float!,
+    $totalPrice: Float!,
     $items: [String!]!
   ) {
     createOrder(data: {
@@ -39,6 +41,7 @@ const CREATE_ORDER = gql`
       date: $date,
       location: $location,
       numberOfPeople: $numberOfPeople,
+      totalPrice: $totalPrice,
       items: $items
     })
   }
@@ -59,26 +62,20 @@ export interface CreateSubscriptionMutationVariables {
   id: string;
 }
 
-// const CREATE_SUBSCRIPTION = gql`
-//   mutation CreateSubscriptionMutation($source: String!, $id: String!) {
-//     createSubcription(source: $source, id: $id) {
-//       id
-//       email
-//     }
-//   }
-// `;
+const CREATE_SUBSCRIPTION = gql`
+  mutation CreateSubscriptionMutation($source: String!, $id: String!) {
+    createSubcription(source: $source, id: $id) {
+      id
+      email
+    }
+  }
+`;
 
 const useStyles = makeStyles({
   tableEmphasis: {
     fontWeight: "bold",
   }
 });
-
-const handlePayment = (bookingDetails: BookingDetails) => {
-  console.log(bookingDetails);
-  console.log("handlePayment: TODO...");
-  return Promise.resolve();
-}
 
 const Confirm = () => {
   const history = useHistory();
@@ -101,29 +98,31 @@ const Confirm = () => {
   const handleToken = (token: Token) => {
     console.log(token);
 
-    handlePayment(bookingDetails)
-      .then(_ => {
-        const variables = {
-          userId: authContext.user.userId,
-          tableId: bookingDetails.selectedTable.id,
-          date: bookingDetails.selectedDate,
-          location: bookingDetails.location,
-          numberOfPeople: bookingDetails.numberOfPeople,
-          items: bookingDetails.selectedItems.map(item => item.id),
-        };
+    const variables = {
+      userId: authContext.user.userId,
+      tableId: bookingDetails.selectedTable.id,
+      date: bookingDetails.selectedDate,
+      location: bookingDetails.location,
+      numberOfPeople: bookingDetails.numberOfPeople,
+      totalPrice: bookingDetails.totalPrice,
+      items: bookingDetails.selectedItems.map(item => item.id),
+    };
 
-        createOrder({ variables })
-          .then(res => {
-            console.log(`DATA: ${JSON.stringify(res.data)}`);
-            if (res.data.createOrder) {
-              history.push('/dashboard', { didCreateOrder: true })
-            } else {
-              console.error(`Failed to create order`);
-            }
-          })
-          .catch(error => console.error(`An error occurred: ${error}`));
+    console.log(variables);
+
+    createOrder({ variables })
+      .then(res => {
+        console.log(`DATA: ${JSON.stringify(res.data)}`);
+        if (res.data.createOrder) {
+          // history.push('/dashboard', { didCreateOrder: true });
+        } else {
+          console.error(`Failed to create order`);
+        }
       })
-      .catch(error => console.error(`An error occurred: ${error}`));
+      .catch(error => {
+        console.error(`An error occurred: ${error}`);
+        // history.push('/dashboard', { didCreateOrder: true });
+      });
   }
 
   let total = 0;
@@ -222,14 +221,6 @@ const Confirm = () => {
         >
           Previous
         </Button>
-        {/* <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          onClick={handleConfirm}
-        >
-          Confirm
-        </Button> */}
         <StripeCheckout
           stripeKey="pk_test_uAMIN59vqRuzrMicoGTAyacQ00EKaAXDAl"
           name="Sapori Unici"

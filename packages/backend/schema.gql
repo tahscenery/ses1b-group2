@@ -84,20 +84,22 @@ type Order {
   id: ID!
   userId: String!
   tableId: String!
-  items: [String!]!
   date: DateTime!
   location: String!
   numberOfPeople: Float!
+  totalPrice: Float!
+  items: [String!]!
   user: User!
 }
 
 input OrderInput {
   userId: String!
-  items: [String!]!
   tableId: String!
   date: DateTime!
   location: String!
   numberOfPeople: Float!
+  totalPrice: Float!
+  items: [String!]!
 }
 
 type Query {

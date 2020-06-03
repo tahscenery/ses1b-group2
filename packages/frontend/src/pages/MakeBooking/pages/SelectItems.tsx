@@ -39,7 +39,7 @@ const SelectItems = () => {
   const { loading, error, data } = useQuery<ItemsData>(GET_ITEMS);
 
   const [selectedItems, setSelectedItems] = useState<Array<Item>>([]);
-  const [total, setTotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleToggle = (item: Item) => {
     const currentItemIndex = selectedItems.indexOf(item);
@@ -47,10 +47,10 @@ const SelectItems = () => {
 
     if (currentItemIndex === -1) {
       newSelectedItems.push(item);
-      setTotal(total + item.price);
+      setTotalPrice(totalPrice + item.price);
     } else {
       newSelectedItems.splice(currentItemIndex, 1);
-      setTotal(total - item.price);
+      setTotalPrice(totalPrice - item.price);
     }
 
     setSelectedItems(newSelectedItems);
@@ -61,7 +61,7 @@ const SelectItems = () => {
   }
 
   const handleNext = () => {
-    context.setBookingDetails({ selectedItems });
+    context.setBookingDetails({ selectedItems, totalPrice });
     context.setCurrentProgress(CurrentProgress.CONFIRM);
   }
 
@@ -115,7 +115,7 @@ const SelectItems = () => {
           ))}
       </List>
       <div className="booking-select-items-footer">
-        <p>Total: ${`${total.toFixed(2)}`}</p>
+        <p>Total: ${`${totalPrice.toFixed(2)}`}</p>
         <div className="booking-footer">
           <Button
             color="secondary"
@@ -129,7 +129,7 @@ const SelectItems = () => {
             variant="contained"
             size="large"
             onClick={handleNext}
-            disabled={total === 0}
+            disabled={totalPrice === 0}
           >
             Proceed to Checkout
           </Button>

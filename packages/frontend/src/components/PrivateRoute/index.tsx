@@ -5,7 +5,6 @@ import AuthContext from 'context/authContext';
 const PrivateRoute = ({ children, ...rest }: RouteProps) => {
   const { user } = useContext(AuthContext);
   const isAuthenticated = user !== null && user !== undefined;
-  console.log(`Authenticated: ${isAuthenticated}`);
 
   return (
     <Route {...rest} render={({ location }) =>

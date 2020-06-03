@@ -13,6 +13,7 @@ interface Booking {
   date: Date;
   location: string;
   numberOfPeople: number;
+  totalPrice: number;
   items: string[];
 }
 
@@ -27,6 +28,7 @@ const GET_BOOKINGS = gql`
       date
       location
       numberOfPeople
+      totalPrice
       items
     }
   }
@@ -52,7 +54,7 @@ interface BookingsListRowProps {
 }
 
 const BookingsListRow = (props: BookingsListRowProps) => {
-  const { date: _date, location, numberOfPeople, id } = props.booking;
+  const { id, date: _date, location, numberOfPeople, totalPrice } = props.booking;
   const date = new Date(_date.toString());
 
   // eslint-disable-next-line
@@ -67,21 +69,19 @@ const BookingsListRow = (props: BookingsListRowProps) => {
         button
         key={`list-item-${props.index}`}>
         <ListItemAvatar>
-          <Avatar>{`${props.index}`}</Avatar>
+          <Avatar>{location.charAt(0)}</Avatar>
         </ListItemAvatar>
         <ListItemText
           key={`list-item-text-${props.index}`}
-          primary={`${location} - ${numberOfPeople} people`}
+          primary={`${location} - ${numberOfPeople} people ($${totalPrice.toFixed(2)})`}
           secondary={date.toLocaleString()}/>
-        <Divider />
         <Button
-          variant="contained"
-          color="primary"
+          variant="outlined"
+          color="secondary"
           onClick={_ => deleteOrder()}>
-          Cancel Booking
+          Cancel
         </Button>
       </ListItem>
-
     </>
   );
 }
@@ -98,28 +98,46 @@ const Dashboard = () => {
     didCreateOrder = location.state.didCreateOrder;
   }
 
+  const generateRows = (results: BookingsData) => {
+    console.log(results);
+
+    if (results.allOrdersForUser.length === 0) {
+      return (<Alert severity="info">You have not made any bookings.</Alert>)
+    } else {
+      return (results.allOrdersForUser
+        .sort((prev, curr) => prev.date < curr.date ? -1 : prev.date > curr.date ? 1 : 0)
+        .map((booking, index) => (
+          <>
+            <BookingsListRow index={index} booking={booking} />
+            <Divider/>
+          </>
+        )))
+    }
+  }
+
   return (
     <div className="component-container">
       <Typography variant="h2">My Bookings</Typography>
+      <p>Below is a list of all your bookings. You can cancel or edit your
+        bookings from here.</p>
       {didCreateOrder ? (
         <Alert severity="success">Your booking has been successfully created.</Alert>
       ) : null}
       <List>
+        <Divider/>
         <ItemList queryResult={queryResult} numberOfLoadingCards={4}>
-          {results => results.allOrdersForUser
-            .sort((prev, curr) => prev.date < curr.date ? -1 : prev.date > curr.date ? 1 : 0)
-            .map((booking, index) => (
-              <BookingsListRow index={index} booking={booking} />
-            ))}
+          {results => generateRows(results)}
         </ItemList>
       </List>
-      <Button
-        variant="contained"
-        color="primary"
-        href="/make-booking"
-      >
-        Make a Booking
-      </Button>
+      <div className="booking-footer">
+        <Button
+          variant="contained"
+          color="primary"
+          href="/make-booking"
+        >
+          New Booking
+        </Button>
+      </div>
     </div>
   )
 }
