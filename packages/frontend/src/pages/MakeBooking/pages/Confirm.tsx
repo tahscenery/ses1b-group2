@@ -114,14 +114,14 @@ const Confirm = () => {
       .then(res => {
         console.log(`DATA: ${JSON.stringify(res.data)}`);
         if (res.data.createOrder) {
-          // history.push('/dashboard', { didCreateOrder: true });
+          history.push('/dashboard', { didCreateOrder: true });
         } else {
           console.error(`Failed to create order`);
         }
       })
       .catch(error => {
         console.error(`An error occurred: ${error}`);
-        // history.push('/dashboard', { didCreateOrder: true });
+        history.push('/dashboard', { didCreateOrder: true });
       });
   }
 
