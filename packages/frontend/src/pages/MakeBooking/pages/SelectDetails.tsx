@@ -15,7 +15,7 @@ const SelectDetails = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(context.bookingDetails.selectedDate || null);
 
   const handleCancel = () => {
-    history.push("/")
+    history.push("/dashboard")
   }
 
   const handleNext = () => {
