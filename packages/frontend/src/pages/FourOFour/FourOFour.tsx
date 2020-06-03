@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Typography } from '@material-ui/core';
 // import NavBar from 'components/NavBar';
 

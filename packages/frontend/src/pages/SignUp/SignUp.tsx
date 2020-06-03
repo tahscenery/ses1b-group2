@@ -5,7 +5,6 @@ import { Button, Link, TextField, Typography } from '@material-ui/core';
 import gql from 'graphql-tag';
 
 import './SignUp.css';
-import AuthContext from 'context/authContext';
 import Alert from 'components/Alert';
 
 interface RegisterParams {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -34,12 +34,12 @@ query getStaff{
 
 const CREATE_STAFF = gql`
 mutation addStaff($username: String!, $email: String!, $password: String!) {
-  addStaff(username: $username, email: $email, password: $password)   
+  addStaff(username: $username, email: $email, password: $password)
 }`;
 
 const UPDATE_STAFF = gql`
 mutation updateStaff($username: String!, $email: String!, $password: String!) {
-  updateStaff(username: $username, email: $email, password: $password)   
+  updateStaff(username: $username, email: $email, password: $password)
 }`;
 
 const DELETE_STAFF = gql`

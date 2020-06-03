@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -67,7 +67,7 @@ export default function ItemList() {
       ],
     datas:
       [
-        
+
       ]
   });
 
@@ -86,7 +86,7 @@ export default function ItemList() {
         title="Item List"
         columns={state.columns}
         data={data.allItems}
-        
+
         editable={{
 
           onRowAdd: (newData) =>

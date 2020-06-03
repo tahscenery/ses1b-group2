@@ -59,14 +59,14 @@ export interface CreateSubscriptionMutationVariables {
   id: string;
 }
 
-const CREATE_SUBSCRIPTION = gql`
-  mutation CreateSubscriptionMutation($source: String!, $id: String!) {
-    createSubcription(source: $source, id: $id) {
-      id
-      email
-    }
-  }
-`;
+// const CREATE_SUBSCRIPTION = gql`
+//   mutation CreateSubscriptionMutation($source: String!, $id: String!) {
+//     createSubcription(source: $source, id: $id) {
+//       id
+//       email
+//     }
+//   }
+// `;
 
 const useStyles = makeStyles({
   tableEmphasis: {
@@ -124,35 +124,6 @@ const Confirm = () => {
       })
       .catch(error => console.error(`An error occurred: ${error}`));
   }
-
-  // const handleToken = () => {
-  //   // pay({variables: {source:"", id: authContext.user.userId}});
-  //   handlePayment(bookingDetails)
-  //     .then(_ => {
-  //       const variables = {
-  //         userId: authContext.user.userId,
-  //         tableId: bookingDetails.selectedTable.id,
-  //         date: bookingDetails.selectedDate,
-  //         location: bookingDetails.location,
-  //         numberOfPeople: bookingDetails.numberOfPeople,
-  //         items: bookingDetails.selectedItems.map(item => item.id),
-  //       };
-
-  //       console.log(variables);
-
-  //       createOrder({ variables })
-  //         .then(res => {
-  //           console.log(`DATA: ${JSON.stringify(res.data)}`);
-  //           if (res.data.createOrder) {
-  //             history.push('/dashboard', { didCreateOrder: true });
-  //           } else {
-  //             console.error(`Failed to create order`);
-  //           }
-  //         })
-  //         .catch(error => console.error(`An error occurred: ${error}`));
-  //     })
-  //     .catch(error => console.error(`An error occurred: ${error}`));
-  // }
 
   let total = 0;
   for (const item of bookingDetails.selectedItems) {
