@@ -42,6 +42,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<FormErrors>({
     name: false,
@@ -84,16 +85,16 @@ const SignUp = () => {
 
   const handleRegisterUser = () => {
     checkInput();
-
     setErrors({ name: false, email: false, password: false, confirmPassword: false });
-    console.log('Registering user...');
+    setInfoMessage("Registering...");
+
     registerUser()
       .then(res => {
         console.log(`DATA: ${JSON.stringify(res.data)}`);
         console.log('Logging in...');
         history.push('/login');
       })
-      .catch(error => console.error(error));
+      .catch(error => setErrorMessage(error.message));
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -111,6 +112,9 @@ const SignUp = () => {
       <div className="sign-up-form">
         <Typography variant="h2">Sign Up</Typography>
         <p>Don't have an account? Fill in the details below to get started.</p>
+        {infoMessage && errorMessage === null ? (
+          <Alert severity="info">{infoMessage}</Alert>
+        ) : null}
         {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
         {registerError ? (
           registerError.graphQLErrors.map((error, index) => (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryResult } from '@apollo/react-common';
 
+import Alert from 'components/Alert';
 import LoadingCard from './LoadingCard';
 
 interface ItemListProps<T> {
@@ -13,8 +14,8 @@ function ItemList<T>({ queryResult, numberOfLoadingCards, children }: ItemListPr
   const { loading, error, data } = queryResult;
 
   if (loading) { return <LoadingCard numberOfItems={numberOfLoadingCards} />; }
-  if (error) { return <p>(ERROR) {error.message}</p>; }
-  if (!data) { return <p>(NO DATA)</p>; }
+  if (error) { return <Alert severity="error">{error.message}</Alert>; }
+  if (!data) { return <Alert severity="info">No data found</Alert> }
 
   return (<>{children(data)}</>);
 }

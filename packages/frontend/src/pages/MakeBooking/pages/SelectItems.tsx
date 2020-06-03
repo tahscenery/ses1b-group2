@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import './SelectItems.css';
+import Alert from 'components/Alert';
 import BookingContext, { Category, CurrentProgress, Item } from 'context/bookingContext';
 
 const nameForCategory = (category: Category) => {
@@ -64,9 +65,9 @@ const SelectItems = () => {
     context.setCurrentProgress(CurrentProgress.CONFIRM);
   }
 
-  if (loading) { return <p>Loading...</p> }
-  if (error) { return <p>(ERROR) {error.message}</p> }
-  if (!data) { return <p>(NO DATA)</p> }
+  if (loading) { return <Alert severity="info">Loading...</Alert> }
+  if (error) { return <Alert severity="error">{error.message}</Alert> }
+  if (!data) { return <Alert severity="info">No data found</Alert> }
 
   return (
     <div className="booking-form-container">
