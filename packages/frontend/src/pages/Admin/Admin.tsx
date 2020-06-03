@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
-import clsx from 'clsx';
+import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline, Drawer, AppBar, Toolbar, ListItem, ListItemIcon, ListItemText, Typography, Divider, IconButton, Container, Grid, Paper } from '@material-ui/core';
 import TableChartIcon from '@material-ui/icons/TableChart';
 import PeopleIcon from '@material-ui/icons/People';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import clsx from 'clsx';
 
+import AuthContext from 'context/authContext';
 import NavbarContext from 'context/navbarContext';
+
 import Staff from './StaffList';
 import Customer from './CustomerList';
 import Table from './TableList';
@@ -97,6 +100,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Admin() {
   const navbarContext = useContext(NavbarContext);
+  const authContext = useContext(AuthContext);
   navbarContext.setShouldShowNavbar(false);
 
   const classes = useStyles();
@@ -157,6 +161,12 @@ export default function Admin() {
     default:
       content = <Typography>Welcome to the Dashboard</Typography>;
   }
+
+  if (!authContext.user.isAdmin) {
+    navbarContext.setShouldShowNavbar(true);
+    return <Redirect to="/"/>;
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
