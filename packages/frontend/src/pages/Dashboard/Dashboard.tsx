@@ -101,7 +101,7 @@ const Dashboard = () => {
     <div className="component-container">
       <Typography variant="h2">My Bookings</Typography>
       {didCreateOrder ? (
-        <Alert severity="info">Your booking has been successfully created.</Alert>
+        <Alert severity="success">Your booking has been successfully created.</Alert>
       ) : null}
       <List>
         <ItemList queryResult={queryResult} numberOfLoadingCards={4}>
