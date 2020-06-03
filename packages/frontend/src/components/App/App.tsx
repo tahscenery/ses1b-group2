@@ -12,6 +12,7 @@ import './App.css';
 import NavBar from 'components/NavBar';
 import PrivateRoute from 'components/PrivateRoute';
 import AuthContext, { User } from 'context/authContext';
+import NavbarContext from 'context/navbarContext';
 import { Admin, Dashboard, ForgotPassword, FourOFour, Home, Login, Locations, MakeBooking, SignUp, ViewMenu } from 'pages';
 
 const theme = createMuiTheme({
@@ -101,6 +102,7 @@ const App = () => {
   }
 
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
+  const [shouldShowNavbar, setShouldShowNavbar] = useState(true);
 
   const login = (user: User) => {
     setUser(user);
@@ -118,8 +120,10 @@ const App = () => {
       <AuthContext.Provider value={{ user, login, logout }}>
         <ThemeProvider theme={theme}>
           <Router history={history}>
-            <NavBar/>
-            <Routes />
+            <NavbarContext.Provider value={{ shouldShowNavbar, setShouldShowNavbar }}>
+              {shouldShowNavbar ? <NavBar/> : null}
+              <Routes/>
+            </NavbarContext.Provider>
           </Router>
         </ThemeProvider>
       </AuthContext.Provider>

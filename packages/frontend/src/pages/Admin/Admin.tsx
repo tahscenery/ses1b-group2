@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { CssBaseline, Drawer, AppBar, Toolbar, ListItem, ListItemIcon, ListItemText, Typography, Divider, IconButton, Container, Grid, Paper } from '@material-ui/core';
@@ -7,6 +7,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
+import NavbarContext from 'context/navbarContext';
 import Staff from './StaffList';
 import Customer from './CustomerList';
 import Table from './TableList';
@@ -95,6 +96,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Admin() {
+  const navbarContext = useContext(NavbarContext);
+  navbarContext.setShouldShowNavbar(false);
+
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [show, setShow] = useState(null);
