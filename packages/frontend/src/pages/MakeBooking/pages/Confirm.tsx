@@ -89,7 +89,7 @@ const Confirm = () => {
   const [createOrder, {}] =
     useMutation<CreateOrderResponse, CreateOrderParams>(CREATE_ORDER);
 
-  const [pay] = useMutation<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>(CREATE_SUBSCRIPTION);
+  // const [pay] = useMutation<CreateSubscriptionMutation, CreateSubscriptionMutationVariables>(CREATE_SUBSCRIPTION);
 
   const styles = useStyles();
 
@@ -97,34 +97,34 @@ const Confirm = () => {
     bookingContext.setCurrentProgress(CurrentProgress.SELECT_ITEMS);
   }
 
-  const handleConfirm = () => {
-    handlePayment(bookingDetails)
-      .then(_ => {
-        const variables = {
-          userId: authContext.user.userId,
-          tableId: bookingDetails.selectedTable.id,
-          date: bookingDetails.selectedDate,
-          location: bookingDetails.location,
-          numberOfPeople: bookingDetails.numberOfPeople,
-          items: bookingDetails.selectedItems.map(item => item.id),
-        };
+  // const handleConfirm = () => {
+  //   handlePayment(bookingDetails)
+  //     .then(_ => {
+  //       const variables = {
+  //         userId: authContext.user.userId,
+  //         tableId: bookingDetails.selectedTable.id,
+  //         date: bookingDetails.selectedDate,
+  //         location: bookingDetails.location,
+  //         numberOfPeople: bookingDetails.numberOfPeople,
+  //         items: bookingDetails.selectedItems.map(item => item.id),
+  //       };
 
-        createOrder({ variables })
-          .then(res => {
-            console.log(`DATA: ${JSON.stringify(res.data)}`);
-            if (res.data.createOrder) {
-              history.push('/dashboard', { didCreateOrder: true })
-            } else {
-              console.error(`Failed to create order`);
-            }
-          })
-          .catch(error => console.error(`An error occurred: ${error}`));
-      })
-      .catch(error => console.error(`An error occurred: ${error}`));
-  }
+  //       createOrder({ variables })
+  //         .then(res => {
+  //           console.log(`DATA: ${JSON.stringify(res.data)}`);
+  //           if (res.data.createOrder) {
+  //             history.push('/dashboard', { didCreateOrder: true })
+  //           } else {
+  //             console.error(`Failed to create order`);
+  //           }
+  //         })
+  //         .catch(error => console.error(`An error occurred: ${error}`));
+  //     })
+  //     .catch(error => console.error(`An error occurred: ${error}`));
+  // }
 
   const handleToken = () => {
-    //pay({variables: {source:"", id: authContext.user.userId}});
+    // pay({variables: {source:"", id: authContext.user.userId}});
     handlePayment(bookingDetails)
       .then(_ => {
         const variables = {
@@ -247,23 +247,22 @@ const Confirm = () => {
         >
           Previous
         </Button>
-        <Button
+        {/* <Button
           color="primary"
           variant="contained"
           size="large"
           onClick={handleConfirm}
         >
           Confirm
-        </Button>
-        
-          <StripeCheckout
-            stripeKey="pk_test_uAMIN59vqRuzrMicoGTAyacQ00EKaAXDAl"
-            token={handleToken}
-            billingAddress
-            shippingAddress
-            amount={total * 100}
-            name="Sapori Unici"
-          />
+        </Button> */}
+        <StripeCheckout
+          stripeKey="pk_test_uAMIN59vqRuzrMicoGTAyacQ00EKaAXDAl"
+          token={handleToken}
+          billingAddress
+          shippingAddress
+          amount={total * 100}
+          name="Sapori Unici"
+        />
       </div>
     </div>
   )
