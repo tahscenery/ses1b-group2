@@ -1,0 +1,14 @@
+.login-form {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.login-button {
+  height: 50px;
+}
