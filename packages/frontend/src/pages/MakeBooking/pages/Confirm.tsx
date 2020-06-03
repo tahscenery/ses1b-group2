@@ -86,6 +86,7 @@ const Confirm = () => {
   const bookingContext = useContext(BookingContext);
   const bookingDetails = bookingContext.bookingDetails;
 
+  // eslint-disable-next-line
   const [createOrder, {}] =
     useMutation<CreateOrderResponse, CreateOrderParams>(CREATE_ORDER);
 

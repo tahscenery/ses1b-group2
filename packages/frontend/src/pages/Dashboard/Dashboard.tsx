@@ -55,6 +55,7 @@ const BookingsListRow = (props: BookingsListRowProps) => {
   const { date: _date, location, numberOfPeople, id } = props.booking;
   const date = new Date(_date.toString());
 
+  // eslint-disable-next-line
   const [deleteOrder, {}] =
     useMutation<deleteOrder, deleteOrderVariables>(DELETE_BOOKINGS, {
       variables: { id: id }
