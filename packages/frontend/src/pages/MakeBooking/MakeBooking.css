@@ -1,0 +1,19 @@
+.booking-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+}
+
+.booking-footer button {
+  margin-left: 15px;
+}

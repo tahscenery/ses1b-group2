@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b2068c56-425e-4b64-b77f-b827cc899443/deploy-status)](https://app.netlify.com/sites/saporiunici-develop/deploys)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

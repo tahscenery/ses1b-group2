@@ -1,0 +1,1 @@
+export const stripe = require("Stripe")(process.env.STRIPE_SECRET!);
