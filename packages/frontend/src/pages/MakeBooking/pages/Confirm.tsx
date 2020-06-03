@@ -9,7 +9,7 @@ import gql from 'graphql-tag';
 
 import './Confirm.css';
 import AuthContext from 'context/authContext';
-import BookingContext, { BookingDetails, CurrentProgress } from 'context/bookingContext';
+import BookingContext, { CurrentProgress } from 'context/bookingContext';
 
 interface CreateOrderParams {
   userId: string;
@@ -62,14 +62,14 @@ export interface CreateSubscriptionMutationVariables {
   id: string;
 }
 
-const CREATE_SUBSCRIPTION = gql`
-  mutation CreateSubscriptionMutation($source: String!, $id: String!) {
-    createSubcription(source: $source, id: $id) {
-      id
-      email
-    }
-  }
-`;
+// const CREATE_SUBSCRIPTION = gql`
+//   mutation CreateSubscriptionMutation($source: String!, $id: String!) {
+//     createSubcription(source: $source, id: $id) {
+//       id
+//       email
+//     }
+//   }
+// `;
 
 const useStyles = makeStyles({
   tableEmphasis: {

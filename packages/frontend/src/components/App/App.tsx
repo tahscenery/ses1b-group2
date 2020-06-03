@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
