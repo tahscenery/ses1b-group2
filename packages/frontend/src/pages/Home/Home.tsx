@@ -14,7 +14,7 @@ const Home = () => {
       <img
         className="restauarnt-image"
         src={`https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80`}
-        alt="restaurant-image"
+        alt="restaurant"
         />
     </div>
   );

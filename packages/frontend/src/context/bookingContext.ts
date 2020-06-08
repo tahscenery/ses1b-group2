@@ -34,6 +34,7 @@ export enum CurrentProgress {
 export interface BookingDetails {
   numberOfPeople?: number;
   location?: string;
+  totalPrice?: number;
   selectedDate?: Date;
   selectedTable?: Table;
   selectedItems?: Array<Item>;

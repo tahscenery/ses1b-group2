@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MaterialTable, { Column } from 'material-table';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -34,12 +34,12 @@ query getCustomer{
 
 const CREATE_CUSTOMER = gql`
 mutation addCustomer($name: String!, $email: String!, $password: String!) {
-  Register(name: $name, email: $email, password: $password)   
+  Register(name: $name, email: $email, password: $password)
 }`;
 
 const UPDATE_CUSTOMER = gql`
 mutation updateCustomer($name: String!, $email: String!, $password: String!) {
-  updateUser(name: $name, email: $email, password: $password)   
+  updateUser(name: $name, email: $email, password: $password)
 }`;
 
 const DELETE_CUSTOMER = gql`

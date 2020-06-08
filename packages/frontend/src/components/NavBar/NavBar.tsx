@@ -5,7 +5,7 @@ import Menu from '@material-ui/icons/Menu';
 import Close from '@material-ui/icons/Close'
 
 import './NavBar.css';
-import AuthContext, { User } from 'context/authContext';
+import AuthContext from 'context/authContext';
 
 const NavBar = () => {
   const history = useHistory();

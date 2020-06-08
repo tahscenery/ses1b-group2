@@ -4,22 +4,13 @@ import { ObjectId } from "mongodb";
 
 @InputType()
 class OrderInput implements Partial<Order>{
-  // @Field()
-  // orderNumber : number;
-
   @Field(() => String)
   userId: ObjectId;
-
-  // @Field(()=> String)
-  // itemId: ObjectId;
-
-  @Field(() => [String])
-  items: string[];
 
   @Field(() => String)
   tableId: ObjectId;
 
-  @Field()
+  @Field(() => Date)
   date: Date;
 
   @Field()
@@ -27,6 +18,12 @@ class OrderInput implements Partial<Order>{
 
   @Field()
   numberOfPeople: number;
+
+  @Field()
+  totalPrice: number;
+
+  @Field(() => [String])
+  items: string[];
 }
 
 export default OrderInput;

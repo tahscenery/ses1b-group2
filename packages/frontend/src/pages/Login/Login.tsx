@@ -47,6 +47,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [errors, setErrors] = useState<FormErrors>({
     email: false,
@@ -69,14 +70,19 @@ const Login = () => {
       throw new Error("The provided email address doesn't appear to be a valid");
     }
 
-    if (password.length === 0 || password.length < 8) {
+    if (password.length === 0) {
       setErrors({ ...errors, password: true });
       throw new Error("Please input your password");
     }
 
-    setErrors({ email: false, password: false });
+    if (password.length < 8) {
+      setErrors({ ...errors, password: true });
+      throw new Error("Your password should contain at least 8 characters.")
+    }
 
-    console.log('Logging user in...');
+    setErrors({ email: false, password: false });
+    setInfoMessage("Logging you in...");
+
     loginUser()
       .then(response => {
         console.log(`DATA: ${JSON.stringify(response.data)}`);
@@ -102,7 +108,7 @@ const Login = () => {
           console.log('Error: No data from response.');
         }
       })
-      .catch(error => console.error(error))
+      .catch(error => console.error(error.message))
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -123,6 +129,9 @@ const Login = () => {
         <Typography variant="h2">Login</Typography>
         <p>Sign in with your email and password below.</p>
         {didRedirect ? <Alert severity="warning">{redirectMessage}</Alert> : null}
+        {infoMessage && errorMessage === null ? (
+          <Alert severity="info">{infoMessage}</Alert>
+        ) : null}
         {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
         {loginError ? (
           loginError.graphQLErrors.map((error, index) => (

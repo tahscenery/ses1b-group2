@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import './SelectItems.css';
+import Alert from 'components/Alert';
 import BookingContext, { Category, CurrentProgress, Item } from 'context/bookingContext';
 
 const nameForCategory = (category: Category) => {
@@ -38,7 +39,7 @@ const SelectItems = () => {
   const { loading, error, data } = useQuery<ItemsData>(GET_ITEMS);
 
   const [selectedItems, setSelectedItems] = useState<Array<Item>>([]);
-  const [total, setTotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleToggle = (item: Item) => {
     const currentItemIndex = selectedItems.indexOf(item);
@@ -46,10 +47,10 @@ const SelectItems = () => {
 
     if (currentItemIndex === -1) {
       newSelectedItems.push(item);
-      setTotal(total + item.price);
+      setTotalPrice(totalPrice + item.price);
     } else {
       newSelectedItems.splice(currentItemIndex, 1);
-      setTotal(total - item.price);
+      setTotalPrice(totalPrice - item.price);
     }
 
     setSelectedItems(newSelectedItems);
@@ -60,13 +61,13 @@ const SelectItems = () => {
   }
 
   const handleNext = () => {
-    context.setBookingDetails({ selectedItems });
+    context.setBookingDetails({ selectedItems, totalPrice });
     context.setCurrentProgress(CurrentProgress.CONFIRM);
   }
 
-  if (loading) { return <p>Loading...</p> }
-  if (error) { return <p>(ERROR) {error.message}</p> }
-  if (!data) { return <p>(NO DATA)</p> }
+  if (loading) { return <Alert severity="info">Loading...</Alert> }
+  if (error) { return <Alert severity="error">{error.message}</Alert> }
+  if (!data) { return <Alert severity="info">No data found</Alert> }
 
   return (
     <div className="booking-form-container">
@@ -114,7 +115,7 @@ const SelectItems = () => {
           ))}
       </List>
       <div className="booking-select-items-footer">
-        <p>Total: ${`${total.toFixed(2)}`}</p>
+        <p>Total: ${`${totalPrice.toFixed(2)}`}</p>
         <div className="booking-footer">
           <Button
             color="secondary"
@@ -128,7 +129,7 @@ const SelectItems = () => {
             variant="contained"
             size="large"
             onClick={handleNext}
-            disabled={total === 0}
+            disabled={totalPrice === 0}
           >
             Proceed to Checkout
           </Button>

@@ -11,40 +11,15 @@ export class Order {
   @Field(() => ID)
   id: string;
 
-  // @Field(_type => String)
-  // @Property({ ref: User, required: true })
-  // user_id: Ref<User>;
-  // _doc: any;
-
-  // @Field(_type => String)
-  // @Property({ ref: Item, required: true })
-  // item_id: Ref<Item>;
-  // //_doc: any; // This still doesn't work // No duplicate identifier _doc
-
-  // @Field(_type => String)
-  // @Property({ ref: Table, required: true })
-  // table_id: Ref<Table>;
-  // //_doc: any; // This still doesn't work // No duplicate identifier _doc
-
-  // @Field(() => String)
-  // @Property({ ref: User, required: true })
-  // userId: Ref<User>;
-
   @Field(() => String)
   @Property({ required: true })
-  // userId: Ref<User>;
   userId: ObjectId;
 
   @Field(() => String)
   @Property({ ref: Table, required: true })
-  // tableId: Ref<Table>;
   tableId: ObjectId;
 
-  @Field(() => [String])
-  @Property({ required: true })
-  items: string[];
-
-  @Field()
+  @Field(() => Date)
   @Property({ required: true })
   date: Date;
 
@@ -55,6 +30,14 @@ export class Order {
   @Field()
   @Property({ required: true })
   numberOfPeople: number;
+
+  @Field()
+  @Property({ required: true })
+  totalPrice: number;
+
+  @Field(() => [String])
+  @Property({ required: true })
+  items: string[];
 }
 
 export const OrderModel = getModelForClass(Order);

@@ -30,6 +30,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
 
+  // eslint-disable-next-line
   const [resetPassword, {}] =
     useMutation<ResetResponse, ResetParams>(RESET_PASSWORD, {
       variables: { email, password }

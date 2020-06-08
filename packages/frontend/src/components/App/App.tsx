@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
@@ -12,7 +11,8 @@ import './App.css';
 import NavBar from 'components/NavBar';
 import PrivateRoute from 'components/PrivateRoute';
 import AuthContext, { User } from 'context/authContext';
-import { Admin, Dashboard, ForgotPassword, FourOFour, Home, Login, Locations, MakeBooking, SignUp, ViewMenu } from 'pages';
+import NavbarContext from 'context/navbarContext';
+import { Admin, Dashboard, ForgotPassword, FourOFour, Home, Login, MakeBooking, SignUp, ViewMenu } from 'pages';
 
 const theme = createMuiTheme({
   palette: {
@@ -70,14 +70,10 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 const Routes = () => {
-  const location = useLocation();
-  console.log(location.pathname);
-
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/menu" component={ViewMenu} />
-      <Route path="/locations" component={Locations} />
       <Route path="/register" component={SignUp} />
       <Route path="/login" component={Login} />
       <Route path="/forgot-password" component={ForgotPassword} />
@@ -101,6 +97,7 @@ const App = () => {
   }
 
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
+  const [shouldShowNavbar, setShouldShowNavbar] = useState(true);
 
   const login = (user: User) => {
     setUser(user);
@@ -118,8 +115,10 @@ const App = () => {
       <AuthContext.Provider value={{ user, login, logout }}>
         <ThemeProvider theme={theme}>
           <Router history={history}>
-            <NavBar/>
-            <Routes />
+            <NavbarContext.Provider value={{ shouldShowNavbar, setShouldShowNavbar }}>
+              {shouldShowNavbar ? <NavBar/> : null}
+              <Routes/>
+            </NavbarContext.Provider>
           </Router>
         </ThemeProvider>
       </AuthContext.Provider>
